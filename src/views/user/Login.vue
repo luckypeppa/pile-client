@@ -7,8 +7,7 @@
       type="password"
       required="true"
     />
-    <!-- <button type="submit">Login</button> -->
-    <BaseButton type="submit" :isLoading="isLoading">Login</BaseButton>
+    <BaseButton type="submit">Login</BaseButton>
     <p class="error">{{ error }}</p>
     <router-link :to="{ name: 'register' }">Register</router-link>
   </form>
@@ -30,7 +29,6 @@ export default {
   },
   methods: {
     login() {
-      this.isLoading = true;
       const auth = getAuth();
       signInWithEmailAndPassword(auth, this.email, this.password)
         .then((userCredential) => {
@@ -40,7 +38,6 @@ export default {
         })
         .catch((error) => {
           this.error = error.message;
-          this.isLoading = false;
         });
     },
   },

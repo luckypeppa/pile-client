@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import Register from "../views/user/Register.vue";
 import Login from "../views/user/Login.vue";
 import Home from "../views/Home.vue";
+import NProgress from "nprogress";
 
 const routes = [
   {
@@ -33,6 +34,14 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(),
   routes,
+});
+
+router.beforeEach(() => {
+  NProgress.start();
+});
+
+router.afterEach(() => {
+  NProgress.done();
 });
 
 export default router;

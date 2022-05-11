@@ -4,6 +4,7 @@ import router from "./router";
 import store from "./store";
 import upperFirst from "lodash/upperFirst";
 import camelCase from "lodash/camelCase";
+import "nprogress/nprogress.css";
 
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
