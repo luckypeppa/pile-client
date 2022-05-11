@@ -25,22 +25,29 @@
 
 <script>
 import { useForm, useField } from "vee-validate";
-import { object, string } from "yup";
+// import { object, string } from "yup";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 
 export default {
   name: "userRegister",
   setup() {
-    const validationSchema = object({
-      email: string().email().required(),
-      username: string().max(12).required(),
-      password: string()
-        .min(12)
-        .required()
-        .matches(
-          /^.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?].*$/,
-          "Password must at least have one special character."
-        ),
-    });
+    // const validationSchema = object({
+    //   email: string().email().required(),
+    //   username: string().max(12).required(),
+    //   password: string()
+    //     .min(12)
+    //     .required()
+    //     .matches(
+    //       /^.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?].*$/,
+    //       "Password must at least have one special character."
+    //     ),
+    // });
+
+    const validationSchema = {
+      email: true,
+      username: true,
+      password: true,
+    };
 
     const { handleSubmit, errors } = useForm({
       validationSchema,
@@ -50,8 +57,15 @@ export default {
     const { value: username } = useField("username");
     const { value: password } = useField("password");
 
-    const submit = handleSubmit(() => {
-      console.log("submitted");
+    let onlineError = "";
+    const submit = handleSubmit((values) => {
+      const auth = getAuth();
+
+      createUserWithEmailAndPassword(auth, values.email, values.password).then(
+        (userCredential) => {
+          console.log(userCredential);
+        }
+      );
     });
 
     return {
@@ -60,6 +74,7 @@ export default {
       username,
       password,
       errors,
+      onlineError,
     };
   },
 };
@@ -72,5 +87,9 @@ export default {
   display: flex;
   flex-direction: column;
   gap: 1rem;
+}
+
+.error {
+  color: red;
 }
 </style>

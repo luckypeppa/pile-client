@@ -1,7 +1,33 @@
 <template>
-  <nav></nav>
+  <Nav></Nav>
   <router-view></router-view>
 </template>
+
+<script>
+import Nav from "@/components/Nav.vue";
+import {
+  getAuth,
+  setPersistence,
+  browserLocalPersistence,
+  onAuthStateChanged,
+} from "firebase/auth";
+export default {
+  components: {
+    Nav,
+  },
+  created() {
+    const auth = getAuth();
+    setPersistence(auth, browserLocalPersistence);
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        this.$store.dispatch("login", user);
+      } else {
+        this.$store.dispatch("logout");
+      }
+    });
+  },
+};
+</script>
 
 <style lang="scss">
 #app {
