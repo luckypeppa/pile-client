@@ -9,11 +9,19 @@
 </template>
 
 <script>
+import { getAuth, signOut } from "firebase/auth";
 export default {
   name: "appNav",
   methods: {
     logout() {
-      this.$store.dispatch("logout");
+      const auth = getAuth();
+      signOut(auth)
+        .then(() => {
+          this.$store.dispatch("logout");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
   },
   computed: {
