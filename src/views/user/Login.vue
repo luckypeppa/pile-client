@@ -7,7 +7,8 @@
       type="password"
       required="true"
     />
-    <button type="submit">Login</button>
+    <!-- <button type="submit">Login</button> -->
+    <BaseButton type="submit" :isLoading="isLoading">Login</BaseButton>
     <p class="error">{{ error }}</p>
     <router-link :to="{ name: 'register' }">Register</router-link>
   </form>
@@ -15,6 +16,7 @@
 
 <script>
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import BaseButton from "@/components/BaseButton.vue";
 
 export default {
   name: "userLogin",
@@ -23,21 +25,26 @@ export default {
       email: "",
       password: "",
       error: "",
+      isLoading: false,
     };
   },
   methods: {
     login() {
+      this.isLoading = true;
       const auth = getAuth();
       signInWithEmailAndPassword(auth, this.email, this.password)
         .then((userCredential) => {
           this.$store.dispatch("login", userCredential.user);
           this.$router.push({ name: "home" });
+          this.isLoading = false;
         })
         .catch((error) => {
           this.error = error.message;
+          this.isLoading = false;
         });
     },
   },
+  components: { BaseButton },
 };
 </script>
 

@@ -18,63 +18,54 @@
       type="password"
       :error="errors.password"
     />
-    <button type="submit">Login</button>
+    <BaseButton type="submit">Register</BaseButton>
     <router-link :to="{ name: 'login' }">Login</router-link>
   </form>
 </template>
 
 <script>
 import { useForm, useField } from "vee-validate";
-// import { object, string } from "yup";
+import { object, string } from "yup";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 
 export default {
   name: "userRegister",
   setup() {
-    // const validationSchema = object({
-    //   email: string().email().required(),
-    //   username: string().max(12).required(),
-    //   password: string()
-    //     .min(12)
-    //     .required()
-    //     .matches(
-    //       /^.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?].*$/,
-    //       "Password must at least have one special character."
-    //     ),
-    // });
-
-    const validationSchema = {
-      email: true,
-      username: true,
-      password: true,
-    };
+    const validationSchema = object({
+      email: string().email().required(),
+      username: string().max(12).required(),
+      password: string()
+        .min(12)
+        .required()
+        .matches(
+          /^.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?].*$/,
+          "Password must at least have one special character."
+        ),
+    });
 
     const { handleSubmit, errors } = useForm({
       validationSchema,
     });
-
     const { value: email } = useField("email");
     const { value: username } = useField("username");
     const { value: password } = useField("password");
 
-    let onlineError = "";
     const submit = handleSubmit((values) => {
       const auth = getAuth();
-
-      createUserWithEmailAndPassword(auth, values.email, values.password).then(
-        (userCredential) => {
+      createUserWithEmailAndPassword(auth, values.email, values.password)
+        .then((userCredential) => {
           console.log(userCredential);
-        }
-      );
+        })
+        .catch((err) => {
+          alert(err.message);
+        });
     });
-
     return {
       submit,
       email,
       username,
       password,
       errors,
-      onlineError,
     };
   },
 };
