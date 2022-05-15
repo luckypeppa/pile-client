@@ -4,12 +4,13 @@
       >Register</router-link
     >
     <router-link :to="{ name: 'login' }" v-if="!isLogin">Login</router-link>
-    <button @click="logout" v-if="isLogin">Logout</button>
+    <BaseButton @click="logout" v-if="isLogin">Logout</BaseButton>
   </nav>
 </template>
 
 <script>
 import { getAuth, signOut } from "firebase/auth";
+import BaseButton from "./BaseButton.vue";
 export default {
   name: "appNav",
   methods: {
@@ -29,6 +30,7 @@ export default {
       return this.$store.getters.isLogin;
     },
   },
+  components: { BaseButton },
 };
 </script>
 
