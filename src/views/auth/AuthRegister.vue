@@ -1,5 +1,6 @@
 <template>
   <form @submit="submit" class="user-form">
+    <h2>REGISTER</h2>
     <BaseInput
       v-model="email"
       label="Email"

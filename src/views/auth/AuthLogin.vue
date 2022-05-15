@@ -1,5 +1,6 @@
 <template>
   <form @submit.prevent="login" class="user-form">
+    <h2>LOGIN</h2>
     <BaseInput v-model="email" label="Email" type="email" required="true" />
     <BaseInput
       v-model="password"
