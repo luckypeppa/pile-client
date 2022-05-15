@@ -1,5 +1,5 @@
 <template>
-  <div class="post-container">
+  <div class="container">
     <tip-tap v-model="content" />
   </div>
 </template>
@@ -18,8 +18,4 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-.post-container {
-  padding-top: 5rem;
-}
-</style>
+<style lang="scss" scoped></style>

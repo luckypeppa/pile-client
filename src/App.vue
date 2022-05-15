@@ -45,5 +45,11 @@ body {
     text-decoration: none;
     font-weight: 600;
   }
+
+  .container {
+    width: min(60rem, 100%);
+    margin: auto;
+    padding-top: 5rem;
+  }
 }
 </style>
