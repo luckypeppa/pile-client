@@ -8,7 +8,7 @@
       required="true"
     />
     <BaseButton type="submit">Login</BaseButton>
-    <p class="error">{{ error }}</p>
+    <p class="error" v-if="error">{{ error }}</p>
     <router-link :to="{ name: 'register' }">Register</router-link>
   </form>
 </template>
@@ -45,11 +45,16 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .user-form {
   width: 100%;
   background-color: #fff;
   padding: 2rem;
   border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  align-items: center;
+  box-shadow: 0 0 1px 1px rgba($color: #000000, $alpha: 0.1);
 }
 </style>
