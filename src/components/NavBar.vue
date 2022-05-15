@@ -36,5 +36,7 @@ export default {
 nav {
   display: flex;
   gap: 1rem;
+  position: fixed;
+  background-color: transparent;
 }
 </style>

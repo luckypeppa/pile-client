@@ -45,4 +45,11 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.user-form {
+  width: 100%;
+  background-color: #fff;
+  padding: 2rem;
+  border-radius: 1rem;
+}
+</style>

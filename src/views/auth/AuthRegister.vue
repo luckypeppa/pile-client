@@ -7,12 +7,6 @@
       :error="errors.email"
     />
     <BaseInput
-      v-model="username"
-      label="Username"
-      type="text"
-      :error="errors.username"
-    />
-    <BaseInput
       v-model="password"
       label="Password"
       type="password"

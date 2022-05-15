@@ -1,10 +1,10 @@
 <template>
-  <Nav></Nav>
+  <NavBar></NavBar>
   <router-view></router-view>
 </template>
 
 <script>
-import Nav from "@/components/Nav.vue";
+import NavBar from "@/components/NavBar.vue";
 import {
   getAuth,
   setPersistence,
@@ -13,7 +13,7 @@ import {
 } from "firebase/auth";
 export default {
   components: {
-    Nav,
+    NavBar,
   },
   created() {
     const auth = getAuth();
@@ -30,24 +30,11 @@ export default {
 </script>
 
 <style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
+body {
+  box-sizing: content-box;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  overflow-x: hidden;
 }
 </style>
