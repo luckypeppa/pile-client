@@ -1,5 +1,5 @@
 <template>
-  <nav class="nav">
+  <nav class="navbar">
     <router-link :to="{ name: 'register' }" v-if="!isLogin"
       >Register</router-link
     >
@@ -33,10 +33,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-nav {
+.navbar {
   display: flex;
   gap: 1rem;
   position: fixed;
   background-color: transparent;
+  height: min(5rem, 10vh);
+  align-items: center;
+  padding: 0 3rem;
+  width: 100vw;
+  justify-content: flex-end;
 }
 </style>

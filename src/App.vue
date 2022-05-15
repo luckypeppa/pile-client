@@ -30,11 +30,20 @@ export default {
 </script>
 
 <style lang="scss">
-body {
-  box-sizing: content-box;
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
   padding: 0;
   margin: 0;
   border: 0;
+}
+
+body {
   overflow-x: hidden;
+  a {
+    text-decoration: none;
+    font-weight: 600;
+  }
 }
 </style>

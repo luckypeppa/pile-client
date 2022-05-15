@@ -20,7 +20,7 @@ export default {};
   .form-container {
     width: min(20rem, 100%);
     margin: auto;
-    padding-top: 5rem;
+    padding-top: 7rem;
   }
 }
 </style>
