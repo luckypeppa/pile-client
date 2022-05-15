@@ -1,5 +1,6 @@
 <template>
   <div v-if="editor" class="editor-menu">
+    <button @click="addImage">Add Image</button>
     <button
       @click="editor.chain().focus().toggleBold().run()"
       :class="{ 'is-active': editor.isActive('bold') }"
@@ -111,7 +112,7 @@
 <script>
 import { Editor, EditorContent } from "@tiptap/vue-3";
 import StarterKit from "@tiptap/starter-kit";
-
+import Image from "@tiptap/extension-image";
 export default {
   components: {
     EditorContent,
@@ -123,9 +124,19 @@ export default {
     };
   },
 
+  methods: {
+    addImage() {
+      const url = window.prompt("URL");
+
+      if (url) {
+        this.editor.chain().focus().setImage({ src: url }).run();
+      }
+    },
+  },
+
   mounted() {
     this.editor = new Editor({
-      extensions: [StarterKit],
+      extensions: [StarterKit, Image],
       content: `
         <h2>
           Hi there,
