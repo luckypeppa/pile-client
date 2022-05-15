@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import AuthRegister from "../views/auth/AuthRegister.vue";
 import AuthLogin from "../views/auth/AuthLogin.vue";
 import AuthLayout from "../views/auth/AuthLayout.vue";
+import PostCreate from "../views/post/PostCreate.vue";
 import Home from "../views/Home.vue";
 import NProgress from "nprogress";
 
@@ -27,6 +28,11 @@ const routes = [
         component: AuthLogin,
       },
     ],
+  },
+  {
+    path: "/create",
+    name: "PostCreate",
+    component: PostCreate,
   },
 
   // {

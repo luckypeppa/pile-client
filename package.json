@@ -13,6 +13,8 @@
   },
   "main": "index.js",
   "dependencies": {
+    "@tiptap/starter-kit": "^2.0.0-beta.184",
+    "@tiptap/vue-3": "^2.0.0-beta.91",
     "core-js": "^3.8.3",
     "firebase": "^9.8.1",
     "lodash": "^4.17.21",
