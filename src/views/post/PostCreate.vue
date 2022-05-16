@@ -4,6 +4,7 @@
       <BaseInput type="text" label="Title" v-model="title" />
       <BaseInput type="text" label="Tag" v-model="tag" />
     </div>
+    <input type="file" @change="addCover" />
     <TipTap v-model="content" />
     <BaseButton @click="createPost">CREATE</BaseButton>
   </div>
@@ -13,12 +14,14 @@
 import TipTap from "../../components/TipTap.vue";
 import { collection, addDoc } from "firebase/firestore";
 import { db } from "@/services/firebaseServices";
+import firebaseApi from "@/services/firebaseApi";
 export default {
   data() {
     return {
       content: "",
       title: "",
       tag: "",
+      coverUrl: null,
     };
   },
   components: {
@@ -31,12 +34,22 @@ export default {
           title: this.title,
           tag: this.tag,
           content: this.content,
+          coverUrl: this.coverUrl,
         });
         console.log("Document written with ID: ", docRef.id);
         this.$router.push({ name: "home" });
       } catch (e) {
         console.error("Error adding document: ", e);
       }
+    },
+    addCover(e) {
+      const file = e.target.files[0];
+      firebaseApi
+        .uploadImage(file)
+        .then((url) => {
+          this.coverUrl = url;
+        })
+        .catch((err) => alert(err));
     },
   },
 };

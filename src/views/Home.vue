@@ -1,14 +1,7 @@
 <template>
   <div class="container">
     <div class="posts">
-      <post-card
-        v-for="(post, index) in posts"
-        :key="index"
-        @click="seeDetail(post.id)"
-      >
-        <h2 class="title">{{ post.title }}</h2>
-        <p class="tag">{{ post.tag }}</p>
-      </post-card>
+      <post-card v-for="(post, index) in posts" :key="index" :post="post" />
     </div>
   </div>
 </template>
@@ -32,11 +25,6 @@ export default {
   computed: {
     posts() {
       return this.$store.state.posts;
-    },
-  },
-  methods: {
-    seeDetail(postId) {
-      this.$router.push({ name: "PostDetail", params: { id: postId } });
     },
   },
 };
