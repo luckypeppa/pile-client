@@ -1,5 +1,7 @@
 <template>
   <nav class="navbar">
+    <router-link :to="{ name: 'home' }">Home</router-link>
+    <router-link :to="{ name: 'PostCreate' }">Create</router-link>
     <router-link :to="{ name: 'register' }" v-if="!isLogin"
       >Register</router-link
     >

@@ -2,7 +2,7 @@
   <div>
     <h1 class="title">{{ post.title }}</h1>
     <p class="tag">{{ post.tag }}</p>
-    <div class="content">{{ post.content }}</div>
+    <div class="content" ref="content"></div>
   </div>
 </template>
 
@@ -24,6 +24,9 @@ export default {
     getPost(this.id)
       .then((post) => (this.post = post))
       .catch((err) => console.log(err));
+  },
+  mounted() {
+    this.$refs.content.innerHTML = this.post.content;
   },
 };
 </script>
