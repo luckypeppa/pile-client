@@ -114,8 +114,7 @@
 import { Editor, EditorContent } from "@tiptap/vue-3";
 import StarterKit from "@tiptap/starter-kit";
 import Image from "@tiptap/extension-image";
-import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import UniqueID from "@/utils/UUID";
+import firebaseApi from "@/services/firebaseApi";
 export default {
   components: {
     EditorContent,
@@ -150,12 +149,8 @@ export default {
   methods: {
     addImage(e) {
       const file = e.target.files[0];
-      const storage = getStorage();
-      const storageRef = ref(storage, "images/" + UniqueID() + file.name);
-      uploadBytes(storageRef, file)
-        .then(() => {
-          return getDownloadURL(storageRef);
-        })
+      firebaseApi
+        .uploadImage(file)
         .then((url) => {
           this.editor.chain().focus().setImage({ src: url }).run();
         })
