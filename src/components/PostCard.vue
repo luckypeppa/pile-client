@@ -3,6 +3,9 @@
     <div class="left">
       <h2 class="title">{{ post.title }}</h2>
       <p class="tag">{{ post.tag }}</p>
+      <time v-if="post.createdAt">{{
+        new Date(this.post.createdAt.seconds * 1000).toString()
+      }}</time>
     </div>
     <div class="cover">
       <img :src="post.coverUrl" alt="" />

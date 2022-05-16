@@ -2,6 +2,9 @@
   <div class="container detail">
     <h1 class="title">{{ post.title }}</h1>
     <p class="tag">{{ post.tag }}</p>
+    <time v-if="post.createdAt">{{
+      new Date(this.post.createdAt.seconds * 1000).toString()
+    }}</time>
     <div class="content" ref="content"></div>
   </div>
 </template>

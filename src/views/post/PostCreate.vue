@@ -14,7 +14,7 @@
 
 <script>
 import TipTap from "../../components/TipTap.vue";
-import { collection, addDoc } from "firebase/firestore";
+import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { db } from "@/services/firebaseServices";
 import firebaseApi from "@/services/firebaseApi";
 export default {
@@ -37,6 +37,7 @@ export default {
           tag: this.tag,
           content: this.content,
           coverUrl: this.coverUrl,
+          createdAt: serverTimestamp(),
         });
         console.log("Document written with ID: ", docRef.id);
         this.$router.push({ name: "home" });
