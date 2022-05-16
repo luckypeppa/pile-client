@@ -39,6 +39,10 @@ export default {
   box-shadow: 0 0 1px 1px rgba($color: #000000, $alpha: 0.1);
   padding: 1rem;
 
+  @media screen and (max-width: 767px) {
+    grid-template-columns: 1fr;
+  }
+
   .left {
     display: flex;
     flex-direction: column;
