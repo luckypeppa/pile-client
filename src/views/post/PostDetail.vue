@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container detail">
     <h1 class="title">{{ post.title }}</h1>
     <p class="tag">{{ post.tag }}</p>
     <div class="content" ref="content"></div>
@@ -31,4 +31,9 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.detail {
+  text-align: center;
+  box-shadow: 0 0 1px 1px rgba($color: #000000, $alpha: 0.1);
+}
+</style>

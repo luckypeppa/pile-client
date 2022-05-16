@@ -46,5 +46,13 @@ export default {
   display: grid;
   grid-template-columns: 1fr;
   gap: 2rem;
+
+  .card {
+    box-shadow: 0 0 1px 1px rgba($color: #000000, $alpha: 0.1);
+    padding: 1rem;
+    display: grid;
+    gap: 1rem;
+    cursor: pointer;
+  }
 }
 </style>

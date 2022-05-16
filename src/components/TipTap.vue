@@ -158,6 +158,7 @@ export default {
     this.editor = new Editor({
       extensions: [StarterKit, Image],
       content: this.modelValue,
+      autofocus: true,
       onUpdate: () => {
         // HTML
         this.$emit("update:modelValue", this.editor.getHTML());
@@ -190,6 +191,11 @@ export default {
 }
 /* Basic editor styles */
 .ProseMirror {
+  margin-bottom: 1rem;
+  min-height: 10rem;
+  border: 1px solid black;
+  border-radius: 0.5rem;
+
   > * + * {
     margin-top: 0.75em;
   }
@@ -239,7 +245,6 @@ export default {
   }
 
   hr {
-    border: none;
     border-top: 2px solid rgba(#0d0d0d, 0.1);
     margin: 2rem 0;
   }

@@ -41,6 +41,7 @@ export default {
 
 body {
   overflow-x: hidden;
+  background-color: #f1e6d6;
   a {
     text-decoration: none;
     font-weight: 600;
@@ -50,6 +51,7 @@ body {
     width: min(60rem, 100%);
     margin: auto;
     padding-top: 5rem;
+    padding-inline: min(3rem, 10vw);
   }
 }
 </style>
