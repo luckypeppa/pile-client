@@ -10,7 +10,7 @@
     />
     <BaseButton type="submit" :style="{ width: '100%' }">Login</BaseButton>
     <p class="error" v-if="error">{{ error }}</p>
-    <router-link :to="{ name: 'register' }">Register</router-link>
+    <!-- <router-link :to="{ name: 'register' }">Register</router-link> -->
   </form>
 </template>
 
