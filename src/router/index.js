@@ -6,6 +6,7 @@ import PostCreate from "../views/post/PostCreate.vue";
 import PostDetail from "../views/post/PostDetail.vue";
 import Home from "../views/Home.vue";
 import NProgress from "nprogress";
+import { getAuth } from "firebase/auth";
 
 const routes = [
   {
@@ -34,6 +35,9 @@ const routes = [
     path: "/create",
     name: "PostCreate",
     component: PostCreate,
+    meta: {
+      requireAuth: true,
+    },
   },
   {
     path: "/post/:id",
@@ -58,8 +62,15 @@ const router = createRouter({
   routes,
 });
 
-router.beforeEach(() => {
+router.beforeEach((to, from, next) => {
   NProgress.start();
+
+  const isLogin = getAuth().currentUser;
+  if (to.meta.requireAuth && !isLogin) {
+    next({ name: "home" });
+  } else {
+    next();
+  }
 });
 
 router.afterEach(() => {
