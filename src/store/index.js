@@ -1,5 +1,6 @@
 import { createStore } from "vuex";
-
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "@/main";
 export default createStore({
   state: {
     user: null,
@@ -8,6 +9,23 @@ export default createStore({
   getters: {
     isLogin(state) {
       return !!state.user;
+    },
+    getPost(state) {
+      return (id) => {
+        const post = state.posts.filter((post) => post.id === id);
+        console.log(post);
+        if (post.length > 1) {
+          return post[0];
+        }
+
+        return getDoc(doc(db, "posts", id)).then((docSnap) => {
+          if (docSnap.exists()) {
+            return { id, ...docSnap.data() };
+          } else {
+            throw "No such document";
+          }
+        });
+      };
     },
   },
   mutations: {
@@ -19,6 +37,9 @@ export default createStore({
     },
     SET_POST(state, post) {
       state.posts.push(post);
+    },
+    REMOVE_POSTS(state) {
+      state.posts = [];
     },
   },
   actions: {

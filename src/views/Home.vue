@@ -1,7 +1,12 @@
 <template>
   <div class="container">
     <div class="posts">
-      <div class="card" v-for="(post, index) in posts" :key="index">
+      <div
+        class="card"
+        v-for="(post, index) in posts"
+        :key="index"
+        @click="seeDetail(post.id)"
+      >
         <h2 class="title">{{ post.title }}</h2>
         <p class="tag">{{ post.tag }}</p>
       </div>
@@ -14,16 +19,23 @@ import { db } from "@/main";
 import { collection, getDocs } from "firebase/firestore";
 export default {
   name: "appHome",
-  async created() {
-    const querySnapshot = await getDocs(collection(db, "posts"));
-    querySnapshot.forEach((doc) => {
-      console.log(`${doc.id} => ${doc.data()}`);
-      this.$store.commit("SET_POST", doc.data());
+  created() {
+    this.$store.commit("REMOVE_POSTS");
+    getDocs(collection(db, "posts")).then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        const post = { id: doc.id, ...doc.data() };
+        this.$store.commit("SET_POST", post);
+      });
     });
   },
   computed: {
     posts() {
       return this.$store.state.posts;
+    },
+  },
+  methods: {
+    seeDetail(postId) {
+      this.$router.push({ name: "PostDetail", params: { id: postId } });
     },
   },
 };
