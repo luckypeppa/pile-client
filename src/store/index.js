@@ -1,6 +1,6 @@
 import { createStore } from "vuex";
 import { doc, getDoc } from "firebase/firestore";
-import { db } from "@/main";
+import { db } from "@/services/firebaseServices";
 export default createStore({
   state: {
     user: null,

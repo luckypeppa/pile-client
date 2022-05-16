@@ -12,7 +12,7 @@
 <script>
 import TipTap from "../../components/TipTap.vue";
 import { collection, addDoc } from "firebase/firestore";
-import { db } from "@/main";
+import { db } from "@/services/firebaseServices";
 export default {
   data() {
     return {

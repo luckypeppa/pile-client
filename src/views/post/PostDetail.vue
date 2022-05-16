@@ -22,11 +22,11 @@ export default {
   created() {
     const getPost = this.$store.getters.getPost;
     getPost(this.id)
-      .then((post) => (this.post = post))
+      .then((post) => {
+        this.post = post;
+        this.$refs.content.innerHTML = this.post.content;
+      })
       .catch((err) => console.log(err));
-  },
-  mounted() {
-    this.$refs.content.innerHTML = this.post.content;
   },
 };
 </script>

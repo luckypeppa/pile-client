@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import { db } from "@/main";
+import { db } from "@/services/firebaseServices";
 import { collection, getDocs } from "firebase/firestore";
 import PostCard from "@/components/PostCard.vue";
 export default {
