@@ -52,6 +52,7 @@ body {
     margin: auto;
     padding-top: 5rem;
     padding-inline: min(3rem, 10vw);
+    min-height: 100vh;
   }
 }
 </style>

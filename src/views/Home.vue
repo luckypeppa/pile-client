@@ -1,15 +1,14 @@
 <template>
   <div class="container">
     <div class="posts">
-      <div
-        class="card"
+      <post-card
         v-for="(post, index) in posts"
         :key="index"
         @click="seeDetail(post.id)"
       >
         <h2 class="title">{{ post.title }}</h2>
         <p class="tag">{{ post.tag }}</p>
-      </div>
+      </post-card>
     </div>
   </div>
 </template>
@@ -17,7 +16,9 @@
 <script>
 import { db } from "@/main";
 import { collection, getDocs } from "firebase/firestore";
+import PostCard from "@/components/PostCard.vue";
 export default {
+  components: { PostCard },
   name: "appHome",
   created() {
     this.$store.commit("REMOVE_POSTS");
@@ -46,13 +47,5 @@ export default {
   display: grid;
   grid-template-columns: 1fr;
   gap: 2rem;
-
-  .card {
-    box-shadow: 0 0 1px 1px rgba($color: #000000, $alpha: 0.1);
-    padding: 1rem;
-    display: grid;
-    gap: 1rem;
-    cursor: pointer;
-  }
 }
 </style>
