@@ -4,7 +4,9 @@
       <BaseInput type="text" label="Title" v-model="title" />
       <BaseInput type="text" label="Tag" v-model="tag" />
     </div>
-    <input type="file" @change="addCover" />
+    <div class="add-cover">
+      <base-input type="file" label="Add Cover" @change="addCover" />
+    </div>
     <TipTap v-model="content" />
     <BaseButton @click="createPost">CREATE</BaseButton>
   </div>
@@ -59,6 +61,9 @@ export default {
 .info {
   display: flex;
   justify-content: space-between;
+  margin-bottom: 1rem;
+}
+.add-cover {
   margin-bottom: 1rem;
 }
 </style>

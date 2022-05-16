@@ -1,6 +1,6 @@
 <template>
   <div v-if="editor" class="editor-menu">
-    <input type="file" @change="addImage" />
+    <base-input type="file" label="Add Image" @change="addImage" />
     <button @click="addImage">Add Image</button>
     <button
       @click="editor.chain().focus().toggleBold().run()"
