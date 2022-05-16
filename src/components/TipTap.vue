@@ -1,5 +1,6 @@
 <template>
   <div v-if="editor" class="editor-menu">
+    <input type="file" @change="addImage" />
     <button @click="addImage">Add Image</button>
     <button
       @click="editor.chain().focus().toggleBold().run()"
@@ -113,6 +114,8 @@
 import { Editor, EditorContent } from "@tiptap/vue-3";
 import StarterKit from "@tiptap/starter-kit";
 import Image from "@tiptap/extension-image";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import UniqueID from "@/utils/UUID";
 export default {
   components: {
     EditorContent,
@@ -145,12 +148,18 @@ export default {
   },
 
   methods: {
-    addImage() {
-      const url = window.prompt("URL");
-
-      if (url) {
-        this.editor.chain().focus().setImage({ src: url }).run();
-      }
+    addImage(e) {
+      const file = e.target.files[0];
+      const storage = getStorage();
+      const storageRef = ref(storage, "images/" + UniqueID() + file.name);
+      uploadBytes(storageRef, file)
+        .then(() => {
+          return getDownloadURL(storageRef);
+        })
+        .then((url) => {
+          this.editor.chain().focus().setImage({ src: url }).run();
+        })
+        .catch((err) => alert(err));
     },
   },
 

@@ -36,7 +36,7 @@ export default {
   emits: ["modelValue:update"],
   computed: {
     UUID() {
-      return UniqueID().getID();
+      return UniqueID();
     },
   },
 };

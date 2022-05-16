@@ -7,6 +7,7 @@ import camelCase from "lodash/camelCase";
 import "nprogress/nprogress.css";
 
 import { getFirestore } from "firebase/firestore";
+import { getStorage } from "firebase/storage";
 
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
@@ -24,8 +25,9 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const firebaseapp = initializeApp(firebaseConfig);
-export const db = getFirestore(firebaseapp);
+const firebaseApp = initializeApp(firebaseConfig);
+export const db = getFirestore(firebaseApp);
+export const storage = getStorage(firebaseApp);
 
 const requireComponent = require.context(
   "./components",
