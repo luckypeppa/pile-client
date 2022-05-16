@@ -2,7 +2,7 @@
   <div class="container detail">
     <h1 class="title">{{ post.title }}</h1>
     <p class="tag">{{ post.tag }}</p>
-    <time v-if="post.createdAt">{{
+    <time v-if="post.createdAt" class="time">{{
       new Date(this.post.createdAt.seconds * 1000).toString()
     }}</time>
     <div class="content" ref="content"></div>
@@ -42,6 +42,11 @@ export default {
   .title,
   .tag {
     margin-bottom: 1rem;
+  }
+
+  .time {
+    display: block;
+    margin-bottom: 2rem;
   }
 }
 </style>

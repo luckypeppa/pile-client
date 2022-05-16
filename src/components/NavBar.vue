@@ -49,5 +49,6 @@ export default {
   padding: 0 3rem;
   width: 100vw;
   justify-content: flex-end;
+  box-shadow: 1px 0 1px 1px rgba($color: #000000, $alpha: 0.1);
 }
 </style>

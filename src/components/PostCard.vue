@@ -39,11 +39,22 @@ export default {
   box-shadow: 0 0 1px 1px rgba($color: #000000, $alpha: 0.1);
   padding: 1rem;
 
+  .left {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    gap: 1rem;
+  }
+
   .cover {
     width: 100%;
+    overflow: hidden;
+    box-shadow: 0 0 3px 1px rgba($color: #000000, $alpha: 0.1);
 
     img {
       width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
     }
   }
 }
