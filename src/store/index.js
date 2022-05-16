@@ -3,6 +3,7 @@ import { createStore } from "vuex";
 export default createStore({
   state: {
     user: null,
+    posts: [],
   },
   getters: {
     isLogin(state) {
@@ -15,6 +16,9 @@ export default createStore({
     },
     REMOVE_USER_DATA(state) {
       state.user = null;
+    },
+    SET_POST(state, post) {
+      state.posts.push(post);
     },
   },
   actions: {
