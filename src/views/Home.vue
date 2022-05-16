@@ -1,9 +1,9 @@
 <template>
   <div class="container">
     <div class="posts">
-      <div class="card">
-        <h2 class="title"></h2>
-        <p class="tag"></p>
+      <div class="card" v-for="(post, index) in posts" :key="index">
+        <h2 class="title">{{ post.title }}</h2>
+        <p class="tag">{{ post.tag }}</p>
       </div>
     </div>
   </div>
@@ -20,6 +20,11 @@ export default {
       console.log(`${doc.id} => ${doc.data()}`);
       this.$store.commit("SET_POST", doc.data());
     });
+  },
+  computed: {
+    posts() {
+      return this.$store.state.posts;
+    },
   },
 };
 </script>
