@@ -14,7 +14,6 @@ export default {};
 .user-container {
   width: 100vw;
   min-height: 100vh;
-  background: url("../../assets/authBackground.jpg");
   background-position: center center;
 
   .form-container {
