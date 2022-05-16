@@ -43,7 +43,7 @@ export default {
   display: flex;
   gap: 1rem;
   position: fixed;
-  background-color: transparent;
+  background-color: #f1e6d6;
   height: min(5rem, 10vh);
   align-items: center;
   padding: 0 3rem;
