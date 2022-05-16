@@ -35,5 +35,10 @@ export default {
 .detail {
   text-align: center;
   box-shadow: 0 0 1px 1px rgba($color: #000000, $alpha: 0.1);
+
+  .title,
+  .tag {
+    margin-bottom: 1rem;
+  }
 }
 </style>
