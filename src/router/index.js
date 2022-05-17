@@ -9,7 +9,6 @@ import PostEdit from "../views/post/PostEdit.vue";
 import Home from "../views/Home.vue";
 import NProgress from "nprogress";
 import { getAuth } from "firebase/auth";
-import store from "@/store";
 
 const routes = [
   {
@@ -46,15 +45,6 @@ const routes = [
     path: "/post/:id",
     name: "PostLayout",
     props: true,
-    beforeEnter: (to, from, next) => {
-      const getPost = store.getters.getPost;
-      getPost(to.params.id)
-        .then((post) => {
-          store.commit("SET_CURRENT_POST", post);
-          next();
-        })
-        .catch((err) => console.log(err));
-    },
     component: PostLayout,
     children: [
       {

@@ -51,7 +51,8 @@ export default {
       })
         .then(() => {
           console.log("updated");
-          this.$router.push({ name: "home" });
+          this.$store.commit("REMOVE_POST", this.post.id);
+          this.$router.push({ name: "PostDetail" });
         })
         .catch((err) => {
           console.error(err);
