@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div>
     <div class="info">
       <BaseInput type="text" label="Title" v-model="title" />
       <BaseInput type="text" label="Tag" v-model="tag" />

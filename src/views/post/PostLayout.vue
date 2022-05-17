@@ -1,8 +1,14 @@
 <template>
   <div class="container">
     <div class="links">
-      <router-link :to="{ name: 'PostDetail' }">Post Detail</router-link>
-      <router-link :to="{ name: 'PostEdit' }">Edit Post</router-link>
+      <router-link
+        :to="{ name: 'PostDetail' }"
+        v-if="$route.name !== 'PostDetail'"
+        >Post Detail</router-link
+      >
+      <router-link :to="{ name: 'PostEdit' }" v-if="$route.name !== 'PostEdit'"
+        >Edit Post</router-link
+      >
     </div>
     <router-view></router-view>
   </div>
@@ -36,7 +42,19 @@ export default {
       })
       .catch((err) => console.log(err));
   },
+  compued: {
+    isDetail() {
+      return this.$route.name !== "PostDetial";
+    },
+  },
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.links {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+</style>
