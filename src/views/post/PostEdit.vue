@@ -9,7 +9,10 @@
       <img :src="coverUrl" v-if="coverUrl" alt="" class="preview" />
     </div>
     <TipTap v-model="content" />
-    <BaseButton @click="updatePost">UPDATE</BaseButton>
+    <div class="buttons">
+      <BaseButton @click="updatePost">UPDATE</BaseButton>
+      <BaseButton @click="deletePost">DELETE</BaseButton>
+    </div>
   </div>
 </template>
 
@@ -54,7 +57,18 @@ export default {
           this.$router.push({ name: "PostDetail" });
         })
         .catch((err) => {
-          console.error(err);
+          this.$store.commit("SET_NOTIFICATION", err);
+        });
+    },
+    deletePost() {
+      firebaseApi
+        .deletePost(this.post.id)
+        .then(() => {
+          this.$store.commit("SET_NOTIFICATION", "The post has been deleted.");
+          this.$router.push({ name: "home" });
+        })
+        .catch((err) => {
+          this.$store.commit("SET_NOTIFICATION", err);
         });
     },
   },
@@ -65,7 +79,9 @@ export default {
       .then((url) => {
         this.coverUrl = url;
       })
-      .catch((err) => alert(err));
+      .catch((err) => {
+        this.$store.commit("SET_NOTIFICATION", err);
+      });
   },
 };
 </script>
@@ -90,5 +106,11 @@ export default {
     aspect-ratio: 16 / 9;
     object-fit: cover;
   }
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
 }
 </style>

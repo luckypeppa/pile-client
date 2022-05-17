@@ -42,7 +42,7 @@ export default {
           this.$router.push({ name: "home", params: { id: docRef.id } });
         })
         .catch((err) => {
-          console.error("Error adding document: ", err);
+          this.$store.commit("SET_NOTIFICATION", err);
         });
     },
     addCover(e) {
@@ -52,7 +52,9 @@ export default {
         .then((url) => {
           this.coverUrl = url;
         })
-        .catch((err) => alert(err));
+        .catch((err) => {
+          this.$store.commit("SET_NOTIFICATION", err);
+        });
     },
   },
 };

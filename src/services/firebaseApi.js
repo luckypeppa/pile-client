@@ -8,6 +8,7 @@ import {
   query,
   orderBy,
   getDocs,
+  deleteDoc,
 } from "firebase/firestore";
 import { db } from "./firebaseServices";
 import UniqueID from "@/utils/UUID";
@@ -46,9 +47,14 @@ const getPosts = () => {
   });
 };
 
+const deletePost = (postId) => {
+  return deleteDoc(doc(db, "posts", postId));
+};
+
 export default {
   uploadImage,
   createPost,
   updatePost,
   getPosts,
+  deletePost,
 };
