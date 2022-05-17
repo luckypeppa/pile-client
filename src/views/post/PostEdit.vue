@@ -14,8 +14,6 @@
 
 <script>
 import TipTap from "../../components/TipTap.vue";
-import { doc, updateDoc, serverTimestamp } from "firebase/firestore";
-import { db } from "@/services/firebaseServices";
 import firebaseApi from "@/services/firebaseApi";
 export default {
   data() {
@@ -42,13 +40,13 @@ export default {
   },
   methods: {
     updatePost() {
-      updateDoc(doc(db, "posts", this.post.id), {
-        title: this.title,
-        tag: this.tag,
-        content: this.content,
-        coverUrl: this.coverUrl,
-        createdAt: serverTimestamp(),
-      })
+      firebaseApi
+        .updatePost(this.post.id, {
+          title: this.title,
+          tag: this.tag,
+          content: this.content,
+          coverUrl: this.coverUrl,
+        })
         .then(() => {
           console.log("updated");
           this.$store.commit("REMOVE_POST", this.post.id);

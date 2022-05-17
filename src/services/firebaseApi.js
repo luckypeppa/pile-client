@@ -1,4 +1,12 @@
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import {
+  addDoc,
+  collection,
+  serverTimestamp,
+  updateDoc,
+  doc,
+} from "firebase/firestore";
+import { db } from "./firebaseServices";
 import UniqueID from "@/utils/UUID";
 
 const uploadImage = (file) => {
@@ -9,6 +17,22 @@ const uploadImage = (file) => {
   });
 };
 
+const createPost = (post) => {
+  return addDoc(collection(db, "posts"), {
+    ...post,
+    createdAt: serverTimestamp(),
+  });
+};
+
+const updatePost = (postId, post) => {
+  return updateDoc(doc(db, "posts", postId), {
+    ...post,
+    createdAt: serverTimestamp(),
+  });
+};
+
 export default {
   uploadImage,
+  createPost,
+  updatePost,
 };

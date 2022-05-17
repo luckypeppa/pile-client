@@ -14,8 +14,6 @@
 
 <script>
 import TipTap from "../../components/TipTap.vue";
-import { collection, addDoc, serverTimestamp } from "firebase/firestore";
-import { db } from "@/services/firebaseServices";
 import firebaseApi from "@/services/firebaseApi";
 export default {
   data() {
@@ -30,20 +28,20 @@ export default {
     TipTap,
   },
   methods: {
-    async createPost() {
-      try {
-        const docRef = await addDoc(collection(db, "posts"), {
+    createPost() {
+      firebaseApi
+        .createPost({
           title: this.title,
           tag: this.tag,
           content: this.content,
           coverUrl: this.coverUrl,
-          createdAt: serverTimestamp(),
+        })
+        .then((docRef) => {
+          this.$router.push({ name: "home", params: { id: docRef.id } });
+        })
+        .catch((err) => {
+          console.error("Error adding document: ", err);
         });
-        console.log("Document written with ID: ", docRef.id);
-        this.$router.push({ name: "home" });
-      } catch (e) {
-        console.error("Error adding document: ", e);
-      }
     },
     addCover(e) {
       const file = e.target.files[0];
