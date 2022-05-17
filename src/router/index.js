@@ -7,6 +7,8 @@ import PostDetail from "../views/post/PostDetail.vue";
 import PostLayout from "../views/post/PostLayout.vue";
 import PostEdit from "../views/post/PostEdit.vue";
 import Home from "../views/Home.vue";
+import NotFound from "../views/NotFound.vue";
+import NetworkError from "../views/NetworkError.vue";
 import NProgress from "nprogress";
 import { getAuth } from "firebase/auth";
 
@@ -61,6 +63,22 @@ const routes = [
         },
       },
     ],
+  },
+  {
+    path: "/404/:resource",
+    name: "404",
+    component: NotFound,
+    props: true,
+  },
+  {
+    path: "/:catchAll(.*)",
+    name: "NotFound",
+    component: NotFound,
+  },
+  {
+    path: "/network-error",
+    name: "NetworkError",
+    component: NetworkError,
   },
   // {
   //   path: "/about",

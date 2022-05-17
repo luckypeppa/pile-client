@@ -34,7 +34,13 @@ export default {
         store.commit("SET_CURRENT_POST", post);
         next();
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        if (err === 404) {
+          next({ name: "404", params: { resource: "post" } });
+        } else {
+          next({ name: "NetworkError" });
+        }
+      });
   },
   beforeRouteUpdate(to, from, next) {
     const getPost = store.getters.getPost;
@@ -43,7 +49,13 @@ export default {
         store.commit("SET_CURRENT_POST", post);
         next();
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        if (err === 404) {
+          next({ name: "404", params: { resource: "post" } });
+        } else {
+          next({ name: "NetworkError" });
+        }
+      });
   },
   computed: {
     ...mapGetters(["isLogin"]),

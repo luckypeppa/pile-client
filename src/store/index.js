@@ -23,7 +23,7 @@ export default createStore({
           if (docSnap.exists()) {
             return { id, ...docSnap.data() };
           } else {
-            throw "No such document";
+            throw 404;
           }
         });
       };
