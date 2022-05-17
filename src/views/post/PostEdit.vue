@@ -10,8 +10,8 @@
     </div>
     <TipTap v-model="content" />
     <div class="buttons">
-      <BaseButton @click="updatePost">UPDATE</BaseButton>
-      <BaseButton @click="deletePost">DELETE</BaseButton>
+      <BaseButton @click="updatePost" :isLoading="isLoading">UPDATE</BaseButton>
+      <BaseButton @click="deletePost" :isLoading="isLoading">DELETE</BaseButton>
     </div>
   </div>
 </template>
@@ -26,6 +26,7 @@ export default {
       tag: "",
       content: "",
       coverUrl: null,
+      isLoading: false,
     };
   },
   computed: {
@@ -44,6 +45,7 @@ export default {
   },
   methods: {
     updatePost() {
+      this.isLoading = true;
       firebaseApi
         .updatePost(this.post.id, {
           title: this.title,
@@ -52,11 +54,13 @@ export default {
           coverUrl: this.coverUrl,
         })
         .then(() => {
+          this.isLoading = false;
           this.$store.commit("SET_NOTIFICATION", "The post has been updated.");
           this.$store.commit("REMOVE_POST", this.post.id);
           this.$router.push({ name: "PostDetail" });
         })
         .catch((err) => {
+          this.isLoading = false;
           this.$store.commit("SET_NOTIFICATION", err);
         });
     },
@@ -64,22 +68,27 @@ export default {
       firebaseApi
         .deletePost(this.post.id)
         .then(() => {
+          this.isLoading = false;
           this.$store.commit("SET_NOTIFICATION", "The post has been deleted.");
           this.$router.push({ name: "home" });
         })
         .catch((err) => {
+          this.isLoading = false;
           this.$store.commit("SET_NOTIFICATION", err);
         });
     },
     addCover(e) {
+      this.isLoading = true;
       const file = e.target.files[0];
       firebaseApi
         .uploadImage(file)
         .then((url) => {
           this.coverUrl = url;
+          this.isLoading = false;
         })
         .catch((err) => {
           this.$store.commit("SET_NOTIFICATION", err);
+          this.isLoading = false;
         });
     },
   },

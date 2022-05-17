@@ -9,7 +9,7 @@
       <img :src="coverUrl" v-if="coverUrl" alt="" class="preview" />
     </div>
     <TipTap v-model="content" />
-    <BaseButton @click="createPost">CREATE</BaseButton>
+    <BaseButton @click="createPost" :isLoading="isLoading">CREATE</BaseButton>
   </div>
 </template>
 
@@ -23,6 +23,7 @@ export default {
       title: "",
       tag: "",
       coverUrl: null,
+      isLoading: false,
     };
   },
   components: {
@@ -30,6 +31,7 @@ export default {
   },
   methods: {
     createPost() {
+      this.isLoading = true;
       firebaseApi
         .createPost({
           title: this.title,
@@ -40,20 +42,25 @@ export default {
         .then((docRef) => {
           this.$store.commit("SET_NOTIFICATION", "The post has been created.");
           this.$router.push({ name: "home", params: { id: docRef.id } });
+          this.isLoading = false;
         })
         .catch((err) => {
           this.$store.commit("SET_NOTIFICATION", err);
+          this.isLoading = false;
         });
     },
     addCover(e) {
+      this.isLoading = true;
       const file = e.target.files[0];
       firebaseApi
         .uploadImage(file)
         .then((url) => {
           this.coverUrl = url;
+          this.isLoading = false;
         })
         .catch((err) => {
           this.$store.commit("SET_NOTIFICATION", err);
+          this.isLoading = false;
         });
     },
   },
