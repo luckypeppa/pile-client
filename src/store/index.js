@@ -36,8 +36,8 @@ export default createStore({
     REMOVE_USER_DATA(state) {
       state.user = null;
     },
-    SET_POST(state, post) {
-      state.posts.push(post);
+    SET_POSTS(state, posts) {
+      state.posts = posts;
     },
     REMOVE_POSTS(state) {
       state.posts = [];

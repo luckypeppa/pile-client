@@ -7,23 +7,10 @@
 </template>
 
 <script>
-import { db } from "@/services/firebaseServices";
-import { collection, getDocs } from "firebase/firestore";
 import PostCard from "@/components/PostCard.vue";
 export default {
   components: { PostCard },
   name: "appHome",
-  created() {
-    this.$store.commit("REMOVE_POSTS");
-    getDocs(collection(db, "posts"))
-      .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          const post = { id: doc.id, ...doc.data() };
-          this.$store.commit("SET_POST", post);
-        });
-      })
-      .catch(() => this.$router.push({ name: "NetworkError" }));
-  },
   computed: {
     posts() {
       return this.$store.state.posts;

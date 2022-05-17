@@ -11,11 +11,23 @@ import NotFound from "../views/NotFound.vue";
 import NetworkError from "../views/NetworkError.vue";
 import NProgress from "nprogress";
 import { getAuth } from "firebase/auth";
+import store from "@/store";
+import firebaseApi from "@/services/firebaseApi";
 
 const routes = [
   {
     path: "/",
     name: "home",
+    beforeEnter: (to, from, next) => {
+      store.commit("REMOVE_POSTS");
+      return firebaseApi
+        .getPosts()
+        .then((posts) => {
+          store.commit("SET_POSTS", posts);
+          next();
+        })
+        .catch(() => next({ name: "NetworkError" }));
+    },
     component: Home,
   },
   {

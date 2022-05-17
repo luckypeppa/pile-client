@@ -8,7 +8,7 @@
       }}</time>
     </div>
     <div class="cover">
-      <img :src="post.coverUrl" alt="" />
+      <img :src="post.coverUrl" alt="" v-if="post.coverUrl" />
     </div>
   </div>
 </template>

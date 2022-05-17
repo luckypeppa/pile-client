@@ -5,6 +5,9 @@ import {
   serverTimestamp,
   updateDoc,
   doc,
+  query,
+  orderBy,
+  getDocs,
 } from "firebase/firestore";
 import { db } from "./firebaseServices";
 import UniqueID from "@/utils/UUID";
@@ -31,8 +34,21 @@ const updatePost = (postId, post) => {
   });
 };
 
+const getPosts = () => {
+  const q = query(collection(db, "posts"), orderBy("createdAt", "desc"));
+  return getDocs(q).then((querySnapshot) => {
+    const posts = [];
+    querySnapshot.forEach((doc) => {
+      const post = { id: doc.id, ...doc.data() };
+      posts.push(post);
+    });
+    return posts;
+  });
+};
+
 export default {
   uploadImage,
   createPost,
   updatePost,
+  getPosts,
 };
