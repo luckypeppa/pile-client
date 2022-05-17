@@ -6,6 +6,7 @@
     </div>
     <div class="add-cover">
       <base-input type="file" label="Add Cover" @change="addCover" />
+      <img :src="coverUrl" v-if="coverUrl" alt="" class="preview" />
     </div>
     <TipTap v-model="content" />
     <BaseButton @click="updatePost">UPDATE</BaseButton>
@@ -77,5 +78,17 @@ export default {
 }
 .add-cover {
   margin-bottom: 1rem;
+  display: grid;
+  grid-template-columns: 40% 1fr;
+
+  @media screen and (max-width: 767px) {
+    grid-template-columns: 1fr;
+  }
+
+  .preview {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+  }
 }
 </style>
