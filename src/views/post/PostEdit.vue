@@ -49,7 +49,7 @@ export default {
           coverUrl: this.coverUrl,
         })
         .then(() => {
-          console.log("updated");
+          this.$store.commit("SET_NOTIFICATION", "The post has been updated.");
           this.$store.commit("REMOVE_POST", this.post.id);
           this.$router.push({ name: "PostDetail" });
         })

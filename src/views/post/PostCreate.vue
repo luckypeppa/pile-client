@@ -38,6 +38,7 @@ export default {
           coverUrl: this.coverUrl,
         })
         .then((docRef) => {
+          this.$store.commit("SET_NOTIFICATION", "The post has been created.");
           this.$router.push({ name: "home", params: { id: docRef.id } });
         })
         .catch((err) => {

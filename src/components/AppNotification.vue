@@ -1,0 +1,52 @@
+<template>
+  <transition name="slide">
+    <div class="notification" v-if="notification" appear>
+      <div class="message">{{ notification }}</div>
+    </div>
+  </transition>
+</template>
+
+<script>
+import { mapState } from "vuex";
+export default {
+  computed: {
+    ...mapState(["notification"]),
+  },
+  watch: {
+    notification(newValue) {
+      if (newValue) {
+        setTimeout(() => {
+          this.$store.commit("EMPTY_NOTIFICATION");
+        }, 3000);
+      }
+    },
+  },
+};
+</script>
+
+<style lang="scss" scoped>
+.notification {
+  position: absolute;
+  left: 1rem;
+  top: 5.5rem;
+  z-index: 99;
+  background-color: #fdc885;
+  border-radius: 1rem;
+  box-shadow: 0 0 3px 1px rgba($color: #000000, $alpha: 0.1);
+  padding: 0.7rem 2rem;
+  font-size: 1.3rem;
+}
+
+.slide-enter-from {
+  transform: translateX(-200%);
+}
+
+.slide-enter-active,
+.slide-leave-active {
+  transition: all 0.5s ease-out;
+}
+
+.slide-leave-to {
+  transform: translateX(-200%);
+}
+</style>

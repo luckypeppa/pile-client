@@ -7,8 +7,8 @@
         new Date(this.post.createdAt.seconds * 1000).toString()
       }}</time>
     </div>
-    <div class="cover">
-      <img :src="post.coverUrl" alt="" v-if="post.coverUrl" />
+    <div class="cover" v-if="post.coverUrl">
+      <img :src="post.coverUrl" alt="" />
     </div>
   </div>
 </template>
@@ -52,6 +52,7 @@ export default {
 
   .cover {
     width: 100%;
+    max-height: fit-content;
     overflow: hidden;
     box-shadow: 0 0 3px 1px rgba($color: #000000, $alpha: 0.1);
 
@@ -59,6 +60,7 @@ export default {
       width: 100%;
       aspect-ratio: 16 / 9;
       object-fit: cover;
+      display: block;
     }
   }
 }

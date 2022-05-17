@@ -1,10 +1,12 @@
 <template>
+  <app-notification />
   <NavBar></NavBar>
   <router-view></router-view>
 </template>
 
 <script>
 import NavBar from "@/components/NavBar.vue";
+import AppNotification from "@/components/AppNotification.vue";
 import {
   getAuth,
   setPersistence,
@@ -14,6 +16,7 @@ import {
 export default {
   components: {
     NavBar,
+    AppNotification,
   },
   created() {
     const auth = getAuth();

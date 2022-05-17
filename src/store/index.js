@@ -6,6 +6,7 @@ export default createStore({
     user: null,
     posts: [],
     currentPost: {},
+    notification: "",
   },
   getters: {
     isLogin(state) {
@@ -47,6 +48,12 @@ export default createStore({
     },
     REMOVE_POST(state, postId) {
       state.posts = state.posts.filter((post) => post.id !== postId);
+    },
+    EMPTY_NOTIFICATION(state) {
+      state.notification = "";
+    },
+    SET_NOTIFICATION(state, notication) {
+      state.notification = notication;
     },
   },
   actions: {
