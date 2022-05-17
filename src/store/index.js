@@ -5,6 +5,7 @@ export default createStore({
   state: {
     user: null,
     posts: [],
+    currentPost: {},
   },
   getters: {
     isLogin(state) {
@@ -40,6 +41,12 @@ export default createStore({
     },
     REMOVE_POSTS(state) {
       state.posts = [];
+    },
+    SET_CURRENT_POST(state, post) {
+      state.currentPost = post;
+    },
+    REMOVE_POST(state, postId) {
+      state.posts = state.posts.filter((post) => post.id !== postId);
     },
   },
   actions: {

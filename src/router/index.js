@@ -4,9 +4,12 @@ import AuthLogin from "../views/auth/AuthLogin.vue";
 import AuthLayout from "../views/auth/AuthLayout.vue";
 import PostCreate from "../views/post/PostCreate.vue";
 import PostDetail from "../views/post/PostDetail.vue";
+import PostLayout from "../views/post/PostLayout.vue";
+import PostEdit from "../views/post/PostEdit.vue";
 import Home from "../views/Home.vue";
 import NProgress from "nprogress";
 import { getAuth } from "firebase/auth";
+import store from "@/store";
 
 const routes = [
   {
@@ -41,11 +44,31 @@ const routes = [
   },
   {
     path: "/post/:id",
-    name: "PostDetail",
+    name: "PostLayout",
     props: true,
-    component: PostDetail,
+    beforeEnter: (to, from, next) => {
+      const getPost = store.getters.getPost;
+      getPost(to.params.id)
+        .then((post) => {
+          store.commit("SET_CURRENT_POST", post);
+          next();
+        })
+        .catch((err) => console.log(err));
+    },
+    component: PostLayout,
+    children: [
+      {
+        path: "",
+        name: "PostDetail",
+        component: PostDetail,
+      },
+      {
+        path: "edit",
+        name: "PostEdit",
+        component: PostEdit,
+      },
+    ],
   },
-
   // {
   //   path: "/about",
   //   name: "about",

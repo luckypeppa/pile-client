@@ -1,5 +1,5 @@
 <template>
-  <div class="container detail">
+  <div class="detail">
     <h1 class="title">{{ post.title }}</h1>
     <p class="tag">{{ post.tag }}</p>
     <time v-if="post.createdAt" class="time">{{
@@ -11,25 +11,16 @@
 
 <script>
 export default {
-  data() {
-    return {
-      post: {},
-    };
+  beforeRouteUpdate() {
+    location.reload();
   },
-  props: {
-    id: {
-      type: String,
-      required: true,
+  computed: {
+    post() {
+      return this.$store.state.currentPost;
     },
   },
-  created() {
-    const getPost = this.$store.getters.getPost;
-    getPost(this.id)
-      .then((post) => {
-        this.post = post;
-        this.$refs.content.innerHTML = this.post.content;
-      })
-      .catch((err) => console.log(err));
+  mounted() {
+    this.$refs.content.innerHTML = this.post.content;
   },
 };
 </script>
