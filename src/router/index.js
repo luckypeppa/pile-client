@@ -56,6 +56,9 @@ const routes = [
         path: "edit",
         name: "PostEdit",
         component: PostEdit,
+        meta: {
+          requireAuth: true,
+        },
       },
     ],
   },

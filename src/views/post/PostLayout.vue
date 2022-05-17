@@ -6,7 +6,9 @@
         v-if="$route.name !== 'PostDetail'"
         >Post Detail</router-link
       >
-      <router-link :to="{ name: 'PostEdit' }" v-if="$route.name !== 'PostEdit'"
+      <router-link
+        :to="{ name: 'PostEdit' }"
+        v-if="$route.name !== 'PostEdit' && isLogin"
         >Edit Post</router-link
       >
     </div>
@@ -16,6 +18,7 @@
 
 <script>
 import store from "@/store";
+import { mapGetters } from "vuex";
 
 export default {
   props: {
@@ -43,9 +46,7 @@ export default {
       .catch((err) => console.log(err));
   },
   compued: {
-    isDetail() {
-      return this.$route.name !== "PostDetial";
-    },
+    ...mapGetters(["isLogin"]),
   },
 };
 </script>
