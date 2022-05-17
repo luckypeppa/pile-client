@@ -71,17 +71,17 @@ export default {
           this.$store.commit("SET_NOTIFICATION", err);
         });
     },
-  },
-  addCover(e) {
-    const file = e.target.files[0];
-    firebaseApi
-      .uploadImage(file)
-      .then((url) => {
-        this.coverUrl = url;
-      })
-      .catch((err) => {
-        this.$store.commit("SET_NOTIFICATION", err);
-      });
+    addCover(e) {
+      const file = e.target.files[0];
+      firebaseApi
+        .uploadImage(file)
+        .then((url) => {
+          this.coverUrl = url;
+        })
+        .catch((err) => {
+          this.$store.commit("SET_NOTIFICATION", err);
+        });
+    },
   },
 };
 </script>
