@@ -42,16 +42,20 @@ export default {
   border: 0;
 }
 
+:root {
+  --main-bg-color: lightyellow;
+}
+
 body {
   overflow-x: hidden;
-  background-color: #f1e6d6;
+  background-color: var(--main-bg-color);
   a {
     text-decoration: none;
     font-weight: 600;
   }
 
   .container {
-    width: min(60rem, 100%);
+    width: min(80rem, 100%);
     margin: auto;
     padding-top: 7rem;
     padding-inline: min(3rem, 10vw);
