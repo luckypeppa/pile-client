@@ -199,6 +199,7 @@ export default {
   min-height: 10rem;
   border: 1px solid black;
   border-radius: 0.5rem;
+  padding: 2rem;
 
   > * + * {
     margin-top: 0.75em;
