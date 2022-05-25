@@ -1,6 +1,9 @@
 <template>
   <div class="detail-container">
-    <img :src="post.coverUrl" alt="" class="cover" />
+    <div class="cover-container">
+      <div class="tag">{{ post.tag }}</div>
+      <img :src="post.coverUrl" alt="" class="cover" />
+    </div>
     <div class="detail">
       <h1 class="title">{{ post.title }}</h1>
       <p class="tag">{{ post.tag }}</p>
@@ -30,11 +33,23 @@ export default {
 
 <style lang="scss" scoped>
 .detail-container {
-  .cover {
-    width: 100%;
-    aspect-ratio: 16 / 9;
-    object-fit: cover;
-    box-shadow: 0 3px 3px 3px rgba($color: #000000, $alpha: 0.1);
+  .cover-container {
+    position: relative;
+    .tag {
+      position: absolute;
+      left: 2rem;
+      top: 2rem;
+      background-color: lightblue;
+      padding: 1rem 2rem;
+      border-radius: 2rem;
+      box-shadow: 0 0 3px 3px rgba($color: #000000, $alpha: 0.1);
+    }
+    .cover {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      box-shadow: 0 3px 3px 3px rgba($color: #000000, $alpha: 0.1);
+    }
   }
   .detail {
     box-shadow: 0 0 3px 1px rgba($color: #000000, $alpha: 0.1);
