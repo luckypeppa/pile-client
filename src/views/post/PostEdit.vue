@@ -65,6 +65,7 @@ export default {
         });
     },
     deletePost() {
+      this.isLoading = true;
       firebaseApi
         .deletePost(this.post.id)
         .then(() => {
