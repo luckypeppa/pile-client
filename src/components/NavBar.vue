@@ -1,5 +1,6 @@
 <template>
   <nav class="navbar">
+    <h1>PiLE</h1>
     <router-link :to="{ name: 'home' }">Home</router-link>
     <router-link :to="{ name: 'PostCreate' }" v-if="isLogin"
       >Create</router-link
@@ -50,5 +51,10 @@ export default {
   width: 100vw;
   justify-content: flex-end;
   box-shadow: 1px 0 1px 1px rgba($color: #000000, $alpha: 0.1);
+
+  h1 {
+    font-size: 3rem;
+    flex: 1;
+  }
 }
 </style>
