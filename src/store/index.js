@@ -15,7 +15,6 @@ export default createStore({
     getPost(state) {
       return (id) => {
         const post = state.posts.filter((post) => post.id === id);
-        console.log(post);
         if (post.length > 1) {
           return post[0];
         }

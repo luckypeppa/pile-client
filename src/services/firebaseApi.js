@@ -9,6 +9,7 @@ import {
   orderBy,
   getDocs,
   deleteDoc,
+  where,
 } from "firebase/firestore";
 import { db } from "./firebaseServices";
 import UniqueID from "@/utils/UUID";
@@ -35,8 +36,17 @@ const updatePost = (postId, post) => {
   });
 };
 
-const getPosts = () => {
-  const q = query(collection(db, "posts"), orderBy("createdAt", "desc"));
+const getPosts = (tag) => {
+  let q;
+  if (tag) {
+    q = query(
+      collection(db, "posts"),
+      orderBy("createdAt", "desc"),
+      where("tag", "==", tag)
+    );
+  } else {
+    q = query(collection(db, "posts"), orderBy("createdAt", "desc"));
+  }
   return getDocs(q).then((querySnapshot) => {
     const posts = [];
     querySnapshot.forEach((doc) => {

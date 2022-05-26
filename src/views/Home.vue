@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    <app-tags></app-tags>
     <div class="posts">
       <post-card v-for="(post, index) in posts" :key="index" :post="post" />
     </div>
@@ -8,8 +9,9 @@
 
 <script>
 import PostCard from "@/components/PostCard.vue";
+import AppTags from "@/components/AppTags.vue";
 export default {
-  components: { PostCard },
+  components: { PostCard, AppTags },
   name: "appHome",
   computed: {
     posts() {
