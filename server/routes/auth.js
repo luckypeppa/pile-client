@@ -15,6 +15,7 @@ router.post("/register", (req, res) => {
 
   User.findOne({ username: username })
     .then((existedUser) => {
+      // if username already existed return
       if (existedUser) return res.sendStatus(400);
       return bcrypt.hash(password, 10);
     })
@@ -83,11 +84,14 @@ router.post("/login", (req, res) => {
 router.post("/token", (req, res) => {
   const refreshToken = req.body.refreshToken;
 
-  if (!refreshToken) return res.sendStatus(401);
+  if (!refreshToken) return res.sendStatus(400);
 
   RefreshToken.findOne({ token: refreshToken })
     .then((token) => {
-      if (!token) return res.sendStatus(403);
+      if (!token) return res.sendStatus(401);
+      if (Date.now() - new Date(token.createdAt) > 30000) {
+        return res.sendStatus(401);
+      }
       jwt.verify(
         refreshToken,
         process.env.REFRESH_TOKEN_SECRET,
