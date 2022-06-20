@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const morgan = require("morgan");
 
 const blogRouter = require("./routes/blog");
+const authRouter = require("./routes/auth");
 const app = express();
 
 const dbUrl =
@@ -17,5 +18,6 @@ mongoose
 
 app.use(morgan("dev"));
 app.use(express.static("public"));
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 app.use("/blogs", blogRouter);
+app.use("/auth", authRouter);
