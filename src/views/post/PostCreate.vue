@@ -3,6 +3,7 @@
     <div class="info">
       <BaseInput type="text" label="Title" v-model="title" />
       <BaseInput type="text" label="Tag" v-model="tag" />
+      <BaseInput type="text" label="Snippet" v-model="snippet" />
     </div>
     <div class="add-cover">
       <base-input type="file" label="Add Cover" @change="addCover" />
@@ -45,27 +46,21 @@ export default {
         });
     }
 
-    return { ...toRefs(post), isLoading, createPost };
+    function addCover(e) {
+      const img = e.target.files[0];
+      postApi
+        .uploadCover(img)
+        .then((res) => {
+          post.coverUrl = process.env.VUE_APP_BASE_URL + res.data.imageUrl;
+        })
+        .catch((err) => console.log("err:", err));
+    }
+
+    return { ...toRefs(post), isLoading, createPost, addCover };
   },
   components: {
     TipTap,
   },
-  // methods: {
-  //   addCover(e) {
-  //     this.isLoading = true;
-  //     const file = e.target.files[0];
-  //     firebaseApi
-  //       .uploadImage(file)
-  //       .then((url) => {
-  //         this.coverUrl = url;
-  //         this.isLoading = false;
-  //       })
-  //       .catch((err) => {
-  //         this.$store.commit("SET_NOTIFICATION", err);
-  //         this.isLoading = false;
-  //       });
-  //   },
-  // },
 };
 </script>
 

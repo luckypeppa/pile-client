@@ -114,7 +114,7 @@
 import { Editor, EditorContent } from "@tiptap/vue-3";
 import StarterKit from "@tiptap/starter-kit";
 import Image from "@tiptap/extension-image";
-import firebaseApi from "@/services/firebaseApi";
+import postApi from "@/services/post";
 export default {
   components: {
     EditorContent,
@@ -148,13 +148,14 @@ export default {
 
   methods: {
     addImage(e) {
-      const file = e.target.files[0];
-      firebaseApi
-        .uploadImage(file)
-        .then((url) => {
+      const img = e.target.files[0];
+      postApi
+        .uploadCover(img)
+        .then((res) => {
+          const url = process.env.VUE_APP_BASE_URL + res.data.imageUrl;
           this.editor.chain().focus().setImage({ src: url }).run();
         })
-        .catch((err) => alert(err));
+        .catch((err) => console.log("err:", err));
     },
   },
 

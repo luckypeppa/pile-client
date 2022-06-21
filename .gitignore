@@ -5,6 +5,7 @@ firebase.json
 .firebaserc
 .firebase/
 requests.rest
+server/public/
 
 # local env files
 .env

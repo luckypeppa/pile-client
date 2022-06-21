@@ -1,11 +1,12 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
-const { getAllBlogs, createBlog } = require("../controller/blog");
+const { getAllBlogs, createBlog, saveImage } = require("../controller/blog");
 
 const router = express.Router();
 
-router.get("/", authenticateToken, getAllBlogs);
+router.get("/", getAllBlogs);
 router.post("/", authenticateToken, createBlog);
+router.post("/image", authenticateToken, saveImage);
 
 function authenticateToken(req, res, next) {
   const authHeader = req.headers["authorization"];

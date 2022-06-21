@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const tagSchema = require("./tag");
+const { tagSchema } = require("./tag");
 const Schema = mongoose.Schema;
 
 const blogSchema = new Schema(
@@ -10,7 +10,7 @@ const blogSchema = new Schema(
     },
     snippet: {
       type: String,
-      // required: true,
+      required: true,
     },
     body: {
       type: String,
@@ -18,9 +18,9 @@ const blogSchema = new Schema(
     },
     coverUrl: {
       type: String,
-      // required: true,
+      required: true,
     },
-    // tag: tagSchema,
+    tag: tagSchema,
   },
   { timestamps: true }
 );

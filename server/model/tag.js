@@ -8,5 +8,8 @@ const tagSchema = new Schema({
   },
 });
 
-// const Tag = mongoose.model("Tag", tagSchema);
-module.exports = tagSchema;
+const Tag = mongoose.model("Tag", tagSchema);
+module.exports = {
+  Tag,
+  tagSchema,
+};

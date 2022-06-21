@@ -32,6 +32,7 @@ const app = createApp({
           config,
           response: { status, data },
         } = error;
+        console.log(config);
 
         if (status === 401) {
           this.$store.dispatch("logout");
@@ -40,22 +41,17 @@ const app = createApp({
           // get new access token
           if (!isRefreshing) {
             isRefreshing = true;
-            authApi
+            return authApi
               .getNewAccessToken(store.state.user.refreshToken)
               .then((accessToken) => {
                 axios.defaults.headers.common[
                   "Authorization"
                 ] = `Bearer ${accessToken}`;
                 isRefreshing = false;
-                return axios({
-                  ...config,
-                  headers: {
-                    Authorization: `Bearer ${accessToken}`,
-                  },
-                });
-              })
-              .catch((err) => {
-                return Promise.reject(err);
+                console.log("first");
+                config.headers.Authorization = `Bearer ${accessToken}`;
+                console.log(config);
+                return axios(config);
               });
           }
         }
