@@ -68,34 +68,29 @@ export default {
           this.$store.commit("SET_NOTIFICATION", err);
         });
     },
-    // deletePost() {
-    //   this.isLoading = true;
-    //   firebaseApi
-    //     .deletePost(this.post.id)
-    //     .then(() => {
-    //       this.isLoading = false;
-    //       this.$store.commit("SET_NOTIFICATION", "The post has been deleted.");
-    //       this.$router.push({ name: "home" });
-    //     })
-    //     .catch((err) => {
-    //       this.isLoading = false;
-    //       this.$store.commit("SET_NOTIFICATION", err);
-    //     });
-    // },
-    // addCover(e) {
-    //   this.isLoading = true;
-    //   const file = e.target.files[0];
-    //   firebaseApi
-    //     .uploadImage(file)
-    //     .then((url) => {
-    //       this.coverUrl = url;
-    //       this.isLoading = false;
-    //     })
-    //     .catch((err) => {
-    //       this.$store.commit("SET_NOTIFICATION", err);
-    //       this.isLoading = false;
-    //     });
-    // },
+    deletePost() {
+      this.isLoading = true;
+      postApi
+        .deletePost(this.post._id)
+        .then(() => {
+          this.isLoading = false;
+          this.$store.commit("SET_NOTIFICATION", "The post has been deleted.");
+          this.$router.push({ name: "home" });
+        })
+        .catch((err) => {
+          this.isLoading = false;
+          this.$store.commit("SET_NOTIFICATION", err);
+        });
+    },
+    addCover(e) {
+      const img = e.target.files[0];
+      postApi
+        .uploadCover(img)
+        .then((res) => {
+          this.coverUrl = process.env.VUE_APP_BASE_URL + res.data.imageUrl;
+        })
+        .catch((err) => console.log("err:", err));
+    },
   },
 };
 </script>

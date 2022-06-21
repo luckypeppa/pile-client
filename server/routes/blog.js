@@ -6,6 +6,7 @@ const {
   saveImage,
   getBlog,
   updateBlog,
+  deleteBlog,
 } = require("../controller/blog");
 
 const router = express.Router();
@@ -13,6 +14,7 @@ const router = express.Router();
 router.post("/image", authenticateToken, saveImage);
 router.get("/:id", getBlog);
 router.post("/:id", authenticateToken, updateBlog);
+router.delete("/:id", authenticateToken, deleteBlog);
 router.get("/", getAllBlogs);
 router.post("/", authenticateToken, createBlog);
 

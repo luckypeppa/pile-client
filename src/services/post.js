@@ -22,10 +22,15 @@ function updatePost(postId, post) {
   return axios.post(process.env.VUE_APP_POST_URL + "/" + postId, post);
 }
 
+function deletePost(postId) {
+  return axios.delete(process.env.VUE_APP_POST_URL + "/" + postId);
+}
+
 export default {
   getAll,
   create,
   uploadCover,
   getPost,
   updatePost,
+  deletePost,
 };

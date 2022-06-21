@@ -56,10 +56,19 @@ const updateBlog = (req, res) => {
     .catch(() => res.sendStatus(404));
 };
 
+const deleteBlog = (req, res) => {
+  const id = req.params.id;
+
+  Blog.deleteOne({ _id: id })
+    .then(() => res.sendStatus(201))
+    .catch(() => res.sendStatus(404));
+};
+
 module.exports = {
   getAllBlogs,
   createBlog,
   saveImage,
   getBlog,
   updateBlog,
+  deleteBlog,
 };
