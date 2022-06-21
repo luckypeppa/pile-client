@@ -2,6 +2,12 @@
   <form @submit="submit" class="user-form">
     <h2>REGISTER</h2>
     <BaseInput
+      v-model="username"
+      label="Username"
+      type="text"
+      :error="errors.username"
+    />
+    <BaseInput
       v-model="email"
       label="Email"
       type="email"
@@ -21,11 +27,14 @@
 <script>
 import { useForm, useField } from "vee-validate";
 import { object, string } from "yup";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import api from "../../services/api";
+import { useRouter } from "vue-router";
 
 export default {
   name: "userRegister",
   setup() {
+    const router = useRouter();
+
     const validationSchema = object({
       email: string().email().required(),
       username: string().max(12).required(),
@@ -46,13 +55,25 @@ export default {
     const { value: password } = useField("password");
 
     const submit = handleSubmit((values) => {
-      const auth = getAuth();
-      createUserWithEmailAndPassword(auth, values.email, values.password)
-        .then((userCredential) => {
-          console.log(userCredential);
+      api
+        .post(
+          process.env.VUE_APP_USER_REGISTER_URL,
+          {
+            username: values.username,
+            email: values.email,
+            password: values.password,
+          },
+          {
+            headers: { "Content-Type": "application/json" },
+          }
+        )
+        .then((res) => {
+          if (res.status === 201) {
+            router.push({ name: "login" });
+          }
         })
         .catch((err) => {
-          alert(err.message);
+          console.log("There is an Error:", err);
         });
     });
     return {

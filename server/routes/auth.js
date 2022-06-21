@@ -10,8 +10,8 @@ const router = express.Router();
 
 // register user
 router.post("/register", (req, res) => {
-  const { username, password } = req.body;
-  if (!username || !password) return res.sendStatus(400);
+  const { username, email, password } = req.body;
+  if (!username || !email || !password) return res.sendStatus(400);
 
   User.findOne({ username: username })
     .then((existedUser) => {
@@ -22,6 +22,7 @@ router.post("/register", (req, res) => {
     .then((hashedPassword) => {
       const user = new User({
         username,
+        email,
         hashedPassword,
       });
       return user.save();

@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const morgan = require("morgan");
+const cors = require("cors");
 
 const blogRouter = require("./routes/blog");
 const authRouter = require("./routes/auth");
@@ -17,6 +18,7 @@ mongoose
   .catch((err) => console.log(err));
 
 app.use(morgan("dev"));
+app.use(cors());
 app.use(express.static("public"));
 app.use(express.json());
 app.use("/blogs", blogRouter);

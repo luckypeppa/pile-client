@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
-// import AuthRegister from "../views/auth/AuthRegister.vue";
+import AuthRegister from "../views/auth/AuthRegister.vue";
 import AuthLogin from "../views/auth/AuthLogin.vue";
 import AuthLayout from "../views/auth/AuthLayout.vue";
 import PostCreate from "../views/post/PostCreate.vue";
@@ -35,11 +35,11 @@ const routes = [
     name: "auth",
     component: AuthLayout,
     children: [
-      // {
-      //   path: "register",
-      //   name: "register",
-      //   component: AuthRegister,
-      // },
+      {
+        path: "register",
+        name: "register",
+        component: AuthRegister,
+      },
       {
         path: "login",
         name: "login",
