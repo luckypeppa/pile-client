@@ -7,27 +7,10 @@
 <script>
 import NavBar from "@/components/NavBar.vue";
 import AppNotification from "@/components/AppNotification.vue";
-import {
-  getAuth,
-  setPersistence,
-  browserLocalPersistence,
-  onAuthStateChanged,
-} from "firebase/auth";
 export default {
   components: {
     NavBar,
     AppNotification,
-  },
-  created() {
-    const auth = getAuth();
-    setPersistence(auth, browserLocalPersistence);
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        this.$store.dispatch("login", user);
-      } else {
-        this.$store.dispatch("logout");
-      }
-    });
   },
 };
 </script>

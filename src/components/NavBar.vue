@@ -5,9 +5,9 @@
     <router-link :to="{ name: 'PostCreate' }" v-if="isLogin"
       >Create</router-link
     >
-    <!-- <router-link :to="{ name: 'register' }" v-if="!isLogin"
+    <router-link :to="{ name: 'register' }" v-if="!isLogin"
       >Register</router-link
-    > -->
+    >
     <router-link :to="{ name: 'login' }" v-if="!isLogin">Login</router-link>
     <BaseButton @click="logout" v-if="isLogin">Logout</BaseButton>
   </nav>

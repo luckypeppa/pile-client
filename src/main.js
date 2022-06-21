@@ -25,8 +25,16 @@ const app = createApp({
     axios.interceptors.response.use(
       (response) => response,
       (error) => {
+        console.log(error);
         if (error.response.status === 401) {
           this.$store.dispatch("logout");
+        }
+
+        if (
+          error.response.status === 403 &&
+          error.response.data === "Access Token has expired."
+        ) {
+          // get new access token
         }
         return Promise.reject(error);
       }

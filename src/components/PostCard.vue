@@ -3,8 +3,9 @@
     <div class="left">
       <h2 class="title">{{ post.title }}</h2>
       <p class="tag">{{ post.tag }}</p>
+      <p class="snippet">{{ post.snippet }}</p>
       <time v-if="post.createdAt">{{
-        new Date(this.post.createdAt.seconds * 1000).toString()
+        new Date(this.post.createdAt).toString()
       }}</time>
     </div>
     <div class="cover" v-if="post.coverUrl">

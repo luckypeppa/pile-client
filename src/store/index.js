@@ -39,7 +39,7 @@ export default createStore({
     },
     REMOVE_USER_DATA() {
       localStorage.removeItem("user");
-      // location.reload();
+      location.reload();
     },
     SET_POSTS(state, posts) {
       state.posts = posts;

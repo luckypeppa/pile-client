@@ -10,9 +10,8 @@ import Home from "../views/Home.vue";
 import NotFound from "../views/NotFound.vue";
 import NetworkError from "../views/NetworkError.vue";
 import NProgress from "nprogress";
-import { getAuth } from "firebase/auth";
 import store from "@/store";
-import firebaseApi from "@/services/firebaseApi";
+import postApi from "@/services/post";
 
 const routes = [
   {
@@ -20,13 +19,16 @@ const routes = [
     name: "home",
     beforeEnter: (to, from, next) => {
       store.commit("REMOVE_POSTS");
-      return firebaseApi
-        .getPosts()
+      postApi
+        .getAll()
         .then((posts) => {
           store.commit("SET_POSTS", posts);
           next();
         })
-        .catch(() => next({ name: "NetworkError" }));
+        .catch((err) => {
+          console.log(err);
+          next({ name: "NetworkError" });
+        });
     },
     component: Home,
   },
@@ -118,7 +120,7 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   NProgress.start();
 
-  const isLogin = getAuth().currentUser;
+  const isLogin = store.getters.isLogin;
   if (to.meta.requireAuth && !isLogin) {
     next({ name: "home" });
   } else {
