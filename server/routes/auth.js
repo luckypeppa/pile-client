@@ -95,16 +95,17 @@ router.post("/token", (req, res) => {
   RefreshToken.findOne({ token: refreshToken })
     .then((token) => {
       if (!token) return res.sendStatus(401);
-      if (Date.now() - new Date(token.createdAt) > 30000) {
+      if (Date.now() - new Date(token.createdAt) > 604800000) {
         return res.sendStatus(401);
       }
       jwt.verify(
         refreshToken,
         process.env.REFRESH_TOKEN_SECRET,
-        (err, user) => {
+        (err, payload) => {
           console.log("err:", err);
+          const user = { payload: payload.username, email: payload.email };
           if (err) return res.sendStatus(403);
-          const accessToken = generateRefreshToken(user);
+          const accessToken = generateAccessToken(user);
           res.json({ accessToken });
         }
       );
@@ -116,9 +117,7 @@ router.post("/token", (req, res) => {
 });
 
 function generateAccessToken(user) {
-  return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {
-    expiresIn: "15s",
-  });
+  return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: 10 });
 }
 
 function generateRefreshToken(user) {

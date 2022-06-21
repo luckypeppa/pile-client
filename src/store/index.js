@@ -35,7 +35,9 @@ export default createStore({
     SET_USER_DATA(state, userData) {
       localStorage.setItem("user", JSON.stringify(userData));
       state.user = userData;
-      axios.defaults.headers.common["Authorization"] = userData.accessToken;
+      axios.defaults.headers.common[
+        "Authorization"
+      ] = `Bearer ${userData.accessToken}`;
     },
     REMOVE_USER_DATA() {
       localStorage.removeItem("user");

@@ -8,15 +8,19 @@ const blogSchema = new Schema(
       type: String,
       required: true,
     },
+    snippet: {
+      type: String,
+      // required: true,
+    },
     body: {
       type: String,
       required: true,
     },
     coverUrl: {
       type: String,
-      required: true,
+      // required: true,
     },
-    tag: tagSchema,
+    // tag: tagSchema,
   },
   { timestamps: true }
 );

@@ -38,7 +38,6 @@ export default {
 
     function login() {
       isLoading.value = true;
-      console.log(process.env.VUE_APP_USER_LOGIN_URL);
 
       axios
         .post(process.env.VUE_APP_USER_LOGIN_URL, {
