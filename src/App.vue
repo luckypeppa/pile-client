@@ -26,7 +26,7 @@ export default {
 }
 
 :root {
-  --main-bg-color: lightyellow;
+  --main-bg-color: ;
 }
 
 body {
@@ -35,6 +35,15 @@ body {
   a {
     text-decoration: none;
     font-weight: 600;
+    color: black;
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    border-radius: 1rem;
+
+    &:hover {
+      color: lightskyblue;
+      background-color: darkblue;
+    }
   }
 
   .container {

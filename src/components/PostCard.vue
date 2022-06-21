@@ -37,8 +37,13 @@ export default {
   gap: 1rem;
   width: 100%;
   cursor: pointer;
-  box-shadow: 0 0 1px 1px rgba($color: #000000, $alpha: 0.1);
+  border-top: 1px solid black;
   padding: 1rem;
+  align-items: center;
+
+  &:nth-child(even) .left {
+    order: 2;
+  }
 
   @media screen and (max-width: 767px) {
     grid-template-columns: 1fr;
@@ -49,17 +54,24 @@ export default {
     flex-direction: column;
     justify-content: start;
     gap: 1rem;
+
+    & > * {
+      font-weight: 800;
+    }
+
+    .title {
+      font-size: clamp(1.7rem, 5vw, 3rem);
+    }
   }
 
   .cover {
     width: 100%;
-    max-height: fit-content;
     overflow: hidden;
     box-shadow: 0 0 3px 1px rgba($color: #000000, $alpha: 0.1);
 
     img {
       width: 100%;
-      aspect-ratio: 16 / 9;
+      aspect-ratio: 2 / 1;
       object-fit: cover;
       display: block;
     }
