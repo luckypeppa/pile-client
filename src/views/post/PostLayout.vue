@@ -30,8 +30,8 @@ export default {
   beforeRouteEnter(to, from, next) {
     const getPost = store.getters.getPost;
     getPost(to.params.id)
-      .then((post) => {
-        store.commit("SET_CURRENT_POST", post);
+      .then((res) => {
+        store.commit("SET_CURRENT_POST", res.data.blog);
         next();
       })
       .catch((err) => {
@@ -45,8 +45,8 @@ export default {
   beforeRouteUpdate(to, from, next) {
     const getPost = store.getters.getPost;
     getPost(to.params.id)
-      .then((post) => {
-        store.commit("SET_CURRENT_POST", post);
+      .then((res) => {
+        store.commit("SET_CURRENT_POST", res.data.blog);
         next();
       })
       .catch((err) => {

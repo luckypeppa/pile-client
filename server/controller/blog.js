@@ -36,8 +36,19 @@ const saveImage = (req, res) => {
   }
 };
 
+const getBlog = (req, res) => {
+  console.log(req.params.id);
+  Blog.findById(req.params.id)
+    .exec()
+    .then((result) => {
+      if (!result) return res.status(404);
+      res.send({ blog: result });
+    });
+};
+
 module.exports = {
   getAllBlogs,
   createBlog,
   saveImage,
+  getBlog,
 };

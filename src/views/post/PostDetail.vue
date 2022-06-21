@@ -1,16 +1,16 @@
 <template>
   <div class="detail-container">
     <div class="cover-container">
-      <div class="tag">{{ post.tag }}</div>
+      <div class="tag">{{ post.tag.name }}</div>
       <img :src="post.coverUrl" alt="" class="cover" />
     </div>
     <div class="detail">
       <h1 class="title">{{ post.title }}</h1>
-      <p class="tag">{{ post.tag }}</p>
+      <p class="tag">{{ post.tag.name }}</p>
       <time v-if="post.createdAt" class="time">{{
-        new Date(this.post.createdAt.seconds * 1000).toString()
+        new Date(post.createdAt).toString()
       }}</time>
-      <div class="content" ref="content"></div>
+      <div class="content" ref="body"></div>
     </div>
   </div>
 </template>
@@ -26,7 +26,7 @@ export default {
     },
   },
   mounted() {
-    this.$refs.content.innerHTML = this.post.content;
+    this.$refs.body.innerHTML = this.post.body;
   },
 };
 </script>

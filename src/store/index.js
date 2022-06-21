@@ -1,7 +1,6 @@
 import { createStore } from "vuex";
-import { doc, getDoc } from "firebase/firestore";
-import { db } from "@/services/firebaseServices";
 import axios from "axios";
+import postApi from "@/services/post";
 
 export default createStore({
   state: {
@@ -16,18 +15,12 @@ export default createStore({
     },
     getPost(state) {
       return (id) => {
-        const post = state.posts.filter((post) => post.id === id);
+        const post = state.posts.filter((post) => post._id === id);
         if (post.length > 1) {
           return post[0];
         }
 
-        return getDoc(doc(db, "posts", id)).then((docSnap) => {
-          if (docSnap.exists()) {
-            return { id, ...docSnap.data() };
-          } else {
-            throw 404;
-          }
-        });
+        return postApi.getPost(id);
       };
     },
   },

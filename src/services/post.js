@@ -14,8 +14,13 @@ function uploadCover(img) {
   });
 }
 
+function getPost(postId) {
+  return axios.get(process.env.VUE_APP_POST_URL + "/" + postId);
+}
+
 export default {
   getAll,
   create,
   uploadCover,
+  getPost,
 };

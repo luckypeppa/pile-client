@@ -1,10 +1,11 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
-const { getAllBlogs, createBlog, saveImage } = require("../controller/blog");
+const { getAllBlogs, createBlog, saveImage, getBlog } = require("../controller/blog");
 
 const router = express.Router();
 
 router.get("/", getAllBlogs);
+router.get("/:id", getBlog);
 router.post("/", authenticateToken, createBlog);
 router.post("/image", authenticateToken, saveImage);
 
