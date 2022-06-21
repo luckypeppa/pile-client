@@ -47,7 +47,7 @@ body {
   }
 
   .container {
-    width: min(80rem, 100%);
+    width: min(60rem, 100%);
     margin: auto;
     padding-top: 7rem;
     padding-inline: min(3rem, 10vw);

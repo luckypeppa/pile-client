@@ -48,14 +48,13 @@ export default {
   display: flex;
   flex-direction: column;
   gap: 0.3rem;
+  border-bottom: 1px solid black;
 
   label {
     text-align: left;
   }
 
   .input-container {
-    border: 1px solid gray;
-    border-radius: 0.5rem;
     padding: 0.3rem 1rem 0.5rem 1rem;
 
     input {
@@ -63,6 +62,7 @@ export default {
       outline: none;
       border: none;
       background-color: transparent;
+      font-size: 1.5rem;
     }
   }
 
