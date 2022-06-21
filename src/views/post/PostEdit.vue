@@ -3,12 +3,13 @@
     <div class="info">
       <BaseInput type="text" label="Title" v-model="title" />
       <BaseInput type="text" label="Tag" v-model="tag" />
+      <BaseInput type="text" label="Snippet" v-model="snippet" />
     </div>
     <div class="add-cover">
       <base-input type="file" label="Add Cover" @change="addCover" />
       <img :src="coverUrl" v-if="coverUrl" alt="" class="preview" />
     </div>
-    <TipTap v-model="content" />
+    <TipTap v-model="body" />
     <div class="buttons">
       <BaseButton @click="updatePost" :isLoading="isLoading">UPDATE</BaseButton>
       <BaseButton @click="deletePost" :isLoading="isLoading">DELETE</BaseButton>
@@ -18,14 +19,15 @@
 
 <script>
 import TipTap from "../../components/TipTap.vue";
-import firebaseApi from "@/services/firebaseApi";
+import postApi from "@/services/post";
 export default {
   data() {
     return {
       title: "",
       tag: "",
-      content: "",
+      body: "",
       coverUrl: null,
+      snippet: "",
       isLoading: false,
     };
   },
@@ -36,9 +38,10 @@ export default {
   },
   mounted() {
     this.title = this.post.title;
-    this.tag = this.post.tag;
-    this.content = this.post.content;
+    this.tag = this.post.tag.name;
+    this.body = this.post.body;
     this.coverUrl = this.post.coverUrl;
+    this.snippet = this.post.snippet;
   },
   components: {
     TipTap,
@@ -46,11 +49,12 @@ export default {
   methods: {
     updatePost() {
       this.isLoading = true;
-      firebaseApi
-        .updatePost(this.post.id, {
+      postApi
+        .updatePost(this.post._id, {
           title: this.title,
           tag: this.tag,
-          content: this.content,
+          snippet: this.snippet,
+          body: this.body,
           coverUrl: this.coverUrl,
         })
         .then(() => {
@@ -64,34 +68,34 @@ export default {
           this.$store.commit("SET_NOTIFICATION", err);
         });
     },
-    deletePost() {
-      this.isLoading = true;
-      firebaseApi
-        .deletePost(this.post.id)
-        .then(() => {
-          this.isLoading = false;
-          this.$store.commit("SET_NOTIFICATION", "The post has been deleted.");
-          this.$router.push({ name: "home" });
-        })
-        .catch((err) => {
-          this.isLoading = false;
-          this.$store.commit("SET_NOTIFICATION", err);
-        });
-    },
-    addCover(e) {
-      this.isLoading = true;
-      const file = e.target.files[0];
-      firebaseApi
-        .uploadImage(file)
-        .then((url) => {
-          this.coverUrl = url;
-          this.isLoading = false;
-        })
-        .catch((err) => {
-          this.$store.commit("SET_NOTIFICATION", err);
-          this.isLoading = false;
-        });
-    },
+    // deletePost() {
+    //   this.isLoading = true;
+    //   firebaseApi
+    //     .deletePost(this.post.id)
+    //     .then(() => {
+    //       this.isLoading = false;
+    //       this.$store.commit("SET_NOTIFICATION", "The post has been deleted.");
+    //       this.$router.push({ name: "home" });
+    //     })
+    //     .catch((err) => {
+    //       this.isLoading = false;
+    //       this.$store.commit("SET_NOTIFICATION", err);
+    //     });
+    // },
+    // addCover(e) {
+    //   this.isLoading = true;
+    //   const file = e.target.files[0];
+    //   firebaseApi
+    //     .uploadImage(file)
+    //     .then((url) => {
+    //       this.coverUrl = url;
+    //       this.isLoading = false;
+    //     })
+    //     .catch((err) => {
+    //       this.$store.commit("SET_NOTIFICATION", err);
+    //       this.isLoading = false;
+    //     });
+    // },
   },
 };
 </script>

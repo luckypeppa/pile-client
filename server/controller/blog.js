@@ -37,7 +37,6 @@ const saveImage = (req, res) => {
 };
 
 const getBlog = (req, res) => {
-  console.log(req.params.id);
   Blog.findById(req.params.id)
     .exec()
     .then((result) => {
@@ -46,9 +45,21 @@ const getBlog = (req, res) => {
     });
 };
 
+const updateBlog = (req, res) => {
+  const newBlog = req.body;
+  const tag = new Tag({ name: req.body.tag });
+
+  tag.save();
+
+  Blog.replaceOne({ _id: req.params.id }, { ...newBlog, tag })
+    .then(() => res.sendStatus(201))
+    .catch(() => res.sendStatus(404));
+};
+
 module.exports = {
   getAllBlogs,
   createBlog,
   saveImage,
   getBlog,
+  updateBlog,
 };

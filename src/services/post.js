@@ -18,9 +18,14 @@ function getPost(postId) {
   return axios.get(process.env.VUE_APP_POST_URL + "/" + postId);
 }
 
+function updatePost(postId, post) {
+  return axios.post(process.env.VUE_APP_POST_URL + "/" + postId, post);
+}
+
 export default {
   getAll,
   create,
   uploadCover,
   getPost,
+  updatePost,
 };
