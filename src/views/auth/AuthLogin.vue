@@ -1,7 +1,12 @@
 <template>
   <form @submit.prevent="login" class="user-form">
     <h2>LOGIN</h2>
-    <BaseInput v-model="email" label="Email" type="email" required="true" />
+    <BaseInput
+      v-model="username"
+      label="Username"
+      type="text"
+      required="true"
+    />
     <BaseInput
       v-model="password"
       label="Password"
@@ -10,39 +15,48 @@
     />
     <BaseButton type="submit" :style="{ width: '100%' }">Login</BaseButton>
     <p class="error" v-if="error">{{ error }}</p>
-    <!-- <router-link :to="{ name: 'register' }">Register</router-link> -->
+    <router-link :to="{ name: 'register' }">Register</router-link>
   </form>
 </template>
 
 <script>
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import BaseButton from "@/components/BaseButton.vue";
+import { ref } from "vue";
+import axios from "axios";
+import { useStore } from "vuex";
+import { useRouter } from "vue-router";
 
 export default {
   name: "userLogin",
-  data() {
-    return {
-      email: "",
-      password: "",
-      error: "",
-      isLoading: false,
-    };
-  },
-  methods: {
-    login() {
-      const auth = getAuth();
-      signInWithEmailAndPassword(auth, this.email, this.password)
-        .then((userCredential) => {
-          this.$store.dispatch("login", userCredential.user);
-          this.$router.push({ name: "home" });
-          this.isLoading = false;
+  setup() {
+    const store = useStore();
+    const router = useRouter();
+
+    const username = ref("");
+    const password = ref("");
+    const error = ref("");
+    const isLoading = ref(false);
+
+    function login() {
+      isLoading.value = true;
+      console.log(process.env.VUE_APP_USER_LOGIN_URL);
+
+      axios
+        .post(process.env.VUE_APP_USER_LOGIN_URL, {
+          username: username.value,
+          password: password.value,
         })
-        .catch((error) => {
-          this.error = error.message;
+        .then((res) => {
+          store.dispatch("login", res.data);
+          router.push({ name: "home" });
+          isLoading.value = false;
+        })
+        .catch((err) => {
+          error.value = err.message;
         });
-    },
+    }
+
+    return { username, password, error, isLoading, login };
   },
-  components: { BaseButton },
 };
 </script>
 

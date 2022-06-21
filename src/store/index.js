@@ -1,6 +1,8 @@
 import { createStore } from "vuex";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "@/services/firebaseServices";
+import axios from "axios";
+
 export default createStore({
   state: {
     user: null,
@@ -31,7 +33,9 @@ export default createStore({
   },
   mutations: {
     SET_USER_DATA(state, userData) {
+      localStorage.setItem("user", JSON.stringify(userData));
       state.user = userData;
+      axios.defaults.headers.common["Authorization"] = userData.accessToken;
     },
     REMOVE_USER_DATA(state) {
       state.user = null;
