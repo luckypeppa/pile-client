@@ -1,7 +1,7 @@
 <template>
   <transition name="slide">
     <div class="notification" v-if="notification" appear>
-      <div class="message">{{ notification }}</div>
+      <div class="message" :style="{ color }">{{ notification.message }}</div>
     </div>
   </transition>
 </template>
@@ -11,6 +11,18 @@ import { mapState } from "vuex";
 export default {
   computed: {
     ...mapState(["notification"]),
+    color() {
+      let color = "green";
+      switch (this.notification.type) {
+        case "error":
+          color = "red";
+          break;
+        case "info":
+          color = "lightblue";
+          break;
+      }
+      return color;
+    },
   },
   watch: {
     notification(newValue) {
@@ -26,11 +38,12 @@ export default {
 
 <style lang="scss" scoped>
 .notification {
-  position: absolute;
+  position: fixed;
   left: 1rem;
   top: 5.5rem;
   z-index: 99;
-  background-color: #fdc885;
+  background-color: white;
+  border: 1px solid black;
   border-radius: 1rem;
   box-shadow: 0 0 3px 1px rgba($color: #000000, $alpha: 0.1);
   padding: 0.7rem 2rem;

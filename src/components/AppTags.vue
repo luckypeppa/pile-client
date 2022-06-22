@@ -17,7 +17,10 @@ export default {
           this.$store.commit("SET_POSTS", posts);
         })
         .catch((err) => {
-          this.$store.commit("SET_NOTIFICATION", err);
+          this.$store.commit("SET_NOTIFICATION", {
+            message: err,
+            type: "error",
+          });
         });
     },
   },

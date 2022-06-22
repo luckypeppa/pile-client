@@ -2,10 +2,20 @@
   <div class="container">
     <div class="create-container">
       <div class="info">
-        <BaseInput type="text" label="Title" v-model="title" />
-        <BaseInput type="text" label="Tag" v-model="tag" />
-        <BaseInput type="text" label="Snippet" v-model="snippet" />
-        <base-input type="file" label="Add Cover" @change="addCover" />
+        <BaseInput type="text" label="Title" v-model="title" :required="true" />
+        <BaseInput type="text" label="Tag" v-model="tag" :required="true" />
+        <BaseInput
+          type="text"
+          label="Snippet"
+          v-model="snippet"
+          :required="true"
+        />
+        <base-input
+          type="file"
+          label="Add Cover"
+          @change="addCover"
+          :required="true"
+        />
       </div>
       <img :src="coverUrl" v-if="coverUrl" alt="" class="preview" />
       <TipTap v-model="body" />
@@ -33,15 +43,27 @@ export default {
     const isLoading = ref(false);
 
     function createPost() {
+      if (!post.title || !post.snippet || !post.coverUrl || !post.tag) {
+        store.commit("SET_NOTIFICATION", {
+          message: "Title, snippet, tag and cover are required.",
+          type: "error",
+        });
+        return;
+      }
       isLoading.value = true;
       postApi
         .create(post)
         .then(() => {
-          store.commit("SET_NOTIFICATION", "The post has been created.");
+          store.commit("SET_NOTIFICATION", {
+            message: "The post has been created.",
+          });
           isLoading.value = false;
         })
         .catch((err) => {
-          store.commit("SET_NOTIFICATION", err.response.data);
+          store.commit("SET_NOTIFICATION", {
+            message: err.response.data,
+            type: "error",
+          });
           isLoading.value = false;
         });
     }

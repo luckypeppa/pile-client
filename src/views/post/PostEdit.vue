@@ -57,13 +57,18 @@ export default {
         })
         .then(() => {
           this.isLoading = false;
-          this.$store.commit("SET_NOTIFICATION", "The post has been updated.");
+          this.$store.commit("SET_NOTIFICATION", {
+            message: "The post has been updated.",
+          });
           this.$store.commit("REMOVE_POST", this.post.id);
           this.$router.push({ name: "PostDetail" });
         })
         .catch((err) => {
           this.isLoading = false;
-          this.$store.commit("SET_NOTIFICATION", err);
+          this.$store.commit("SET_NOTIFICATION", {
+            message: err,
+            type: "error",
+          });
         });
     },
     deletePost() {
@@ -72,12 +77,17 @@ export default {
         .deletePost(this.post._id)
         .then(() => {
           this.isLoading = false;
-          this.$store.commit("SET_NOTIFICATION", "The post has been deleted.");
+          this.$store.commit("SET_NOTIFICATION", {
+            message: "The post has been deleted.",
+          });
           this.$router.push({ name: "home" });
         })
         .catch((err) => {
           this.isLoading = false;
-          this.$store.commit("SET_NOTIFICATION", err);
+          this.$store.commit("SET_NOTIFICATION", {
+            message: err,
+            type: "error",
+          });
         });
     },
     addCover(e) {
