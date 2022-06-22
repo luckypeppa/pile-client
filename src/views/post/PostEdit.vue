@@ -1,24 +1,24 @@
 <template>
   <div class="create-container">
-    <div class="info">
-      <BaseInput type="text" label="Title" v-model="title" :required="true" />
-      <BaseInput type="text" label="Tag" v-model="tag" :required="true" />
-      <BaseInput
-        type="text"
-        label="Snippet"
-        v-model="snippet"
-        :required="true"
-      />
-      <base-input
-        type="file"
-        label="Add Cover"
-        @change="addCover"
-        :required="true"
-      />
-    </div>
-    <img :src="coverUrl" v-if="coverUrl" alt="" class="preview" />
-    <TipTap v-model="body" />
-    <div class="buttons">
+    <div class="create-container">
+      <div class="info">
+        <BaseInput type="text" label="Title" v-model="title" :required="true" />
+        <BaseInput
+          type="text"
+          label="Snippet"
+          v-model="snippet"
+          :required="true"
+        />
+        <base-input
+          type="file"
+          label="Add Cover"
+          @change="addCover"
+          :required="true"
+        />
+      </div>
+      <img :src="coverUrl" v-if="coverUrl" alt="" class="preview" />
+      <tag-input :tags="tags" @add:tag="addTag"></tag-input>
+      <TipTap v-model="body" />
       <BaseButton @click="updatePost(post._id)" :isLoading="isLoading"
         >UPDATE</BaseButton
       >
@@ -31,6 +31,7 @@
 
 <script>
 import TipTap from "../../components/TipTap.vue";
+import TagInput from "@/components/TagInput";
 import usePost from "@/utils/usePost";
 import { computed, onMounted } from "vue";
 import { useStore } from "vuex";
@@ -41,12 +42,13 @@ export default {
       title,
       snippet,
       body,
-      tag,
+      tags,
       coverUrl,
       isLoading,
       updatePost,
       deletePost,
       addCover,
+      addTag,
     } = usePost();
 
     // get the post to be edited from store
@@ -56,7 +58,7 @@ export default {
     // show post content
     onMounted(() => {
       title.value = post.value.title;
-      tag.value = post.value.tag.name;
+      tags.value = post.value.tags.map((tag) => tag.name);
       body.value = post.value.body;
       coverUrl.value = post.value.coverUrl;
       snippet.value = post.value.snippet;
@@ -66,17 +68,19 @@ export default {
       title,
       snippet,
       body,
-      tag,
+      tags,
       coverUrl,
       isLoading,
       updatePost,
       deletePost,
       addCover,
       post,
+      addTag,
     };
   },
   components: {
     TipTap,
+    TagInput,
   },
 };
 </script>

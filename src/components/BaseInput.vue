@@ -7,6 +7,7 @@
         :value="modelValue"
         :placeholder="label"
         @input="$emit('update:modelValue', $event.target.value)"
+        @change="$emit('update:input', $event)"
         :id="UUID"
         :aria-describedby="error ? `${UUID}-error` : null"
         :aria-invalid="error ? true : null"
@@ -33,7 +34,7 @@ export default {
       default: "",
     },
   },
-  emits: ["modelValue:update"],
+  emits: ["update:modelValue", "add:tag"],
   computed: {
     UUID() {
       return UniqueID();

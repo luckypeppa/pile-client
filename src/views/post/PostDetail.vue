@@ -4,7 +4,9 @@
       <time v-if="post.createdAt" class="time">{{
         new Date(post.createdAt).toString()
       }}</time>
-      <tag-button>{{ post.tag.name }}</tag-button>
+      <tag-button v-for="(tag, index) in post.tags" :key="index">{{
+        tag.name
+      }}</tag-button>
     </div>
     <div class="cover-container">
       <img :src="post.coverUrl" alt="" class="cover" />

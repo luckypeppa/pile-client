@@ -2,7 +2,7 @@
   <div class="post-card" @click="seeDetail(post._id)">
     <div class="left">
       <h2 class="title">{{ post.title }}</h2>
-      <p class="tag">{{ post.tag.name }}</p>
+      <!-- <p class="tag">{{ post.tag.name }}</p> -->
       <p class="snippet">{{ post.snippet }}</p>
       <time v-if="post.createdAt">{{
         new Date(this.post.createdAt).toString()

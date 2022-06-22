@@ -1,41 +1,53 @@
 const Blog = require("../model/blog");
-const { Tag } = require("../model/tag");
+const Tag = require("../model/tag");
 
 const createBlog = async (req, res) => {
-  console.log(req.body);
+  const { title, snippet, body, coverUrl, tags } = req.body;
 
-  const result = await Tag.findOne({ name: req.body.tag }).exec();
-  // check if the tag has existed
-  const tag = result || new Tag({ name: req.body.tag });
-  // create a new tag and blog
+  //create a new blog
   const blog = new Blog({
-    ...req.body,
-    tag,
+    title,
+    snippet,
+    body,
+    coverUrl,
   });
 
-  // save tag
-  try {
-    await tag.save();
-  } catch (err) {
-    console.log(err);
-    return res.status(500).send({ message: "Failed to save tag to database." });
+  for (const t of tags) {
+    try {
+      //check if the tag exists
+      const result = await Tag.findOne({ name: t }).exec();
+      let tag;
+      if (result) {
+        tag = result;
+      } else {
+        tag = new Tag({ name: t });
+      }
+
+      // set blog's tags
+      blog.tags.push(tag);
+
+      // set tag's blogs
+      tag.blogs.push(blog);
+      await tag.save();
+    } catch (err) {
+      return res.status(500).send({ message: err });
+    }
   }
 
-  // save the blog
+  // save blog
   try {
     await blog.save();
   } catch (err) {
-    console.log(err);
-    return res
-      .status(500)
-      .send({ message: "Failed to save blog to database." });
+    return res.status(500).send({ message: err });
   }
-  return res.sendStatus(201);
+
+  res.sendStatus(201);
 };
 
 const getAllBlogs = (req, res) => {
   Blog.find()
     .sort("createdAt")
+    .populate("tags", "name")
     .then((result) => res.send(result))
     .catch((err) => console.log(err));
 };
@@ -45,8 +57,8 @@ const saveImage = (req, res) => {
     console.log(req.files);
     const ext = req.files.file.name.split(".")[1];
     const randomName = Math.random().toString().slice(2, 14);
-    const imageUrl = `/images/${randomName}.${ext}`;
-    req.files.file.mv("public" + imageUrl, (err) => {
+    const imageUrl = `images/${randomName}.${ext}`;
+    req.files.file.mv("public/" + imageUrl, (err) => {
       if (err) res.sendStatus(500);
       res.send({ imageUrl });
     });
@@ -55,7 +67,7 @@ const saveImage = (req, res) => {
 
 const getBlog = (req, res) => {
   Blog.findById(req.params.id)
-    .exec()
+    .populate("tags", "name")
     .then((result) => {
       if (!result) return res.status(404);
       res.send({ blog: result });
@@ -63,29 +75,60 @@ const getBlog = (req, res) => {
 };
 
 const updateBlog = async (req, res) => {
-  const newBlog = req.body;
+  const id = req.params.id;
+  const { title, snippet, body, coverUrl, tags } = req.body;
 
-  //check if the tag exists
-  const result = await Tag.findOne({ name: req.body.tag }).exec();
-  const tag = result || new Tag({ name: req.body.tag });
-  // save tag
+  //create a new blog
+  let blog;
   try {
-    await tag.save();
+    blog = await Blog.findByIdAndUpdate(
+      { _id: id },
+      {
+        title,
+        snippet,
+        body,
+        coverUrl,
+      },
+      {
+        new: true,
+        overwrite: true,
+      }
+    ).exec();
+    if (!blog) return res.status(404).send({ message: "Not Found" });
   } catch (err) {
-    console.log(err);
-    return res.status(500).send({ message: "Failed to save tag to database." });
+    return res.status(500).send({ message: err });
   }
 
-  //replace blog
-  const blogResult = await Blog.replaceOne(
-    { _id: req.params.id },
-    { ...newBlog, tag }
-  );
-  if (blogResult.matchedCount === 0) {
-    return res.status(404).send({ message: "The post doesn't exist." });
+  for (const t of tags) {
+    try {
+      //check if the tag exists
+      const result = await Tag.findOne({ name: t });
+      let tag;
+      if (result) {
+        tag = result;
+      } else {
+        tag = new Tag({ name: t });
+      }
+
+      // set blog's tags
+      blog.tags.push(tag);
+
+      // set tag's blogs
+      tag.blogs.push(blog);
+      await tag.save();
+    } catch (err) {
+      return res.status(500).send({ message: err });
+    }
   }
 
-  return res.sendStatus(201);
+  // save blog
+  try {
+    await blog.save();
+  } catch (err) {
+    return res.status(500).send({ message: err });
+  }
+
+  res.sendStatus(201);
 };
 
 const deleteBlog = (req, res) => {

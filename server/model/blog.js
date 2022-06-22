@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const { tagSchema } = require("./tag");
 const Schema = mongoose.Schema;
 
 const blogSchema = new Schema(
@@ -20,7 +19,7 @@ const blogSchema = new Schema(
       type: String,
       required: true,
     },
-    tag: tagSchema,
+    tags: [{ type: Schema.Types.ObjectId, ref: "Tag" }],
   },
   { timestamps: true }
 );

@@ -11,7 +11,7 @@ export default function () {
     title: "",
     snippet: "",
     body: "",
-    tag: "",
+    tags: [],
     coverUrl: null,
   });
   const isLoading = ref(false);
@@ -43,7 +43,7 @@ export default function () {
     postApi
       .updatePost(postId, {
         title: post.title,
-        tag: post.tag,
+        tags: post.tags,
         snippet: post.snippet,
         body: post.body,
         coverUrl: post.coverUrl,
@@ -95,9 +95,13 @@ export default function () {
       .catch((err) => console.log("err:", err));
   }
 
+  function addTag(value) {
+    post.tags.push(value);
+  }
+
   // check whether or not title, snippet, cover and tag is empty
   function checkEmpty() {
-    if (!post.title || !post.snippet || !post.coverUrl || !post.tag) {
+    if (!post.title || !post.snippet || !post.coverUrl || !post.tags) {
       store.commit("SET_NOTIFICATION", {
         message: "Title, snippet, tag and cover are required.",
         type: "error",
@@ -111,8 +115,9 @@ export default function () {
     ...toRefs(post),
     isLoading,
     createPost,
-    addCover,
     updatePost,
     deletePost,
+    addCover,
+    addTag,
   };
 }

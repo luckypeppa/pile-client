@@ -3,7 +3,6 @@
     <div class="create-container">
       <div class="info">
         <BaseInput type="text" label="Title" v-model="title" :required="true" />
-        <BaseInput type="text" label="Tag" v-model="tag" :required="true" />
         <BaseInput
           type="text"
           label="Snippet"
@@ -18,6 +17,7 @@
         />
       </div>
       <img :src="coverUrl" v-if="coverUrl" alt="" class="preview" />
+      <tag-input :tags="tags" @add:tag="addTag"></tag-input>
       <TipTap v-model="body" />
       <BaseButton @click="createPost" :isLoading="isLoading">CREATE</BaseButton>
     </div>
@@ -25,7 +25,8 @@
 </template>
 
 <script>
-import TipTap from "../../components/TipTap.vue";
+import TipTap from "@/components/TipTap.vue";
+import TagInput from "@/components/TagInput";
 import usePost from "@/utils/usePost";
 export default {
   setup() {
@@ -33,26 +34,29 @@ export default {
       title,
       snippet,
       body,
-      tag,
+      tags,
       coverUrl,
       isLoading,
       createPost,
       addCover,
+      addTag,
     } = usePost();
 
     return {
       title,
       snippet,
       body,
-      tag,
+      tags,
       coverUrl,
       isLoading,
       createPost,
       addCover,
+      addTag,
     };
   },
   components: {
     TipTap,
+    TagInput,
   },
 };
 </script>
