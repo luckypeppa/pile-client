@@ -17,88 +17,52 @@
 
 <script>
 import TipTap from "../../components/TipTap.vue";
-import postApi from "@/services/post";
+import usePost from "@/utils/usePost";
+import { computed, onMounted } from "vue";
+import { useStore } from "vuex";
+
 export default {
-  data() {
+  setup() {
+    const {
+      title,
+      snippet,
+      body,
+      tag,
+      coverUrl,
+      isLoading,
+      updatePost,
+      deletePost,
+      addCover,
+    } = usePost();
+
+    // get the post to be edited from store
+    const store = useStore();
+    const post = computed(() => store.state.currentPost);
+
+    // show post content
+    onMounted(() => {
+      title.value = post.value.title;
+      tag.value = post.value.tag.name;
+      body.value = post.value.body;
+      coverUrl.value = post.value.coverUrl;
+      snippet.value = post.value.snippet;
+    });
+
     return {
-      title: "",
-      tag: "",
-      body: "",
-      coverUrl: null,
-      snippet: "",
-      isLoading: false,
+      title,
+      snippet,
+      body,
+      tag,
+      coverUrl,
+      isLoading,
+      updatePost,
+      deletePost,
+      addCover,
+      post,
     };
-  },
-  computed: {
-    post() {
-      return this.$store.state.currentPost;
-    },
-  },
-  mounted() {
-    this.title = this.post.title;
-    this.tag = this.post.tag.name;
-    this.body = this.post.body;
-    this.coverUrl = this.post.coverUrl;
-    this.snippet = this.post.snippet;
   },
   components: {
     TipTap,
-  },
-  methods: {
-    updatePost() {
-      this.isLoading = true;
-      postApi
-        .updatePost(this.post._id, {
-          title: this.title,
-          tag: this.tag,
-          snippet: this.snippet,
-          body: this.body,
-          coverUrl: this.coverUrl,
-        })
-        .then(() => {
-          this.isLoading = false;
-          this.$store.commit("SET_NOTIFICATION", {
-            message: "The post has been updated.",
-          });
-          this.$store.commit("REMOVE_POST", this.post.id);
-          this.$router.push({ name: "PostDetail" });
-        })
-        .catch((err) => {
-          this.isLoading = false;
-          this.$store.commit("SET_NOTIFICATION", {
-            message: err,
-            type: "error",
-          });
-        });
-    },
-    deletePost() {
-      this.isLoading = true;
-      postApi
-        .deletePost(this.post._id)
-        .then(() => {
-          this.isLoading = false;
-          this.$store.commit("SET_NOTIFICATION", {
-            message: "The post has been deleted.",
-          });
-          this.$router.push({ name: "home" });
-        })
-        .catch((err) => {
-          this.isLoading = false;
-          this.$store.commit("SET_NOTIFICATION", {
-            message: err,
-            type: "error",
-          });
-        });
-    },
-    addCover(e) {
-      const img = e.target.files[0];
-      postApi
-        .uploadCover(img)
-        .then((res) => {
-          this.coverUrl = process.env.VUE_APP_BASE_URL + res.data.imageUrl;
-        })
-        .catch((err) => console.log("err:", err));
-    },
   },
 };
 </script>

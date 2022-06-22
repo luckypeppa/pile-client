@@ -26,59 +26,30 @@
 
 <script>
 import TipTap from "../../components/TipTap.vue";
-import { reactive, ref, toRefs } from "vue";
-import { useStore } from "vuex";
-import postApi from "@/services/post";
+import usePost from "@/utils/usePost";
 export default {
   setup() {
-    const store = useStore();
+    const {
+      title,
+      snippet,
+      body,
+      tag,
+      coverUrl,
+      isLoading,
+      createPost,
+      addCover,
+    } = usePost();
 
-    const post = reactive({
-      title: "",
-      snippet: "",
-      body: "",
-      tag: "",
-      coverUrl: null,
-    });
-    const isLoading = ref(false);
-
-    function createPost() {
-      if (!post.title || !post.snippet || !post.coverUrl || !post.tag) {
-        store.commit("SET_NOTIFICATION", {
-          message: "Title, snippet, tag and cover are required.",
-          type: "error",
-        });
-        return;
-      }
-      isLoading.value = true;
-      postApi
-        .create(post)
-        .then(() => {
-          store.commit("SET_NOTIFICATION", {
-            message: "The post has been created.",
-          });
-          isLoading.value = false;
-        })
-        .catch((err) => {
-          store.commit("SET_NOTIFICATION", {
-            message: err.response.data,
-            type: "error",
-          });
-          isLoading.value = false;
-        });
-    }
-
-    function addCover(e) {
-      const img = e.target.files[0];
-      postApi
-        .uploadCover(img)
-        .then((res) => {
-          post.coverUrl = process.env.VUE_APP_BASE_URL + res.data.imageUrl;
-        })
-        .catch((err) => console.log("err:", err));
-    }
-
-    return { ...toRefs(post), isLoading, createPost, addCover };
+    return {
+      title,
+      snippet,
+      body,
+      tag,
+      coverUrl,
+      isLoading,
+      createPost,
+      addCover,
+    };
   },
   components: {
     TipTap,
