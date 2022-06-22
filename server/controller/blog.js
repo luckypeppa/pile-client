@@ -4,7 +4,7 @@ const { Tag } = require("../model/tag");
 const createBlog = async (req, res) => {
   console.log(req.body);
 
-  const result = await Tag.findOne({ name: req.body.tag });
+  const result = await Tag.findOne({ name: req.body.tag }).exec();
   // check if the tag has existed
   const tag = result || new Tag({ name: req.body.tag });
   // create a new tag and blog
@@ -35,6 +35,7 @@ const createBlog = async (req, res) => {
 
 const getAllBlogs = (req, res) => {
   Blog.find()
+    .sort("createdAt")
     .then((result) => res.send(result))
     .catch((err) => console.log(err));
 };
@@ -65,7 +66,7 @@ const updateBlog = async (req, res) => {
   const newBlog = req.body;
 
   //check if the tag exists
-  const result = await Tag.findOne({ name: req.body.tag });
+  const result = await Tag.findOne({ name: req.body.tag }).exec();
   const tag = result || new Tag({ name: req.body.tag });
   // save tag
   try {
