@@ -44,7 +44,8 @@ export default {
   display: flex;
   gap: 1rem;
   position: fixed;
-  background-color: var(--main-bg-color);
+  top: 0;
+  background-color: white;
   height: min(5rem, 10vh);
   align-items: center;
   padding: 0 3rem;

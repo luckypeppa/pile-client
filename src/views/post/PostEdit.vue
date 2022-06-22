@@ -1,14 +1,12 @@
 <template>
-  <div>
+  <div class="create-container">
     <div class="info">
       <BaseInput type="text" label="Title" v-model="title" />
       <BaseInput type="text" label="Tag" v-model="tag" />
       <BaseInput type="text" label="Snippet" v-model="snippet" />
-    </div>
-    <div class="add-cover">
       <base-input type="file" label="Add Cover" @change="addCover" />
-      <img :src="coverUrl" v-if="coverUrl" alt="" class="preview" />
     </div>
+    <img :src="coverUrl" v-if="coverUrl" alt="" class="preview" />
     <TipTap v-model="body" />
     <div class="buttons">
       <BaseButton @click="updatePost" :isLoading="isLoading">UPDATE</BaseButton>
@@ -95,31 +93,4 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-.info {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 1rem;
-}
-.add-cover {
-  margin-bottom: 1rem;
-  display: grid;
-  grid-template-columns: 40% 1fr;
-
-  @media screen and (max-width: 767px) {
-    grid-template-columns: 1fr;
-  }
-
-  .preview {
-    width: 100%;
-    aspect-ratio: 16 / 9;
-    object-fit: cover;
-  }
-}
-
-.buttons {
-  display: flex;
-  justify-content: center;
-  gap: 2rem;
-}
-</style>
+<style lang="scss" scoped></style>

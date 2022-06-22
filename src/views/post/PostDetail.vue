@@ -11,7 +11,7 @@
     </div>
     <div class="detail">
       <h1 class="title">{{ post.title }}</h1>
-      <div class="content" ref="body"></div>
+      <div class="ProseMirror post-body" ref="body"></div>
     </div>
   </div>
 </template>

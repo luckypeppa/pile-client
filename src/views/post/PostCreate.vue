@@ -64,7 +64,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .create-container {
   border: 1px solid black;
   padding: 2rem;

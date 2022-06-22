@@ -25,13 +25,9 @@ export default {
   border: 0;
 }
 
-:root {
-  --main-bg-color: ;
-}
-
 body {
   overflow-x: hidden;
-  background-color: var(--main-bg-color);
+  background-color: white;
   a {
     text-decoration: none;
     font-weight: 600;
@@ -47,70 +43,75 @@ body {
   }
 
   .container {
-    width: min(60rem, 100%);
-    margin: auto;
-    padding-top: 7rem;
-    padding-inline: min(3rem, 10vw);
-    min-height: 100vh;
+    width: min(100%, 60rem);
+    margin: 0 auto;
+    margin-top: 7rem;
+  }
+}
+
+/* Basic editor styles */
+.ProseMirror {
+  margin-bottom: 1rem;
+  min-height: 10rem;
+  border: 1px solid black;
+  border-radius: 0.5rem;
+  padding: 2rem;
+
+  &.post-body {
+    border: none;
   }
 
-  .content {
-    margin-bottom: 1rem;
-    min-height: 10rem;
+  > * + * {
+    margin-top: 0.75em;
+  }
+
+  ul,
+  ol {
+    padding: 0 1rem;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    line-height: 1.1;
+  }
+
+  code {
+    background-color: rgba(#616161, 0.1);
+    color: #616161;
+  }
+
+  pre {
+    background: #343434;
+    color: #fff;
+    font-family: "JetBrainsMono", monospace;
+    padding: 0.75rem 1rem;
     border-radius: 0.5rem;
 
-    > * + * {
-      margin-top: 0.75em;
-    }
-
-    ul,
-    ol {
-      padding: 0 1rem;
-    }
-
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6 {
-      line-height: 1.1;
-    }
-
     code {
-      background-color: rgba(#616161, 0.1);
-      color: #616161;
+      color: inherit;
+      padding: 0;
+      background: none;
+      font-size: 0.8rem;
     }
+  }
 
-    pre {
-      background: #0d0d0d;
-      color: #fff;
-      font-family: "JetBrainsMono", monospace;
-      padding: 0.75rem 1rem;
-      border-radius: 0.5rem;
+  img {
+    max-width: 100%;
+    height: auto;
+  }
 
-      code {
-        color: inherit;
-        padding: 0;
-        background: none;
-        font-size: 0.8rem;
-      }
-    }
+  blockquote {
+    padding-left: 1rem;
+    border-left: 2px solid rgba(#0d0d0d, 0.1);
+  }
 
-    img {
-      max-width: 100%;
-      height: auto;
-    }
-
-    blockquote {
-      padding-left: 1rem;
-      border-left: 2px solid rgba(#0d0d0d, 0.1);
-    }
-
-    hr {
-      border-top: 2px solid rgba(#0d0d0d, 0.1);
-      margin: 2rem 0;
-    }
+  hr {
+    border-top: 2px solid rgba(#0d0d0d, 0.1);
+    margin: 2rem 0;
   }
 }
 </style>
