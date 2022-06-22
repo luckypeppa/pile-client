@@ -1,16 +1,30 @@
 <template>
   <div class="create-container">
     <div class="info">
-      <BaseInput type="text" label="Title" v-model="title" />
-      <BaseInput type="text" label="Tag" v-model="tag" />
-      <BaseInput type="text" label="Snippet" v-model="snippet" />
-      <base-input type="file" label="Add Cover" @change="addCover" />
+      <BaseInput type="text" label="Title" v-model="title" :required="true" />
+      <BaseInput type="text" label="Tag" v-model="tag" :required="true" />
+      <BaseInput
+        type="text"
+        label="Snippet"
+        v-model="snippet"
+        :required="true"
+      />
+      <base-input
+        type="file"
+        label="Add Cover"
+        @change="addCover"
+        :required="true"
+      />
     </div>
     <img :src="coverUrl" v-if="coverUrl" alt="" class="preview" />
     <TipTap v-model="body" />
     <div class="buttons">
-      <BaseButton @click="updatePost" :isLoading="isLoading">UPDATE</BaseButton>
-      <BaseButton @click="deletePost" :isLoading="isLoading">DELETE</BaseButton>
+      <BaseButton @click="updatePost(post._id)" :isLoading="isLoading"
+        >UPDATE</BaseButton
+      >
+      <BaseButton @click="deletePost(post._id)" :isLoading="isLoading"
+        >DELETE</BaseButton
+      >
     </div>
   </div>
 </template>

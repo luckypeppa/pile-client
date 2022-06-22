@@ -1,5 +1,7 @@
 <template>
   <div class="tags">
+    <tag-button>test</tag-button>
+    <tag-button>javascript</tag-button>
     <button @click="getPostsByTag">test</button>
     <button @click="getPostsByTag">javascript</button>
   </div>
@@ -7,6 +9,7 @@
 
 <script>
 import firebaseApi from "@/services/firebaseApi";
+import TagButton from "@/components/TagButton.vue";
 export default {
   methods: {
     getPostsByTag(e) {
@@ -24,13 +27,16 @@ export default {
         });
     },
   },
+  components: {
+    TagButton,
+  },
 };
 </script>
 
 <style lang="scss" scoped>
 .tags {
   display: flex;
-  gap: 1rem;
+  gap: 2rem;
   flex-wrap: wrap;
   margin-bottom: 2rem;
 

@@ -1,20 +1,36 @@
 const Blog = require("../model/blog");
 const { Tag } = require("../model/tag");
 
-const createBlog = (req, res) => {
+const createBlog = async (req, res) => {
   console.log(req.body);
-  const tag = new Tag({ name: req.body.tag });
+
+  const result = await Tag.findOne({ name: req.body.tag });
+  // check if the tag has existed
+  const tag = result || new Tag({ name: req.body.tag });
+  // create a new tag and blog
   const blog = new Blog({
     ...req.body,
     tag,
   });
 
-  tag.save().catch((err) => console.log(err));
+  // save tag
+  try {
+    await tag.save();
+  } catch (err) {
+    console.log(err);
+    return res.status(500).send({ message: "Failed to save tag to database." });
+  }
 
-  blog
-    .save()
-    .then((result) => res.send(result))
-    .catch((err) => console.log(err));
+  // save the blog
+  try {
+    await blog.save();
+  } catch (err) {
+    console.log(err);
+    return res
+      .status(500)
+      .send({ message: "Failed to save blog to database." });
+  }
+  return res.sendStatus(201);
 };
 
 const getAllBlogs = (req, res) => {
@@ -45,15 +61,30 @@ const getBlog = (req, res) => {
     });
 };
 
-const updateBlog = (req, res) => {
+const updateBlog = async (req, res) => {
   const newBlog = req.body;
-  const tag = new Tag({ name: req.body.tag });
 
-  tag.save();
+  //check if the tag exists
+  const result = await Tag.findOne({ name: req.body.tag });
+  const tag = result || new Tag({ name: req.body.tag });
+  // save tag
+  try {
+    await tag.save();
+  } catch (err) {
+    console.log(err);
+    return res.status(500).send({ message: "Failed to save tag to database." });
+  }
 
-  Blog.replaceOne({ _id: req.params.id }, { ...newBlog, tag })
-    .then(() => res.sendStatus(201))
-    .catch(() => res.sendStatus(404));
+  //replace blog
+  const blogResult = await Blog.replaceOne(
+    { _id: req.params.id },
+    { ...newBlog, tag }
+  );
+  if (blogResult.matchedCount === 0) {
+    return res.status(404).send({ message: "The post doesn't exist." });
+  }
+
+  return res.sendStatus(201);
 };
 
 const deleteBlog = (req, res) => {

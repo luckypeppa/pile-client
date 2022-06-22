@@ -4,7 +4,7 @@
       <time v-if="post.createdAt" class="time">{{
         new Date(post.createdAt).toString()
       }}</time>
-      <div class="tag">{{ post.tag.name }}</div>
+      <tag-button>{{ post.tag.name }}</tag-button>
     </div>
     <div class="cover-container">
       <img :src="post.coverUrl" alt="" class="cover" />
@@ -17,6 +17,7 @@
 </template>
 
 <script>
+import TagButton from "@/components/TagButton.vue";
 export default {
   beforeRouteUpdate() {
     location.reload();
@@ -28,6 +29,9 @@ export default {
   },
   mounted() {
     this.$refs.body.innerHTML = this.post.body;
+  },
+  components: {
+    TagButton,
   },
 };
 </script>

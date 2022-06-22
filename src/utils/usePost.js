@@ -30,18 +30,18 @@ export default function () {
       })
       .catch((err) => {
         store.commit("SET_NOTIFICATION", {
-          message: err.response.data,
+          message: err.response.data.message,
           type: "error",
         });
         isLoading.value = false;
       });
   }
 
-  function updatePost() {
+  function updatePost(postId) {
     if (checkEmpty()) return;
     isLoading.value = true;
     postApi
-      .updatePost(post._id, {
+      .updatePost(postId, {
         title: post.title,
         tag: post.tag,
         snippet: post.snippet,
@@ -59,16 +59,16 @@ export default function () {
       .catch((err) => {
         isLoading.value = false;
         store.commit("SET_NOTIFICATION", {
-          message: err,
+          message: err.message,
           type: "error",
         });
       });
   }
 
-  function deletePost() {
+  function deletePost(postId) {
     isLoading.value = true;
     postApi
-      .deletePost(post._id)
+      .deletePost(postId)
       .then(() => {
         isLoading.value = false;
         store.commit("SET_NOTIFICATION", {
