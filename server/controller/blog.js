@@ -46,7 +46,7 @@ const createBlog = async (req, res) => {
 
 const getAllBlogs = (req, res) => {
   Blog.find()
-    .sort("createdAt")
+    .sort({ createdAt: -1 })
     .populate("tags", "name")
     .then((result) => res.send(result))
     .catch(() => res.status(500).send({ message: "server side error" }));

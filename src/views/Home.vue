@@ -56,7 +56,7 @@ export default {
 
 <style lang="scss" scoped>
 .search-container {
-  display: grid;
+  display: flex;
   place-content: center;
   margin-bottom: 2rem;
 }

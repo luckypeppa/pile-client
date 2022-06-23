@@ -1,44 +1,14 @@
 <template>
   <div class="container">
-    <div class="create-container">
-      <div class="info">
-        <BaseInput type="text" label="Title" v-model="title" :required="true" />
-        <BaseInput
-          type="text"
-          label="Snippet"
-          v-model="snippet"
-          :required="true"
-        />
-        <base-input
-          type="file"
-          label="Add Cover"
-          @change="addCover"
-          :required="true"
-        />
-      </div>
-      <img :src="wholeCoverUrl" v-if="coverUrl" alt="" class="preview" />
-      <tag-input
-        :tags="tags"
-        @add:tag="addTag"
-        @remove:tag="removeTag"
-      ></tag-input>
-      <TipTap v-model="body" />
-      <BaseButton @click="updatePost(post._id)" :isLoading="isLoading"
-        >UPDATE</BaseButton
-      >
-      <BaseButton @click="deletePost(post._id)" :isLoading="isLoading"
-        >DELETE</BaseButton
-      >
-    </div>
+    <post-editor edit />
   </div>
 </template>
 
 <script>
-import TipTap from "../../components/TipTap.vue";
-import TagInput from "@/components/TagInput";
 import usePost from "@/utils/usePost";
 import { computed, onMounted } from "vue";
 import { useStore } from "vuex";
+import PostEditor from "@/components/PostEditor.vue";
 
 export default {
   setup() {
@@ -87,8 +57,7 @@ export default {
     };
   },
   components: {
-    TipTap,
-    TagInput,
+    PostEditor,
   },
 };
 </script>
