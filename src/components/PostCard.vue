@@ -1,5 +1,5 @@
 <template>
-  <div class="post-card" @click="seeDetail(post._id)">
+  <div class="post-card" @click="seeDetail(post._id)" data-test-id="postcard">
     <div class="left">
       <h2 class="title">{{ post.title }}</h2>
       <div class="tags">
@@ -7,6 +7,7 @@
           :tag="tag.name"
           v-for="(tag, index) in post.tags"
           :key="index"
+          :data-test-id="`postcard-tag-${index}`"
         ></tag-button>
       </div>
       <p class="snippet">{{ post.snippet }}</p>
