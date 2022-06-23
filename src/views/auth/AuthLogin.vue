@@ -50,7 +50,7 @@ export default {
           isLoading.value = false;
         })
         .catch((err) => {
-          error.value = err.message;
+          error.value = err.response.data.message;
         });
     }
 

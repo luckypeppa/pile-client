@@ -19,6 +19,7 @@
       type="password"
       :error="errors.password"
     />
+    <p class="error" v-if="error">{{ error }}</p>
     <BaseButton type="submit">Register</BaseButton>
     <router-link :to="{ name: 'login' }">Login</router-link>
   </form>
@@ -29,11 +30,14 @@ import { useForm, useField } from "vee-validate";
 import { object, string } from "yup";
 import api from "../../services/api";
 import { useRouter } from "vue-router";
+import { ref } from "vue";
 
 export default {
   name: "userRegister",
   setup() {
     const router = useRouter();
+
+    const error = ref("");
 
     const validationSchema = object({
       email: string().email().required(),
@@ -74,6 +78,7 @@ export default {
         })
         .catch((err) => {
           console.log("There is an Error:", err);
+          error.value = err.response.data.message;
         });
     });
     return {
@@ -82,6 +87,7 @@ export default {
       username,
       password,
       errors,
+      error,
     };
   },
 };

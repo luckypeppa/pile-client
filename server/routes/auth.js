@@ -11,11 +11,15 @@ const router = express.Router();
 // register user
 router.post("/register", async (req, res) => {
   const { username, email, password } = req.body;
-  if (!username || !email || !password) return res.sendStatus(400);
+  if (!username || !email || !password)
+    return res
+      .status(400)
+      .send({ message: "Username, email, password can not be empty." });
 
   const existedUser = await User.findOne({ username: username });
   // if username already existed return
-  if (existedUser) return res.sendStatus(400);
+  if (existedUser)
+    return res.status(400).send({ message: "The username has been used." });
 
   try {
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -45,23 +49,28 @@ router.post("/register", async (req, res) => {
     });
   } catch (err) {
     console.log("err:", err);
-    res.sendStatus(500);
+    res.status(500).send({ message: "Can not create user." });
   }
 });
 
 // user login
 router.post("/login", async (req, res) => {
   const { username, password } = req.body;
-  if (!username || !password) return res.sendStatus(400);
+  if (!username || !password)
+    return res
+      .status(400)
+      .send({ message: "Username and password can not be empty." });
 
   // find existed user
   const existedUser = await User.findOne({ username: username });
-  if (!existedUser) return res.sendStatus(404);
+  if (!existedUser)
+    return res.status(404).json({ message: "Incorrect username." });
 
   try {
     // compare passwords
     const result = await bcrypt.compare(password, existedUser.hashedPassword);
-    if (!result) return res.sendStatus(403);
+    if (!result)
+      return res.status(403).json({ message: "Incorrect password." });
     const user = { username: username, email: existedUser.email };
 
     // generate access token and refresh token
@@ -82,7 +91,7 @@ router.post("/login", async (req, res) => {
     });
   } catch (err) {
     console.log("err:", err);
-    return res.sendStatus(500);
+    res.status(500).send({ message: "Can not login." });
   }
 });
 
@@ -98,7 +107,7 @@ router.delete("/login", async (req, res) => {
 router.post("/token", (req, res) => {
   const refreshToken = req.body.refreshToken;
 
-  if (!refreshToken) return res.sendStatus(400);
+  if (!refreshToken) return res.sendStatus(401);
 
   RefreshToken.findOne({ token: refreshToken })
     .then((token) => {
