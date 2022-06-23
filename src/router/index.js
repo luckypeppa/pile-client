@@ -21,8 +21,8 @@ const routes = [
       store.commit("REMOVE_POSTS");
       postApi
         .getAll()
-        .then((posts) => {
-          store.commit("SET_POSTS", posts);
+        .then((res) => {
+          store.commit("SET_POSTS", res.data);
           return postApi.getAllTags();
         })
         .then((res) => {

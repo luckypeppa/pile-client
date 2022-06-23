@@ -16,7 +16,7 @@
           :required="true"
         />
       </div>
-      <img :src="coverUrl" v-if="coverUrl" alt="" class="preview" />
+      <img :src="wholeCoverUrl" v-if="coverUrl" alt="" class="preview" />
       <tag-input
         :tags="tags"
         @add:tag="addTag"
@@ -40,6 +40,7 @@ export default {
       body,
       tags,
       coverUrl,
+      wholeCoverUrl,
       isLoading,
       createPost,
       addCover,
@@ -53,6 +54,7 @@ export default {
       body,
       tags,
       coverUrl,
+      wholeCoverUrl,
       isLoading,
       createPost,
       addCover,

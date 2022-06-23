@@ -1,7 +1,7 @@
 import axios from "axios";
 
 function getAll() {
-  return axios.get(process.env.VUE_APP_POST_URL).then((res) => res.data);
+  return axios.get(process.env.VUE_APP_POST_URL);
 }
 
 function create(post) {

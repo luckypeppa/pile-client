@@ -12,7 +12,7 @@
       >
     </div>
     <div class="cover-container">
-      <img :src="post.coverUrl" alt="" class="cover" />
+      <img :src="wholeCoverUrl" alt="" class="cover" />
     </div>
     <div class="detail">
       <h1 class="title">{{ post.title }}</h1>
@@ -30,6 +30,9 @@ export default {
   computed: {
     post() {
       return this.$store.state.currentPost;
+    },
+    wholeCoverUrl() {
+      return process.env.VUE_APP_BASE_URL + this.post.coverUrl;
     },
   },
   mounted() {

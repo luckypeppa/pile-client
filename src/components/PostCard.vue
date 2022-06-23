@@ -14,8 +14,8 @@
         new Date(this.post.createdAt).toString()
       }}</time>
     </div>
-    <div class="cover" v-if="post.coverUrl">
-      <img :src="post.coverUrl" alt="" />
+    <div class="cover" v-if="wholeCoverUrl">
+      <img :src="wholeCoverUrl" alt="" />
     </div>
   </div>
 </template>
@@ -32,6 +32,11 @@ export default {
   methods: {
     seeDetail(postId) {
       this.$router.push({ name: "PostDetail", params: { id: postId } });
+    },
+  },
+  computed: {
+    wholeCoverUrl() {
+      return process.env.VUE_APP_BASE_URL + this.post.coverUrl;
     },
   },
   components: {
