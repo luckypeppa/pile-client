@@ -4,9 +4,12 @@
       <time v-if="post.createdAt" class="time">{{
         new Date(post.createdAt).toString()
       }}</time>
-      <tag-button v-for="(tag, index) in post.tags" :key="index">{{
-        tag.name
-      }}</tag-button>
+      <tag-button
+        :tag="tag.name"
+        v-for="(tag, index) in post.tags"
+        :key="index"
+        >{{ tag.name }}</tag-button
+      >
     </div>
     <div class="cover-container">
       <img :src="post.coverUrl" alt="" class="cover" />
@@ -49,23 +52,6 @@ export default {
     .time {
       color: grey;
       display: block;
-    }
-
-    .tag {
-      color: grey;
-      position: relative;
-
-      &::before {
-        content: "";
-        width: 0.3rem;
-        height: 0.3rem;
-        background-color: red;
-        border-radius: 50%;
-        position: absolute;
-        left: -1rem;
-        top: 50%;
-        transform: translateY(-50%);
-      }
     }
   }
   .cover {

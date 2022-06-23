@@ -1,31 +1,25 @@
 <template>
   <div class="tags">
-    <tag-button>test</tag-button>
-    <tag-button>javascript</tag-button>
-    <button @click="getPostsByTag">test</button>
-    <button @click="getPostsByTag">javascript</button>
+    <tag-button tag="All"></tag-button>
+    <tag-button
+      :tag="tag"
+      v-for="(tag, index) in tags"
+      :key="index"
+    ></tag-button>
   </div>
 </template>
 
 <script>
-import firebaseApi from "@/services/firebaseApi";
 import TagButton from "@/components/TagButton.vue";
+import { useStore } from "vuex";
+import { computed } from "vue";
 export default {
-  methods: {
-    getPostsByTag(e) {
-      const tag = e.target.textContent;
-      firebaseApi
-        .getPosts(tag)
-        .then((posts) => {
-          this.$store.commit("SET_POSTS", posts);
-        })
-        .catch((err) => {
-          this.$store.commit("SET_NOTIFICATION", {
-            message: err,
-            type: "error",
-          });
-        });
-    },
+  setup() {
+    const store = useStore();
+
+    const tags = computed(() => store.state.tags.map((tag) => tag.name));
+
+    return { tags };
   },
   components: {
     TagButton,

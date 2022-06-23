@@ -42,5 +42,6 @@ h1 {
 .posts {
   display: grid;
   grid-template-columns: 1fr;
+  gap: 2rem;
 }
 </style>

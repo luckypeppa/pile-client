@@ -23,6 +23,10 @@ const routes = [
         .getAll()
         .then((posts) => {
           store.commit("SET_POSTS", posts);
+          return postApi.getAllTags();
+        })
+        .then((res) => {
+          store.commit("SET_TAGS", res.data.tags);
           next();
         })
         .catch((err) => {

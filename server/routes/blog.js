@@ -7,11 +7,15 @@ const {
   getBlog,
   updateBlog,
   deleteBlog,
+  getBlogsByTag,
+  getAllTags
 } = require("../controller/blog");
 
 const router = express.Router();
 
 router.post("/image", authenticateToken, saveImage);
+router.get("/tag/:tag", getBlogsByTag);
+router.get("/tag/", getAllTags);
 router.get("/:id", getBlog);
 router.post("/:id", authenticateToken, updateBlog);
 router.delete("/:id", authenticateToken, deleteBlog);

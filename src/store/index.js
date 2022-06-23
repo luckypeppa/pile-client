@@ -6,6 +6,7 @@ export default createStore({
   state: {
     user: null,
     posts: [],
+    tags: [],
     currentPost: {},
     notification: null,
   },
@@ -53,6 +54,9 @@ export default createStore({
     },
     SET_NOTIFICATION(state, notication) {
       state.notification = notication;
+    },
+    SET_TAGS(state, tags) {
+      state.tags = tags;
     },
   },
   actions: {

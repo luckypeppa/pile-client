@@ -2,7 +2,13 @@
   <div class="post-card" @click="seeDetail(post._id)">
     <div class="left">
       <h2 class="title">{{ post.title }}</h2>
-      <!-- <p class="tag">{{ post.tag.name }}</p> -->
+      <div class="tags">
+        <tag-button
+          :tag="tag.name"
+          v-for="(tag, index) in post.tags"
+          :key="index"
+        ></tag-button>
+      </div>
       <p class="snippet">{{ post.snippet }}</p>
       <time v-if="post.createdAt">{{
         new Date(this.post.createdAt).toString()
@@ -15,6 +21,7 @@
 </template>
 
 <script>
+import TagButton from "@/components/TagButton.vue";
 export default {
   props: {
     post: {
@@ -27,6 +34,9 @@ export default {
       this.$router.push({ name: "PostDetail", params: { id: postId } });
     },
   },
+  components: {
+    TagButton,
+  },
 };
 </script>
 
@@ -34,16 +44,12 @@ export default {
 .post-card {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 1rem;
+  gap: 4rem;
   width: 100%;
   cursor: pointer;
   border-top: 1px solid black;
   padding: 1rem;
   align-items: center;
-
-  &:nth-child(even) .left {
-    order: 2;
-  }
 
   @media screen and (max-width: 767px) {
     grid-template-columns: 1fr;
@@ -54,6 +60,7 @@ export default {
     flex-direction: column;
     justify-content: start;
     gap: 1rem;
+    text-align: right;
 
     & > * {
       font-weight: 800;
@@ -61,6 +68,23 @@ export default {
 
     .title {
       font-size: clamp(1.7rem, 5vw, 3rem);
+    }
+
+    .tags {
+      padding-left: 1rem;
+      display: flex;
+      gap: 2rem;
+      justify-content: flex-end;
+    }
+  }
+
+  &:nth-child(even) .left {
+    order: 2;
+
+    text-align: left;
+
+    & .tags {
+      justify-content: flex-start;
     }
   }
 

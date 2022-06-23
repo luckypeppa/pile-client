@@ -26,6 +26,14 @@ function deletePost(postId) {
   return axios.delete(process.env.VUE_APP_POST_URL + "/" + postId);
 }
 
+function getPostsByTag(tag) {
+  return axios.get(process.env.VUE_APP_GET_POST_BY_TAG_URL + "/" + tag);
+}
+
+function getAllTags() {
+  return axios.get(process.env.VUE_APP_GET_POST_BY_TAG_URL);
+}
+
 export default {
   getAll,
   create,
@@ -33,4 +41,6 @@ export default {
   getPost,
   updatePost,
   deletePost,
+  getPostsByTag,
+  getAllTags,
 };

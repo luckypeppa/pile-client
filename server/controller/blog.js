@@ -139,6 +139,28 @@ const deleteBlog = (req, res) => {
     .catch(() => res.sendStatus(404));
 };
 
+const getBlogsByTag = (req, res) => {
+  const tag = req.params.tag;
+
+  Tag.findOne({ name: tag }).exec((err, tag) => {
+    if (err) return res.status(500).send({ message: err });
+    if (!tag) return res.send([]);
+    Blog.find({ tags: tag._id })
+      .populate("tags", "name")
+      .exec((err, blogs) => {
+        if (err) return res.status(500).send({ message: err });
+        return res.send(blogs);
+      });
+  });
+};
+
+const getAllTags = (req, res) => {
+  Tag.find().exec((err, tags) => {
+    if (err) return res.status(400).send({ message: err });
+    res.send({ tags });
+  });
+};
+
 module.exports = {
   getAllBlogs,
   createBlog,
@@ -146,4 +168,6 @@ module.exports = {
   getBlog,
   updateBlog,
   deleteBlog,
+  getBlogsByTag,
+  getAllTags,
 };
