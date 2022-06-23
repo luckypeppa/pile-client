@@ -2,14 +2,27 @@
   <nav class="navbar">
     <h1><router-link :to="{ name: 'home' }">PiLE</router-link></h1>
     <router-link :to="{ name: 'home' }">Home</router-link>
-    <router-link :to="{ name: 'PostCreate' }" v-if="isLogin"
+    <router-link
+      :to="{ name: 'PostCreate' }"
+      v-if="isLogin"
+      data-test-id="navbar-create"
       >Create</router-link
     >
-    <router-link :to="{ name: 'register' }" v-if="!isLogin"
+    <router-link
+      :to="{ name: 'register' }"
+      v-if="!isLogin"
+      data-test-id="navbar-register"
       >Register</router-link
     >
-    <router-link :to="{ name: 'login' }" v-if="!isLogin">Login</router-link>
-    <BaseButton @click="logout" v-if="isLogin">Logout</BaseButton>
+    <router-link
+      :to="{ name: 'login' }"
+      v-if="!isLogin"
+      data-test-id="navbar-login"
+      >Login</router-link
+    >
+    <BaseButton @click="logout" v-if="isLogin" data-test-id="navbar-logout"
+      >Logout</BaseButton
+    >
   </nav>
 </template>
 
