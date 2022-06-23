@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    <base-input label="Search" v-model="searchInput"></base-input>
     <app-tags></app-tags>
     <p>Home</p>
     <h1>Hello, I am Pipi.</h1>
@@ -12,13 +13,36 @@
 <script>
 import PostCard from "@/components/PostCard.vue";
 import AppTags from "@/components/AppTags.vue";
+import { computed, ref, watch } from "vue";
+import { useStore } from "vuex";
+import postApi from "@/services/post";
+import usePromise from "@/utils/usePromise";
 export default {
   components: { PostCard, AppTags },
   name: "appHome",
-  computed: {
-    posts() {
-      return this.$store.state.posts;
-    },
+  setup() {
+    const store = useStore();
+    const posts = computed(() => store.state.posts);
+
+    // search posts
+    const searchInput = ref("");
+    const getBlogs = usePromise((searchInput) =>
+      postApi.searchPosts(searchInput.value)
+    );
+
+    watch(searchInput, () => {
+      if (searchInput.value !== "") {
+        getBlogs.createPromise(searchInput).then(() => {
+          store.commit("SET_POSTS", getBlogs.results.value.data);
+        });
+      } else {
+        postApi.getAll().then((res) => {
+          store.commit("SET_POSTS", res.data);
+        });
+      }
+    });
+
+    return { searchInput, posts };
   },
 };
 </script>

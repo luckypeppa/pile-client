@@ -34,6 +34,10 @@ function getAllTags() {
   return axios.get(process.env.VUE_APP_GET_POST_BY_TAG_URL);
 }
 
+function searchPosts(input) {
+  return axios.get(process.env.VUE_APP_SEARCH_POST_URL + "/" + input);
+}
+
 export default {
   getAll,
   create,
@@ -43,4 +47,5 @@ export default {
   deletePost,
   getPostsByTag,
   getAllTags,
+  searchPosts,
 };

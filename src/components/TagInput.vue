@@ -5,8 +5,8 @@
         v-for="(t, index) in tags"
         :key="index"
         @click="$emit('remove:tag', t)"
-        >{{ t }}</tag-button
-      >
+        :tag="t"
+      ></tag-button>
     </div>
     <BaseInput
       type="text"

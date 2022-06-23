@@ -161,6 +161,18 @@ const getAllTags = (req, res) => {
   });
 };
 
+const searchBlogs = (req, res) => {
+  const input = req.params.input;
+
+  Blog.where("title")
+    .regex(new RegExp(input))
+    .populate("tags", "name")
+    .exec((err, blogs) => {
+      if (err) return res.status(400).send({ message: err });
+      res.send(blogs);
+    });
+};
+
 module.exports = {
   getAllBlogs,
   createBlog,
@@ -170,4 +182,5 @@ module.exports = {
   deleteBlog,
   getBlogsByTag,
   getAllTags,
+  searchBlogs,
 };

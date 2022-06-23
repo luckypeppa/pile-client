@@ -33,6 +33,7 @@ export default {
   gap: 2rem;
   flex-wrap: wrap;
   margin-bottom: 2rem;
+  margin-top: 1rem;
 
   button {
     background-color: orange;

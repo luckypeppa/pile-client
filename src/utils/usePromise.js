@@ -12,6 +12,7 @@ export default function (fn) {
     try {
       results.value = await fn(...args);
     } catch (err) {
+      console.log(err);
       store.commit("SET_NOTIFICATION", {
         message: err.response.data.message,
         type: "error",
