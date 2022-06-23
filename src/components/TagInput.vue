@@ -1,11 +1,16 @@
 <template>
   <div class="tag-input">
     <div class="tags">
-      <tag-button v-for="(t, index) in tags" :key="index">{{ t }}</tag-button>
+      <tag-button
+        v-for="(t, index) in tags"
+        :key="index"
+        @click="$emit('remove:tag', t)"
+        >{{ t }}</tag-button
+      >
     </div>
     <BaseInput
       type="text"
-      label="Tags(Enter to add)"
+      label="Tags(Enter to add, click tag to remove)"
       :model="tag"
       @update:input="emitTag"
     />
@@ -22,7 +27,7 @@ export default {
       required: true,
     },
   },
-  emits: ["add: tag"],
+  emits: ["add: tag", "remove:tag"],
   components: {
     TagButton,
   },

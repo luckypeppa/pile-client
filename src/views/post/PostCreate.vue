@@ -17,7 +17,11 @@
         />
       </div>
       <img :src="coverUrl" v-if="coverUrl" alt="" class="preview" />
-      <tag-input :tags="tags" @add:tag="addTag"></tag-input>
+      <tag-input
+        :tags="tags"
+        @add:tag="addTag"
+        @remove:tag="removeTag"
+      ></tag-input>
       <TipTap v-model="body" />
       <BaseButton @click="createPost" :isLoading="isLoading">CREATE</BaseButton>
     </div>
@@ -40,6 +44,7 @@ export default {
       createPost,
       addCover,
       addTag,
+      removeTag,
     } = usePost();
 
     return {
@@ -52,6 +57,7 @@ export default {
       createPost,
       addCover,
       addTag,
+      removeTag,
     };
   },
   components: {

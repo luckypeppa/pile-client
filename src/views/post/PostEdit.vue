@@ -17,7 +17,11 @@
         />
       </div>
       <img :src="coverUrl" v-if="coverUrl" alt="" class="preview" />
-      <tag-input :tags="tags" @add:tag="addTag"></tag-input>
+      <tag-input
+        :tags="tags"
+        @add:tag="addTag"
+        @remove:tag="removeTag"
+      ></tag-input>
       <TipTap v-model="body" />
       <BaseButton @click="updatePost(post._id)" :isLoading="isLoading"
         >UPDATE</BaseButton
@@ -49,6 +53,7 @@ export default {
       deletePost,
       addCover,
       addTag,
+      removeTag,
     } = usePost();
 
     // get the post to be edited from store
@@ -76,6 +81,7 @@ export default {
       addCover,
       post,
       addTag,
+      removeTag,
     };
   },
   components: {

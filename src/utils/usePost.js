@@ -99,6 +99,10 @@ export default function () {
     post.tags.push(value);
   }
 
+  function removeTag(value) {
+    post.tags = post.tags.filter((tag) => tag !== value);
+  }
+
   // check whether or not title, snippet, cover and tag is empty
   function checkEmpty() {
     if (!post.title || !post.snippet || !post.coverUrl || !post.tags) {
@@ -119,5 +123,6 @@ export default function () {
     deletePost,
     addCover,
     addTag,
+    removeTag,
   };
 }
