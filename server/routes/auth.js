@@ -86,6 +86,14 @@ router.post("/login", async (req, res) => {
   }
 });
 
+// user logout
+router.delete("/login", async (req, res) => {
+  const refreshToken = req.body.refreshToken;
+
+  await RefreshToken.deleteOne({ token: refreshToken });
+  res.sendStatus(200);
+});
+
 // regenerate access token
 router.post("/token", (req, res) => {
   const refreshToken = req.body.refreshToken;
@@ -123,16 +131,5 @@ function generateAccessToken(user) {
 function generateRefreshToken(user) {
   return jwt.sign(user, process.env.REFRESH_TOKEN_SECRET);
 }
-
-// router.get("/post", (req, res) => {
-//   const authHeader = req.headers["authorization"];
-//   const accessToken = authHeader.split(" ")[1];
-//   if (!accessToken) return res.sendStatus(401);
-//   jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
-//     console.log("err:", err);
-//     if (err) return res.sendStatus(403);
-//     res.json({ msg: "got" });
-//   });
-// });
 
 module.exports = router;

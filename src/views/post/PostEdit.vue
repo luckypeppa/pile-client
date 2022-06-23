@@ -1,5 +1,5 @@
 <template>
-  <div class="create-container">
+  <div class="container">
     <div class="create-container">
       <div class="info">
         <BaseInput type="text" label="Title" v-model="title" :required="true" />

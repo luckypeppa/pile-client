@@ -30,7 +30,7 @@ const createBlog = async (req, res) => {
       tag.blogs.push(blog);
       await tag.save();
     } catch (err) {
-      return res.status(500).send({ message: err });
+      return res.status(500).send({ message: "can not save tag." });
     }
   }
 
@@ -38,7 +38,7 @@ const createBlog = async (req, res) => {
   try {
     await blog.save();
   } catch (err) {
-    return res.status(500).send({ message: err });
+    return res.status(500).send({ message: "can not save blog." });
   }
 
   res.sendStatus(201);
@@ -49,17 +49,20 @@ const getAllBlogs = (req, res) => {
     .sort("createdAt")
     .populate("tags", "name")
     .then((result) => res.send(result))
-    .catch((err) => console.log(err));
+    .catch(() => res.status(500).send({ message: "server side error" }));
 };
 
 const saveImage = (req, res) => {
   if (req.files) {
-    console.log(req.files);
     const ext = req.files.file.name.split(".")[1];
+    const allowedExtensions = ["jpg", "png", "jpeg"];
+    if (!allowedExtensions.includes(ext.toLowerCase())) {
+      return res.status(400).send({ message: "Extension not allowed." });
+    }
     const randomName = Math.random().toString().slice(2, 14);
     const imageUrl = `images/${randomName}.${ext}`;
     req.files.file.mv("public/" + imageUrl, (err) => {
-      if (err) res.sendStatus(500);
+      if (err) return res.status(500).send({ message: "can not save image." });
       res.send({ imageUrl });
     });
   }
@@ -69,7 +72,7 @@ const getBlog = (req, res) => {
   Blog.findById(req.params.id)
     .populate("tags", "name")
     .then((result) => {
-      if (!result) return res.status(404);
+      if (!result) return res.status(404).send({ message: "not found" });
       res.send({ blog: result });
     });
 };
@@ -96,7 +99,7 @@ const updateBlog = async (req, res) => {
     ).exec();
     if (!blog) return res.status(404).send({ message: "Not Found" });
   } catch (err) {
-    return res.status(500).send({ message: err });
+    return res.status(500).send({ message: "Server Side Error" });
   }
 
   for (const t of tags) {
@@ -117,7 +120,7 @@ const updateBlog = async (req, res) => {
       tag.blogs.push(blog);
       await tag.save();
     } catch (err) {
-      return res.status(500).send({ message: err });
+      return res.status(500).send({ message: "Can not save tag." });
     }
   }
 
@@ -125,7 +128,7 @@ const updateBlog = async (req, res) => {
   try {
     await blog.save();
   } catch (err) {
-    return res.status(500).send({ message: err });
+    return res.status(500).send({ message: "Can not save blog" });
   }
 
   res.sendStatus(201);
@@ -136,19 +139,19 @@ const deleteBlog = (req, res) => {
 
   Blog.deleteOne({ _id: id })
     .then(() => res.sendStatus(201))
-    .catch(() => res.sendStatus(404));
+    .catch(() => res.status(404).send({ message: "Not found." }));
 };
 
 const getBlogsByTag = (req, res) => {
   const tag = req.params.tag;
 
   Tag.findOne({ name: tag }).exec((err, tag) => {
-    if (err) return res.status(500).send({ message: err });
+    if (err) return res.status(500).send({ message: "Server Side Error" });
     if (!tag) return res.send([]);
     Blog.find({ tags: tag._id })
       .populate("tags", "name")
       .exec((err, blogs) => {
-        if (err) return res.status(500).send({ message: err });
+        if (err) return res.status(500).send({ message: "Server Side Error" });
         return res.send(blogs);
       });
   });
@@ -156,7 +159,7 @@ const getBlogsByTag = (req, res) => {
 
 const getAllTags = (req, res) => {
   Tag.find().exec((err, tags) => {
-    if (err) return res.status(400).send({ message: err });
+    if (err) return res.status(500).send({ message: "Server Side Error" });
     res.send({ tags });
   });
 };
@@ -168,7 +171,7 @@ const searchBlogs = (req, res) => {
     .regex(new RegExp(input))
     .populate("tags", "name")
     .exec((err, blogs) => {
-      if (err) return res.status(400).send({ message: err });
+      if (err) return res.status(500).send({ message: "Server Side Error" });
       res.send(blogs);
     });
 };

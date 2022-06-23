@@ -8,6 +8,11 @@ function getNewAccessToken(refreshToken) {
     });
 }
 
+function logout() {
+  return axios.delete(process.env.VUE_APP_USER_LOGIN_URL);
+}
+
 export default {
   getNewAccessToken,
+  logout,
 };

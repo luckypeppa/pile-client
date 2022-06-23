@@ -62,7 +62,7 @@ export default function () {
       .catch((err) => {
         isLoading.value = false;
         store.commit("SET_NOTIFICATION", {
-          message: err.message,
+          message: err.response.data.message,
           type: "error",
         });
       });
@@ -82,7 +82,7 @@ export default function () {
       .catch((err) => {
         isLoading.value = false;
         store.commit("SET_NOTIFICATION", {
-          message: err,
+          message: err.response.data.message,
           type: "error",
         });
       });
@@ -95,7 +95,12 @@ export default function () {
       .then((res) => {
         post.coverUrl = res.data.imageUrl;
       })
-      .catch((err) => console.log("err:", err));
+      .catch((err) =>
+        store.commit("SET_NOTIFICATION", {
+          message: err.response.data.message,
+          type: "error",
+        })
+      );
   }
 
   function addTag(value) {
@@ -108,7 +113,13 @@ export default function () {
 
   // check whether or not title, snippet, cover and tag is empty
   function checkEmpty() {
-    if (!post.title || !post.snippet || !post.coverUrl || !post.tags) {
+    if (
+      !post.title ||
+      !post.snippet ||
+      !post.coverUrl ||
+      !post.tags ||
+      !post.body
+    ) {
       store.commit("SET_NOTIFICATION", {
         message: "Title, snippet, tag and cover are required.",
         type: "error",

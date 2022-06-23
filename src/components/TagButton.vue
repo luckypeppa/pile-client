@@ -1,5 +1,5 @@
 <template>
-  <div class="tag" @click="getPostsByTag">
+  <div class="tag" @click.stop="getPostsByTag">
     {{ tag }}
   </div>
 </template>
@@ -7,6 +7,7 @@
 <script>
 import postApi from "@/services/post";
 import { useStore } from "vuex";
+import { useRouter } from "vue-router";
 export default {
   props: {
     tag: {
@@ -16,25 +17,33 @@ export default {
   },
   setup(props) {
     const store = useStore();
+    const router = useRouter();
 
     function getPostsByTag() {
       if (props.tag === "All") {
         postApi
           .getAll()
-          .then((posts) => {
-            store.commit("SET_POSTS", posts);
+          .then((res) => {
+            store.commit("SET_POSTS", res.data);
           })
           .catch((err) => {
-            store.commit("SET_NOTIFICATION", { message: err, type: "error" });
+            store.commit("SET_NOTIFICATION", {
+              message: err.response.data.message,
+              type: "error",
+            });
           });
       } else {
+        router.push({ name: "home" });
         postApi
           .getPostsByTag(props.tag)
           .then((res) => {
             store.commit("SET_POSTS", res.data);
           })
           .catch((err) =>
-            store.commit("SET_NOTIFICATION", { message: err, type: "error" })
+            store.commit("SET_NOTIFICATION", {
+              message: err.response.data.message,
+              type: "error",
+            })
           );
       }
     }

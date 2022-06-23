@@ -14,14 +14,14 @@
 </template>
 
 <script>
-import { getAuth, signOut } from "firebase/auth";
 import BaseButton from "./BaseButton.vue";
+import authApi from "@/services/auth";
 export default {
   name: "appNav",
   methods: {
     logout() {
-      const auth = getAuth();
-      signOut(auth)
+      authApi
+        .logout()
         .then(() => {
           this.$store.dispatch("logout");
         })
@@ -52,6 +52,7 @@ export default {
   width: 100vw;
   justify-content: flex-end;
   box-shadow: 1px 0 1px 1px rgba($color: #000000, $alpha: 0.1);
+  z-index: 999;
 
   h1 {
     font-size: 3rem;
