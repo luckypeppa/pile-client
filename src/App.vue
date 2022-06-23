@@ -46,6 +46,7 @@ body {
     width: min(100%, 60rem);
     margin: 0 auto;
     margin-top: 7rem;
+    padding-inline: 2rem;
   }
 }
 

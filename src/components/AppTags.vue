@@ -34,6 +34,7 @@ export default {
   flex-wrap: wrap;
   margin-bottom: 2rem;
   margin-top: 1rem;
+  justify-content: center;
 
   button {
     background-color: orange;

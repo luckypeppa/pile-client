@@ -9,6 +9,19 @@ import axios from "axios";
 import { h } from "vue";
 import authApi from "@/services/auth";
 
+// fontawesome
+/* import the fontawesome core */
+import { library } from "@fortawesome/fontawesome-svg-core";
+
+/* import font awesome icon component */
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+
+/* import specific icons */
+import { faXmark, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+
+/* add icons to the library */
+library.add(faXmark, faMagnifyingGlass);
+
 const requireComponent = require.context(
   "./components",
   false,
@@ -63,6 +76,9 @@ const app = createApp({
 })
   .use(store)
   .use(router);
+
+// add fontawesome
+app.component("font-awesome-icon", FontAwesomeIcon);
 
 requireComponent.keys().forEach((fileName) => {
   const componentConfig = requireComponent(fileName);

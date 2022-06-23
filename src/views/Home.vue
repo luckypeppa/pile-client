@@ -1,6 +1,13 @@
 <template>
   <div class="container">
-    <base-input label="Search" v-model="searchInput"></base-input>
+    <div class="search-container">
+      <base-input
+        label="Search"
+        v-model="searchInput"
+        prependIcon="fa-solid fa-magnifying-glass"
+        outlined
+      ></base-input>
+    </div>
     <app-tags></app-tags>
     <p>Home</p>
     <h1>Hello, I am Pipi.</h1>
@@ -48,6 +55,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.search-container {
+  display: grid;
+  place-content: center;
+  margin-bottom: 2rem;
+}
+
 p,
 h1 {
   text-align: center;
