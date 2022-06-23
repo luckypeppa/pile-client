@@ -15,7 +15,7 @@
         new Date(this.post.createdAt).toString()
       }}</time>
     </div>
-    <div class="cover" v-if="wholeCoverUrl">
+    <div class="cover">
       <img :src="wholeCoverUrl" alt="" />
     </div>
   </div>

@@ -1,6 +1,14 @@
 import PostCard from "@/components/PostCard";
 import { mount } from "@vue/test-utils";
 
+const mockPost = {
+  title: "test title",
+  body: "test body",
+  tags: ["tag1", "tag2"],
+  snippet: "test snippet",
+  coverUrl: "images/123.jpg",
+};
+
 describe("PostCard", () => {
   test("When click tags, go to home page", async () => {
     const mockRouter = {
@@ -13,13 +21,7 @@ describe("PostCard", () => {
         },
       },
       props: {
-        post: {
-          title: "test title",
-          body: "test body",
-          tags: ["tag1", "tag2"],
-          snippet: "test snippet",
-          coverUrl: "images/123.jpg",
-        },
+        post: mockPost,
       },
     });
 
