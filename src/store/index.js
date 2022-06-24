@@ -14,6 +14,9 @@ export default createStore({
     isLogin(state) {
       return !!state.user;
     },
+    isAdmin(state) {
+      return state.user.role === "admin";
+    },
     getPost(state) {
       return (id) => {
         const post = state.posts.filter((post) => post._id === id);

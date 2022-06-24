@@ -14,15 +14,15 @@ const {
 
 const router = express.Router();
 
-router.post("/image", authenticateToken, saveImage);
+router.post("/image", authenticateToken, authenticateRole, saveImage);
 router.get("/tag/:tag", getBlogsByTag);
 router.get("/tag/", getAllTags);
 router.get("/search/:input", searchBlogs);
 router.get("/:id", getBlog);
-router.post("/:id", authenticateToken, updateBlog);
-router.delete("/:id", authenticateToken, deleteBlog);
+router.post("/:id", authenticateToken, authenticateRole, updateBlog);
+router.delete("/:id", authenticateToken, authenticateRole, deleteBlog);
 router.get("/", getAllBlogs);
-router.post("/", authenticateToken, createBlog);
+router.post("/", authenticateToken, authenticateRole, createBlog);
 
 function authenticateToken(req, res, next) {
   const authHeader = req.headers["authorization"];
@@ -33,6 +33,12 @@ function authenticateToken(req, res, next) {
     req.user = user;
     next();
   });
+}
+
+function authenticateRole(req, res, next) {
+  const user = req.user;
+  if (user.role === "admin") next();
+  res.status(403).json({ message: "The action is forbidden." });
 }
 
 module.exports = router;

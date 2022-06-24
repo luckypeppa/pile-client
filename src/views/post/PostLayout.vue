@@ -8,7 +8,8 @@
       >
       <router-link
         :to="{ name: 'PostEdit' }"
-        v-if="$route.name !== 'PostEdit' && isLogin"
+        v-if="$route.name !== 'PostEdit' && isLogin && isAdmin"
+        data-test-id="post-layout-edit"
         >Edit Post</router-link
       >
     </div>
@@ -58,7 +59,7 @@ export default {
       });
   },
   computed: {
-    ...mapGetters(["isLogin"]),
+    ...mapGetters(["isLogin", "isAdmin"]),
   },
 };
 </script>

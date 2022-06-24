@@ -4,7 +4,7 @@
     <router-link :to="{ name: 'home' }">Home</router-link>
     <router-link
       :to="{ name: 'PostCreate' }"
-      v-if="isLogin"
+      v-if="isAdmin && isLogin"
       data-test-id="navbar-create"
       >Create</router-link
     >
@@ -46,6 +46,9 @@ export default {
   computed: {
     isLogin() {
       return this.$store.getters.isLogin;
+    },
+    isAdmin() {
+      return this.$store.getters.isAdmin;
     },
   },
   components: { BaseButton },

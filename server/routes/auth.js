@@ -5,16 +5,24 @@ const bcrypt = require("bcrypt");
 
 const User = require("../model/user");
 const RefreshToken = require("../model/refreshToken");
+const Role = require("../model/role");
 
 const router = express.Router();
 
 // register user
 router.post("/register", async (req, res) => {
   const { username, email, password } = req.body;
+  // check empty
   if (!username || !email || !password)
     return res
       .status(400)
       .send({ message: "Username, email, password can not be empty." });
+
+  // check password's length
+  if (password.length < 12)
+    return res.status(400).json({
+      message: "Password at least has a length of 12.",
+    });
 
   const existedUser = await User.findOne({ username: username });
   // if username already existed return
@@ -22,14 +30,21 @@ router.post("/register", async (req, res) => {
     return res.status(400).send({ message: "The username has been used." });
 
   try {
+    // get default user role
+    const userRole = await Role.findOne({ name: "user" });
+    if (!userRole)
+      return res.status(500).json({ message: "User role doesn't exist." });
+
+    // generate hashed password
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = new User({
       username,
       email,
       hashedPassword,
+      role: userRole._id,
     });
     await newUser.save();
-    const user = { username, email };
+    const user = newUser.toObject();
 
     // generate access token and refresh token
     const accessToken = generateAccessToken(user);
@@ -49,7 +64,7 @@ router.post("/register", async (req, res) => {
     });
   } catch (err) {
     console.log("err:", err);
-    res.status(500).send({ message: "Can not create user." });
+    res.status(500).send({ message: err.message });
   }
 });
 
@@ -62,7 +77,10 @@ router.post("/login", async (req, res) => {
       .send({ message: "Username and password can not be empty." });
 
   // find existed user
-  const existedUser = await User.findOne({ username: username });
+  const existedUser = await User.findOne({ username: username }).populate(
+    "role",
+    "name"
+  );
   if (!existedUser)
     return res.status(404).json({ message: "Incorrect username." });
 
@@ -71,7 +89,8 @@ router.post("/login", async (req, res) => {
     const result = await bcrypt.compare(password, existedUser.hashedPassword);
     if (!result)
       return res.status(403).json({ message: "Incorrect password." });
-    const user = { username: username, email: existedUser.email };
+
+    const user = existedUser.toObject();
 
     // generate access token and refresh token
     const accessToken = generateAccessToken(user);

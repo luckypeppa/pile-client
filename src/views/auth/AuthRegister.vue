@@ -30,18 +30,20 @@ import { useForm, useField } from "vee-validate";
 import { object, string } from "yup";
 import api from "../../services/api";
 import { useRouter } from "vue-router";
+import { useStore } from "vuex";
 import { ref } from "vue";
 
 export default {
   name: "userRegister",
   setup() {
     const router = useRouter();
+    const store = useStore();
 
     const error = ref("");
 
     const validationSchema = object({
       email: string().email().required(),
-      username: string().max(12).required(),
+      username: string().min(6).max(12).required(),
       password: string()
         .min(12)
         .required()
@@ -72,9 +74,8 @@ export default {
           }
         )
         .then((res) => {
-          if (res.status === 201) {
-            router.push({ name: "login" });
-          }
+          store.commit("SET_USER_DATA", res.response.data);
+          router.push({ name: "login" });
         })
         .catch((err) => {
           console.log("There is an Error:", err);

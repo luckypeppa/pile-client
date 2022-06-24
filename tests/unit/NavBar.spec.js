@@ -52,6 +52,27 @@ describe("NavBar", () => {
     expect(registerBtn.exists()).toBe(false);
   });
 
+  test("If user's role is not admin, do not show create button.", () => {
+    const $store = {
+      getters: {
+        isLogin: true,
+        isAdmin: false,
+      },
+    };
+
+    const wrapper = mount(NavBar, {
+      global: {
+        mocks: {
+          $store,
+        },
+      },
+    });
+
+    const createBtn = wrapper.find("[data-test-id='navbar-create']");
+
+    expect(createBtn.exists()).toBe(false);
+  });
+
   test("When click logout button, $store's dispatch is called.", async () => {
     const $store = {
       getters: {
