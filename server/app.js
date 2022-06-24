@@ -6,6 +6,7 @@ const fileUpload = require("express-fileupload");
 
 const blogRouter = require("./routes/blog");
 const authRouter = require("./routes/auth");
+const commentRouter = require("./routes/comment");
 const app = express();
 
 const dbUrl =
@@ -25,3 +26,4 @@ app.use(express.json());
 app.use(fileUpload());
 app.use("/blogs", blogRouter);
 app.use("/auth", authRouter);
+app.use("/comments", commentRouter);

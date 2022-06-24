@@ -110,7 +110,7 @@ router.post("/login", async (req, res) => {
     });
   } catch (err) {
     console.log("err:", err);
-    res.status(500).send({ message: "Can not login." });
+    res.status(500).send({ message: err.message });
   }
 });
 
