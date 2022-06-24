@@ -18,11 +18,14 @@
       <h1 class="title">{{ post.title }}</h1>
       <div class="ProseMirror post-body" ref="body"></div>
     </div>
+
+    <post-comment width="40rem" />
   </div>
 </template>
 
 <script>
 import TagButton from "@/components/TagButton.vue";
+import PostComment from "@/components/PostComments.vue";
 export default {
   beforeRouteUpdate() {
     location.reload();
@@ -40,6 +43,7 @@ export default {
   },
   components: {
     TagButton,
+    PostComment,
   },
 };
 </script>

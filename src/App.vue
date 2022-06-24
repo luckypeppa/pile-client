@@ -47,6 +47,7 @@ body {
     margin: 0 auto;
     margin-top: 7rem;
     padding-inline: 2rem;
+    padding-bottom: 10rem;
   }
 }
 
