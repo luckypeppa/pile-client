@@ -3,6 +3,7 @@ const Comment = require("../model/comment");
 const User = require("../model/user");
 
 async function createComment(req, res) {
+  console.log(req);
   const { authorId, body, parentId, blogId } = req.body;
 
   try {

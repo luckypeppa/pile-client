@@ -19,7 +19,7 @@
       <div class="ProseMirror post-body" ref="body"></div>
     </div>
 
-    <post-comment width="40rem" />
+    <post-comment width="40rem" :blogId="post._id" />
   </div>
 </template>
 

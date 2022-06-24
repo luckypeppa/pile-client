@@ -1,16 +1,22 @@
 <template>
   <div class="comment">
-    <h3 class="author">Mike Pipi</h3>
+    <h3 class="author">{{ comment.author.username }}</h3>
     <p class="body">
-      Lorem ipsum dolor sit amet consectetur, adipisicing elit. Totam nesciunt
-      quidem maxime illum fuga tenetur enim veritatis deserunt, quo dolorum.
+      {{ comment.body }}
     </p>
     <div class="actions"></div>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  props: {
+    comment: {
+      type: Object,
+      required: true,
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
