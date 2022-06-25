@@ -9,7 +9,9 @@
         <base-button @click="createComment" v-show="!isEditing"
           >Send</base-button
         >
-        <base-button v-show="isEditing">Update</base-button>
+        <base-button v-show="isEditing" @click="updateComment"
+          >Update</base-button
+        >
         <base-button v-show="isEditing" @click="deleteComment"
           >Delete</base-button
         >
@@ -44,14 +46,6 @@ export default {
 
     const body = ref(props.selectedComment?.body);
 
-    // watch(props.selectedComment, (newValue) => {
-    //   body.value = newValue.body;
-    // });
-
-    // onUpdated(() => {
-    //   body.value = props.selectedComment?.body;
-    // });
-
     function createComment() {
       commentApi
         .createComment({
@@ -82,10 +76,10 @@ export default {
       commentApi
         .deleteComment(props.selectedComment._id)
         .then(() => {
+          store.commit("REMOVE_CURRENT_COMMENT", props.selectedComment._id);
           store.commit("SET_NOTIFICATION", {
             message: "You have deleted the comment.",
           });
-          store.commit("REMOVE_CURRENT_COMMENT", props.selectedComment._id);
           context.emit("close:inputer");
         })
         .catch((err) => {
@@ -96,7 +90,26 @@ export default {
         });
     }
 
-    return { body, createComment, deleteComment };
+    function updateComment() {
+      commentApi
+        .updateComment(props.selectedComment._id, body.value)
+        .then((res) => {
+          store.commit("UPDATE_CURRENT_COMMENT", res.data);
+          store.commit("SET_NOTIFICATION", {
+            message: "You have updated the comment.",
+          });
+          body.value = "";
+          context.emit("close:inputer");
+        })
+        .catch((err) => {
+          store.commit("SET_NOTIFICATION", {
+            message: err.response.data.message,
+            type: "error",
+          });
+        });
+    }
+
+    return { body, createComment, deleteComment, updateComment };
   },
 };
 </script>

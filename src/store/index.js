@@ -77,9 +77,18 @@ export default createStore({
       }
     },
     REMOVE_CURRENT_COMMENT(state, commentId) {
-      state.currentComments = state.currentComments.map(
+      state.currentComments = state.currentComments.filter(
         (comment) => comment._id !== commentId
       );
+    },
+    UPDATE_CURRENT_COMMENT(state, comment) {
+      state.currentComments = state.currentComments.map((c) => {
+        if (c._id === comment._id) {
+          return comment;
+        } else {
+          return c;
+        }
+      });
     },
   },
   actions: {

@@ -45,7 +45,6 @@ export default {
 
     const comments = computed(() => store.state.currentComments);
 
-    console.log(comments.value.length);
     const hasComments = computed(() => comments.value.length !== 0);
     // get total number of comments
     const numOfComments = computed(() => {
@@ -58,9 +57,17 @@ export default {
     });
 
     onMounted(() => {
-      commentApi.getAllCommentsByBlogId(props.blogId).then((res) => {
-        store.commit("SET_CURRENT_COMMENTS", res.data);
-      });
+      commentApi
+        .getAllCommentsByBlogId(props.blogId)
+        .then((res) => {
+          store.commit("SET_CURRENT_COMMENTS", res.data);
+        })
+        .catch((err) => {
+          store.commit("SET_NOTIFICATION", {
+            message: err.response.data.message,
+            type: "error",
+          });
+        });
     });
 
     return {

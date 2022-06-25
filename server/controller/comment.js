@@ -115,6 +115,9 @@ async function updateComment(req, res) {
       }
     );
 
+    await updatedComment.populate("author", "username");
+    await updatedComment.populate("replyTo", "username");
+
     return res.json(updatedComment);
   } catch (err) {
     return res.status(400).json({ message: err.message });

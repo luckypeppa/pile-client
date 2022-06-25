@@ -12,8 +12,15 @@ function deleteComment(commentId) {
   return axios.delete(process.env.VUE_APP_COMMENT_URL + "/" + commentId);
 }
 
+function updateComment(commentId, body) {
+  return axios.post(process.env.VUE_APP_COMMENT_URL + "/" + commentId, {
+    body,
+  });
+}
+
 export default {
   getAllCommentsByBlogId,
   createComment,
   deleteComment,
+  updateComment,
 };
