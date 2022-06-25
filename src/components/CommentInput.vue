@@ -2,39 +2,51 @@
   <div class="inputer-container">
     <textarea name="" id="" cols="30" rows="5" class="inputer" v-model="body" />
     <div class="actions">
-      <p v-if="replyToUser" class="reply-to">
-        {{ "Reply to " + replyToUser.username }}
+      <p v-if="selectedComment?.replyTo" class="reply-to">
+        {{ "Reply to " + selectedComment?.replyTo.username }}
       </p>
       <div class="buttons">
-        <base-button @click="createComment">Send</base-button>
-        <!-- <base-button>Update</base-button> -->
-        <!-- <base-button>Delete</base-button> -->
+        <base-button @click="createComment" v-show="!isEditing"
+          >Send</base-button
+        >
+        <base-button v-show="isEditing">Update</base-button>
+        <base-button v-show="isEditing" @click="deleteComment"
+          >Delete</base-button
+        >
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { ref } from "vue";
+import { onUpdated, ref } from "vue";
 import commentApi from "@/services/comment";
 import { useStore } from "vuex";
 export default {
   props: {
-    replyToUser: {
-      type: Object,
-    },
     parentId: {
       type: String,
     },
     blogId: {
       type: String,
     },
+    selectedComment: {
+      type: Object,
+    },
+    isEditing: {
+      type: Boolean,
+      default: false,
+    },
   },
   emits: ["close:inputer"],
   setup(props, context) {
     const store = useStore();
 
-    const body = ref("");
+    const body = ref(props.selectedComment?.body);
+
+    onUpdated(() => {
+      body.value = props.selectedComment?.body;
+    });
 
     function createComment() {
       commentApi
@@ -43,7 +55,7 @@ export default {
           body: body.value,
           parentId: props.parentId,
           authorId: store.state.user._id,
-          replyToId: props.replyToUser?._id,
+          replyToId: props.selectedComment?.author._id,
         })
         .then((res) => {
           console.log(res.data);
@@ -55,7 +67,6 @@ export default {
           context.emit("close:inputer");
         })
         .catch((err) => {
-          console.log(err);
           store.commit("SET_NOTIFICATION", {
             message: err.response.data.message,
             type: "error",
@@ -63,7 +74,25 @@ export default {
         });
     }
 
-    return { body, createComment };
+    function deleteComment() {
+      commentApi
+        .deleteComment(props.selectedComment._id)
+        .then(() => {
+          store.commit("SET_NOTIFICATION", {
+            message: "You have deleted the comment.",
+          });
+          store.commit("REMOVE_CURRENT_COMMENT", props.selectedComment._id);
+          context.emit("close:inputer");
+        })
+        .catch((err) => {
+          store.commit("SET_NOTIFICATION", {
+            message: err.response.data.message,
+            type: "error",
+          });
+        });
+    }
+
+    return { body, createComment, deleteComment };
   },
 };
 </script>
@@ -91,6 +120,11 @@ export default {
     display: flex;
     justify-content: space-between;
     gap: 2rem;
+
+    .buttons {
+      display: flex;
+      gap: 1rem;
+    }
   }
 
   &:focus-within {

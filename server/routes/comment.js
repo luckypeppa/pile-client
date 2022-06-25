@@ -5,7 +5,7 @@ const router = express.Router();
 const {
   createComment,
   getAllCommentsByBlogId,
-  deleteComment
+  deleteComment,
 } = require("../controller/comment");
 
 const { authenticateToken } = require("./authUtils");

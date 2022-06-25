@@ -76,6 +76,11 @@ export default createStore({
         });
       }
     },
+    REMOVE_CURRENT_COMMENT(state, commentId) {
+      state.currentComments = state.currentComments.map(
+        (comment) => comment._id !== commentId
+      );
+    },
   },
   actions: {
     login({ commit }, userData) {

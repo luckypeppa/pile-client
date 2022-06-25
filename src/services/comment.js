@@ -8,7 +8,9 @@ function createComment(comment) {
   return axios.post(process.env.VUE_APP_COMMENT_URL, comment);
 }
 
-function deleteComment() {}
+function deleteComment(commentId) {
+  return axios.delete(process.env.VUE_APP_COMMENT_URL + "/" + commentId);
+}
 
 export default {
   getAllCommentsByBlogId,

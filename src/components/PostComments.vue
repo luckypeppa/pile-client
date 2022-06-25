@@ -45,12 +45,14 @@ export default {
 
     const comments = computed(() => store.state.currentComments);
 
+    console.log(comments.value.length);
     const hasComments = computed(() => comments.value.length !== 0);
     // get total number of comments
     const numOfComments = computed(() => {
+      const initialValue = comments.value.length;
       const sum = comments.value.reduce(
-        (previousValue, comment) => previousValue + comment.children.length,
-        comments.value.length
+        (previousValue, comment) => previousValue + comment.children?.length,
+        initialValue
       );
       return sum;
     });

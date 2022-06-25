@@ -21,10 +21,11 @@ import {
   faXmark,
   faMagnifyingGlass,
   faMessage,
+  faPenToSquare,
 } from "@fortawesome/free-solid-svg-icons";
 
 /* add icons to the library */
-library.add(faXmark, faMagnifyingGlass, faMessage);
+library.add(faXmark, faMagnifyingGlass, faMessage, faPenToSquare);
 
 const requireComponent = require.context(
   "./components",

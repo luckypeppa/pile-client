@@ -1,9 +1,9 @@
 <template>
   <div class="comment">
     <div class="header">
-      <h3 class="author">{{ comment.author.username }}</h3>
+      <h3 class="author">{{ comment.author?.username }}</h3>
       <p v-if="sub && comment.replyTo">
-        {{ "Reply to " + comment.replyTo.username }}
+        {{ "Reply to " + comment.replyTo?.username }}
       </p>
     </div>
     <p class="body">
@@ -13,8 +13,16 @@
       <base-button
         prependIcon="fa-solid fa-message"
         text
+        @click="toggleInputer({ comment, isEditingBoolean: false })"
+      ></base-button>
+      <base-button
+        prependIcon="fa-solid fa-pen-to-square"
+        text
         @click="
-          toggleInputer({ commentId: comment._id, replyTo: comment.author })
+          toggleInputer({
+            comment,
+            isEditingBoolean: true,
+          })
         "
       ></base-button>
     </div>
@@ -28,10 +36,11 @@
       />
     </div>
     <comment-input
-      :replyToUser="replyToUser"
       :parentId="comment._id"
+      :selectedComment="selectedComment"
       v-if="inputerOpen && !sub"
       @close:inputer="closeInputer"
+      :isEditing="isEditing"
     />
   </div>
 </template>
@@ -61,18 +70,22 @@ export default {
     const replyToUser = ref({});
 
     // indicate which comment the user is replying to
-    const activeCommentId = ref("");
+    const selectedComment = ref({});
+    const isEditing = ref(false);
 
-    function toggleInputer({ commentId, replyTo }) {
+    function toggleInputer({ comment, isEditingBoolean }) {
       if (props.sub) {
-        context.emit("toggle:inputer", { commentId, replyTo });
+        context.emit("toggle:inputer", { comment, isEditingBoolean });
       } else {
-        if (commentId === activeCommentId.value) {
+        if (
+          comment._id === selectedComment.value._id &&
+          isEditing.value === isEditingBoolean
+        ) {
           inputerOpen.value = !inputerOpen.value;
         } else {
           inputerOpen.value = true;
-          replyToUser.value = replyTo;
-          activeCommentId.value = commentId;
+          selectedComment.value = comment;
+          isEditing.value = isEditingBoolean;
         }
       }
     }
@@ -86,6 +99,8 @@ export default {
       toggleInputer,
       replyToUser,
       closeInputer,
+      selectedComment,
+      isEditing,
     };
   },
 };
@@ -114,6 +129,11 @@ export default {
   .body {
     color: rgb(98, 97, 97);
     margin-bottom: 1rem;
+  }
+
+  .actions {
+    display: flex;
+    gap: 1rem;
   }
 
   .sub-comments {
