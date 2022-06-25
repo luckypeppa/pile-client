@@ -8,6 +8,7 @@ export default createStore({
     posts: [],
     tags: [],
     currentPost: {},
+    currentComments: [],
     notification: null,
   },
   getters: {
@@ -15,7 +16,7 @@ export default createStore({
       return !!state.user;
     },
     isAdmin(state) {
-      return state.user.role === "admin";
+      return state.user && state.user.role.name === "admin";
     },
     getPost(state) {
       return (id) => {
@@ -60,6 +61,20 @@ export default createStore({
     },
     SET_TAGS(state, tags) {
       state.tags = tags;
+    },
+    SET_CURRENT_COMMENTS(state, comments) {
+      state.currentComments = comments;
+    },
+    ADD_CURRENT_COMMENT(state, comment) {
+      if (!comment.parent) {
+        state.currentComments.push(comment);
+      } else {
+        state.currentComments.forEach((parent) => {
+          if (parent._id === comment.parent) {
+            parent.children.push(comment);
+          }
+        });
+      }
     },
   },
   actions: {

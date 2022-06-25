@@ -29,9 +29,8 @@ const userSchema = new Schema(
 // specify the transform schema option
 if (!userSchema.options.toObject) userSchema.options.toObject = {};
 userSchema.options.toObject.transform = function (doc, ret) {
-  // remove the _id of every document before returning the result
+  // remove the password of every document before returning the result
   delete ret.hashedPassword;
-  ret.role = ret.role.name;
   return ret;
 };
 

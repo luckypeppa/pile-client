@@ -1,5 +1,10 @@
 <template>
-  <button @click="onClick">
+  <button @click="onClick" :class="{ text }">
+    <font-awesome-icon
+      :icon="prependIcon"
+      v-if="prependIcon"
+      class="prependIcon"
+    ></font-awesome-icon>
     <div class="loading" v-if="isLoading"></div>
     <slot v-else></slot>
   </button>
@@ -12,6 +17,12 @@ export default {
     isLoading: {
       type: Boolean,
       default: false,
+    },
+    prependIcon: {
+      type: String,
+    },
+    text: {
+      type: Boolean,
     },
   },
   mounted() {
@@ -43,6 +54,7 @@ button {
   font-size: 1rem;
   font-weight: 700;
   cursor: pointer;
+  color: white;
 
   .loading {
     width: 1.5rem;
@@ -53,6 +65,14 @@ button {
     border-right: 2px solid white;
     border-bottom: 2px solid transparent;
     border-radius: 50%;
+  }
+
+  &.text {
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+    color: black;
+    padding: 0;
   }
 }
 </style>

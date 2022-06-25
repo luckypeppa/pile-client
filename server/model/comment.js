@@ -16,24 +16,34 @@ const commentSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "Blog",
     },
-    children: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "Comment",
-      },
-    ],
+    parent: {
+      type: Schema.Types.ObjectId,
+      ref: "Comment",
+    },
+    replyTo: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+    },
   },
-  { timestamps: true }
+  { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );
 
-// specify the transform schema option
-if (!commentSchema.options.toObject) commentSchema.options.toObject = {};
-commentSchema.options.toObject.transform = async function (doc, ret) {
-  await doc.populate("author", "username");
-  await doc.populate("children");
-  ret = doc;
-  return ret;
-};
+// Specifying a virtual with a `ref` property is how you enable virtual
+// population
+// commentSchema.virtual("children", {
+//   ref: "Comment",
+//   localField: "_id",
+//   foreignField: "parent",
+// });
+
+// // specify the transform schema option
+// if (!commentSchema.options.toObject) commentSchema.options.toObject = {};
+// commentSchema.options.toObject.transform = async function (doc, ret) {
+//   await doc.populate("author", "username");
+//   await doc.populate("children");
+//   ret = doc;
+//   return ret;
+// };
 
 const Comment = mongoose.model("Comment", commentSchema);
 module.exports = Comment;
