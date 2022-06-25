@@ -44,7 +44,7 @@ export default {
   setup(props, context) {
     const store = useStore();
 
-    const body = ref(props.selectedComment?.body);
+    const body = ref(props.isEditing ? props.selectedComment?.body : "");
 
     function createComment() {
       commentApi
