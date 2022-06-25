@@ -1,6 +1,14 @@
 <template>
   <div class="inputer-container">
-    <textarea name="" id="" cols="30" rows="5" class="inputer" v-model="body" />
+    <textarea
+      name=""
+      id=""
+      cols="30"
+      rows="5"
+      class="inputer"
+      v-model="body"
+      ref="input"
+    />
     <div class="actions">
       <p v-if="selectedComment?.replyTo" class="reply-to">
         {{ "Reply to " + selectedComment?.replyTo.username }}
@@ -21,7 +29,7 @@
 </template>
 
 <script>
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import commentApi from "@/services/comment";
 import { useStore } from "vuex";
 export default {
@@ -109,7 +117,13 @@ export default {
         });
     }
 
-    return { body, createComment, deleteComment, updateComment };
+    // focus on input when the compoent has been opened.
+    const input = ref();
+    onMounted(() => {
+      input.value.focus();
+    });
+
+    return { body, createComment, deleteComment, updateComment, input };
   },
 };
 </script>

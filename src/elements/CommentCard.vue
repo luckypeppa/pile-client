@@ -1,5 +1,5 @@
 <template>
-  <div class="comment">
+  <div class="comment" @click="closeInputer">
     <div class="header">
       <h3 class="author">{{ comment.author?.username }}</h3>
       <p v-if="sub && comment.replyTo">
@@ -41,6 +41,7 @@
       v-if="inputerOpen && !sub"
       @close:inputer="closeInputer"
       :isEditing="isEditing"
+      @click.stop
     />
   </div>
 </template>
