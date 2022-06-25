@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import { onUpdated, ref } from "vue";
+import { ref } from "vue";
 import commentApi from "@/services/comment";
 import { useStore } from "vuex";
 export default {
@@ -44,9 +44,13 @@ export default {
 
     const body = ref(props.selectedComment?.body);
 
-    onUpdated(() => {
-      body.value = props.selectedComment?.body;
-    });
+    // watch(props.selectedComment, (newValue) => {
+    //   body.value = newValue.body;
+    // });
+
+    // onUpdated(() => {
+    //   body.value = props.selectedComment?.body;
+    // });
 
     function createComment() {
       commentApi

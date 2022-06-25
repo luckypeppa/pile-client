@@ -83,9 +83,12 @@ export default {
         ) {
           inputerOpen.value = !inputerOpen.value;
         } else {
-          inputerOpen.value = true;
-          selectedComment.value = comment;
-          isEditing.value = isEditingBoolean;
+          inputerOpen.value = false;
+          setTimeout(() => {
+            inputerOpen.value = true;
+            selectedComment.value = comment;
+            isEditing.value = isEditingBoolean;
+          });
         }
       }
     }

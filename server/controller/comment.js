@@ -99,6 +99,28 @@ async function deleteComment(req, res) {
     .send({ message: "The deleting of the comment failed." });
 }
 
+async function updateComment(req, res) {
+  const commentId = req.params.commentId;
+  const body = req.body.body;
+
+  try {
+    const updatedComment = await Comment.findByIdAndUpdate(
+      commentId,
+      {
+        body,
+      },
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
+
+    return res.json(updatedComment);
+  } catch (err) {
+    return res.status(400).json({ message: err.message });
+  }
+}
+
 // check if exists
 async function checkExistenceById(id, Model, name, res) {
   const document = await Model.findById(id).exec();
@@ -111,4 +133,5 @@ module.exports = {
   createComment,
   getAllCommentsByBlogId,
   deleteComment,
+  updateComment,
 };
