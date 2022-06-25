@@ -74,7 +74,6 @@ export default {
 .comments-container {
   margin-top: 5rem;
   background-color: #fff;
-  //   box-shadow: 0px 0px 14px -2px rgba(0, 0, 0, 0.17);
   padding: 2rem;
   border-radius: 2rem;
   margin-inline: auto;

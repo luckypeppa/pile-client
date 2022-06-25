@@ -85,6 +85,21 @@ async function getAllCommentsByBlogId(req, res) {
   }
 }
 
+async function deleteComment(req, res) {
+  const commentId = req.params.commentId;
+
+  const result = await Comment.deleteOne({ _id: commentId });
+
+  if (result.deletedCount === 1) {
+    return res.sendStatus(200);
+  }
+
+  return res
+    .status(400)
+    .send({ message: "The deleting of the comment failed." });
+}
+
+// check if exists
 async function checkExistenceById(id, Model, name, res) {
   const document = await Model.findById(id).exec();
   if (!document)
@@ -95,4 +110,5 @@ async function checkExistenceById(id, Model, name, res) {
 module.exports = {
   createComment,
   getAllCommentsByBlogId,
+  deleteComment,
 };
