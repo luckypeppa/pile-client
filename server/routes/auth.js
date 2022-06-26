@@ -44,6 +44,7 @@ router.post("/register", async (req, res) => {
       role: userRole._id,
     });
     await newUser.save();
+    user.populate("role", "name");
     const user = newUser.toObject();
 
     // generate access token and refresh token
@@ -90,6 +91,7 @@ router.post("/login", async (req, res) => {
     if (!result)
       return res.status(403).json({ message: "Incorrect password." });
 
+    existedUser.populate("role", "name");
     const user = existedUser.toObject();
 
     // generate access token and refresh token

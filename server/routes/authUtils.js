@@ -13,8 +13,11 @@ function authenticateToken(req, res, next) {
 
 function authenticateRole(req, res, next) {
   const user = req.user;
-  if (user.role === "admin") next();
-  res.status(403).json({ message: "The action is forbidden." });
+  if (user.role.name === "admin") {
+    next();
+  } else {
+    res.status(403).json({ message: "The action is forbidden." });
+  }
 }
 
 module.exports = {

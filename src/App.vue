@@ -62,8 +62,6 @@ body {
 .ProseMirror {
   margin-bottom: 1rem;
   min-height: 10rem;
-  border: 1px solid black;
-  border-radius: 0.5rem;
   padding: 2rem;
 
   &.post-body {
