@@ -12,7 +12,7 @@
       </div>
       <p class="snippet">{{ post.snippet }}</p>
       <time v-if="post.createdAt">{{
-        new Date(this.post.createdAt).toString()
+        $d(new Date(post.createdAt), "long", $i18n.locale)
       }}</time>
     </div>
     <div class="cover">

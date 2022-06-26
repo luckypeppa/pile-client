@@ -62,6 +62,7 @@ export default {
       },
     });
 
+    // set validation schema with yup
     const validationSchema = object({
       email: string().email().required(),
       username: string().min(6).max(12).required(),
@@ -134,7 +135,7 @@ export default {
 
 <style lang="scss">
 .user-form {
-  width: min(90%, 10rem);
+  width: min(90%, 20rem);
   margin: auto;
   display: flex;
   flex-direction: column;

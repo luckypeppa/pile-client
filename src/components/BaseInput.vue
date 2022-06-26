@@ -59,11 +59,10 @@ export default {
 
 <style lang="scss" scoped>
 .baseinput-container {
-  width: min(20rem, 100%);
+  width: min(25rem, 100%);
   display: flex;
   flex-direction: column;
   gap: 0.3rem;
-  border-bottom: 1px solid black;
 
   &.outlined {
     border: none;
@@ -101,6 +100,8 @@ export default {
     display: flex;
     align-items: center;
     gap: 1rem;
+    border-bottom: 1px solid black;
+    margin-bottom: 0.5rem;
 
     input {
       width: 100%;

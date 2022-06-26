@@ -23,10 +23,46 @@ function loadLocaleMessages() {
   return messages;
 }
 
+// datetimeFormates
+const datetimeFormats = {
+  en: {
+    short: {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    },
+    long: {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+      weekday: "short",
+      hour: "numeric",
+      minute: "numeric",
+    },
+  },
+  zh: {
+    short: {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    },
+    long: {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+      weekday: "long",
+      hour: "numeric",
+      minute: "numeric",
+      hour12: true,
+    },
+  },
+};
+
 export default createI18n({
   legacy: false,
   locale: process.env.VUE_APP_I18N_LOCALE || "en",
   fallbackLocale: process.env.VUE_APP_I18N_FALLBACK_LOCALE || "en",
   messages: loadLocaleMessages(),
   globalInjection: true,
+  datetimeFormats,
 });

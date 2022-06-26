@@ -25,6 +25,13 @@ export default {
   border: 0;
 }
 
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Roboto:wght@300;400;500;700&display=swap");
+
+html {
+  font-family: "Noto Sans SC", sans-serif;
+  font-family: "Roboto", sans-serif;
+}
+
 body {
   overflow-x: hidden;
   background-color: white;

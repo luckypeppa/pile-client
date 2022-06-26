@@ -17,7 +17,7 @@ export default {};
   background-position: center center;
 
   .form-container {
-    width: min(20rem, 100%);
+    width: min(25rem, 100%);
     margin: auto;
     padding-top: 7rem;
   }

@@ -2,7 +2,7 @@
   <div class="detail-container">
     <div class="time-container">
       <time v-if="post.createdAt" class="time">{{
-        new Date(post.createdAt).toString()
+        $d(new Date(post.createdAt), "long", $i18n.locale)
       }}</time>
       <tag-button
         :tag="tag.name"
