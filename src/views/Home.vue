@@ -2,15 +2,15 @@
   <div class="container">
     <div class="search-container">
       <base-input
-        label="Search"
+        :label="$t('home.search.label')"
         v-model="searchInput"
         prependIcon="fa-solid fa-magnifying-glass"
         outlined
       ></base-input>
     </div>
     <app-tags></app-tags>
-    <p>Home</p>
-    <h1>Hello, I am Pipi.</h1>
+    <p>{{ $t("navbar.home") }}</p>
+    <h1>{{ $t("home.welcome") }}</h1>
     <div class="posts">
       <post-card v-for="(post, index) in posts" :key="index" :post="post" />
     </div>

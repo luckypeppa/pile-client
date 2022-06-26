@@ -8,6 +8,7 @@ import "nprogress/nprogress.css";
 import axios from "axios";
 import { h } from "vue";
 import authApi from "@/services/auth";
+import i18n from "./i18n";
 
 // fontawesome
 /* import the fontawesome core */
@@ -26,12 +27,6 @@ import {
 
 /* add icons to the library */
 library.add(faXmark, faMagnifyingGlass, faMessage, faPenToSquare);
-
-const requireComponent = require.context(
-  "./components",
-  false,
-  /Base[A-Z]\w+\.(vue|js)$/
-);
 
 let isRefreshing = false;
 
@@ -79,11 +74,20 @@ const app = createApp({
   },
   render: () => h(App),
 })
+  .use(i18n)
   .use(store)
   .use(router);
 
 // add fontawesome
 app.component("font-awesome-icon", FontAwesomeIcon);
+
+// add all components starts with Base
+
+const requireComponent = require.context(
+  "./components",
+  false,
+  /Base[A-Z]\w+\.(vue|js)$/
+);
 
 requireComponent.keys().forEach((fileName) => {
   const componentConfig = requireComponent(fileName);

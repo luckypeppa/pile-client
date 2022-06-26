@@ -1,0 +1,15 @@
+{
+  "navbar": {
+    "home": "Home",
+    "create": "Create",
+    "register": "Register",
+    "login": "Login",
+    "logout": "Logout"
+  },
+  "home": {
+    "search": {
+      "label": "搜索"
+    },
+    "welcome": "你好， 我是皮皮!"
+  }
+}

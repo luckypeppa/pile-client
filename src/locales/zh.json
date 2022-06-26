@@ -1,0 +1,15 @@
+{
+  "navbar": {
+    "home": "主页",
+    "create": "发帖",
+    "register": "注册",
+    "login": "登录",
+    "logout": "退出"
+  },
+  "home": {
+    "search": {
+      "label": "搜索"
+    },
+    "intro": "你好， 我是皮皮"
+  }
+}

@@ -12,101 +12,113 @@ import NetworkError from "../views/NetworkError.vue";
 import NProgress from "nprogress";
 import store from "@/store";
 import postApi from "@/services/post";
+import i18n from "../i18n";
+import LanguageLayout from "@/views/LanguageLayout";
 
 const routes = [
   {
     path: "/",
-    name: "home",
-    beforeEnter: (to, from, next) => {
-      store.commit("REMOVE_POSTS");
-      postApi
-        .getAll()
-        .then((res) => {
-          store.commit("SET_POSTS", res.data);
-          return postApi.getAllTags();
-        })
-        .then((res) => {
-          store.commit("SET_TAGS", res.data.tags);
-          next();
-        })
-        .catch((err) => {
-          console.log(err);
-          next({ name: "NetworkError" });
-        });
-    },
-    component: Home,
+    redirect: `/${i18n.global.locale.value}`,
   },
   {
-    path: "/auth",
-    name: "auth",
-    component: AuthLayout,
-    children: [
-      {
-        path: "register",
-        name: "register",
-        component: AuthRegister,
-      },
-      {
-        path: "login",
-        name: "login",
-        component: AuthLogin,
-      },
-    ],
-  },
-  {
-    path: "/create",
-    name: "PostCreate",
-    component: PostCreate,
-    meta: {
-      requireAuth: true,
-    },
-  },
-  {
-    path: "/post/:id",
-    name: "PostLayout",
-    props: true,
-    component: PostLayout,
+    path: "/:language",
+    component: LanguageLayout,
     children: [
       {
         path: "",
-        name: "PostDetail",
-        component: PostDetail,
+        name: "home",
+        beforeEnter: (to, from, next) => {
+          store.commit("REMOVE_POSTS");
+          postApi
+            .getAll()
+            .then((res) => {
+              store.commit("SET_POSTS", res.data);
+              return postApi.getAllTags();
+            })
+            .then((res) => {
+              store.commit("SET_TAGS", res.data.tags);
+              next();
+            })
+            .catch((err) => {
+              console.log(err);
+              next({ name: "NetworkError" });
+            });
+        },
+        component: Home,
       },
       {
-        path: "edit",
-        name: "PostEdit",
-        component: PostEdit,
+        path: "auth",
+        name: "auth",
+        component: AuthLayout,
+        children: [
+          {
+            path: "register",
+            name: "register",
+            component: AuthRegister,
+          },
+          {
+            path: "login",
+            name: "login",
+            component: AuthLogin,
+          },
+        ],
+      },
+      {
+        path: "create",
+        name: "PostCreate",
+        component: PostCreate,
         meta: {
           requireAuth: true,
         },
       },
+      {
+        path: "post/:id",
+        name: "PostLayout",
+        props: true,
+        component: PostLayout,
+        children: [
+          {
+            path: "",
+            name: "PostDetail",
+            component: PostDetail,
+          },
+          {
+            path: "edit",
+            name: "PostEdit",
+            component: PostEdit,
+            meta: {
+              requireAuth: true,
+            },
+          },
+        ],
+      },
+      {
+        path: "404/:resource",
+        name: "404",
+        component: NotFound,
+        props: true,
+      },
+      {
+        path: ":catchAll(.*)",
+        name: "NotFound",
+        component: NotFound,
+      },
+      {
+        path: "network-error",
+        name: "NetworkError",
+        component: NetworkError,
+      },
+      // {
+      //   path: "/about",
+      //   name: "about",
+      //   // route level code-splitting
+      //   // this generates a separate chunk (about.[hash].js) for this route
+      //   // which is lazy-loaded when the route is visited.
+      //   component: () =>
+      //     import(/* webpackChunkName: "about" */ "../views/AboutView.vue"),
+      // },
     ],
   },
-  {
-    path: "/404/:resource",
-    name: "404",
-    component: NotFound,
-    props: true,
-  },
-  {
-    path: "/:catchAll(.*)",
-    name: "NotFound",
-    component: NotFound,
-  },
-  {
-    path: "/network-error",
-    name: "NetworkError",
-    component: NetworkError,
-  },
-  // {
-  //   path: "/about",
-  //   name: "about",
-  //   // route level code-splitting
-  //   // this generates a separate chunk (about.[hash].js) for this route
-  //   // which is lazy-loaded when the route is visited.
-  //   component: () =>
-  //     import(/* webpackChunkName: "about" */ "../views/AboutView.vue"),
-  // },
 ];
 
 const router = createRouter({
@@ -122,8 +134,11 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  NProgress.start();
+  const language = to.params.language;
 
+  i18n.global.locale.value = language;
+
+  NProgress.start();
   const isLogin = store.getters.isLogin;
   if (to.meta.requireAuth && !isLogin) {
     next({ name: "home" });

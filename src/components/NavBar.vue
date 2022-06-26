@@ -1,28 +1,34 @@
 <template>
   <nav class="navbar">
-    <h1><router-link :to="{ name: 'home' }">PiLE</router-link></h1>
-    <router-link :to="{ name: 'home' }">Home</router-link>
+    <h1>
+      <router-link :to="{ name: 'home', params: { language: $i18n.locale } }"
+        >PiLE</router-link
+      >
+    </h1>
+    <router-link :to="{ name: 'home', params: { language: $i18n.locale } }">{{
+      $t("navbar.home")
+    }}</router-link>
     <router-link
-      :to="{ name: 'PostCreate' }"
+      :to="{ name: 'PostCreate', params: { language: $i18n.locale } }"
       v-if="isAdmin && isLogin"
       data-test-id="navbar-create"
-      >Create</router-link
+      >{{ $t("navbar.create") }}</router-link
     >
     <router-link
-      :to="{ name: 'register' }"
+      :to="{ name: 'register', params: { language: $i18n.locale } }"
       v-if="!isLogin"
       data-test-id="navbar-register"
-      >Register</router-link
+      >{{ $t("navbar.register") }}</router-link
     >
     <router-link
-      :to="{ name: 'login' }"
+      :to="{ name: 'login', params: { language: $i18n.locale } }"
       v-if="!isLogin"
       data-test-id="navbar-login"
-      >Login</router-link
+      >{{ $t("navbar.login") }}</router-link
     >
-    <BaseButton @click="logout" v-if="isLogin" data-test-id="navbar-logout"
-      >Logout</BaseButton
-    >
+    <BaseButton @click="logout" v-if="isLogin" data-test-id="navbar-logout">{{
+      $t("navbar.logout")
+    }}</BaseButton>
   </nav>
 </template>
 
