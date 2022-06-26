@@ -14,5 +14,29 @@
       "label": "搜索"
     },
     "welcome": "你好， 我是皮皮"
+  },
+  "postComments": {
+    "title": "评论"
+  },
+  "commentInputer": {
+    "buttons": {
+      "send": "发送",
+      "update": "更新",
+      "delete": "删除"
+    },
+    "replyTo": "回复"
+  },
+  "auth": {
+    "title": {
+      "login": "登录",
+      "register": "注册"
+    },
+    "username": "用户名",
+    "email": "邮箱",
+    "password": "密码",
+    "buttons": {
+      "login": "登录",
+      "register": "注册"
+    }
   }
 }

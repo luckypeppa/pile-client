@@ -1,21 +1,26 @@
 <template>
   <form @submit.prevent="login" class="user-form">
-    <h2>LOGIN</h2>
+    <h2>{{ $t("auth.title.login") }}</h2>
     <BaseInput
       v-model="username"
-      label="Username"
+      :label="$t('auth.username')"
       type="text"
       required="true"
     />
     <BaseInput
       v-model="password"
-      label="Password"
+      :label="$t('auth.password')"
       type="password"
       required="true"
     />
-    <BaseButton type="submit" :style="{ width: '100%' }">Login</BaseButton>
+    <BaseButton type="submit" :style="{ width: '100%' }">{{
+      $t("auth.buttons.login")
+    }}</BaseButton>
     <p class="error" v-if="error">{{ error }}</p>
-    <router-link :to="{ name: 'register' }">Register</router-link>
+    <router-link
+      :to="{ name: 'register', params: { language: $i18n.locale } }"
+      >{{ $t("auth.buttons.register") }}</router-link
+    >
   </form>
 </template>
 

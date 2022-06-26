@@ -2,7 +2,7 @@
   <section class="comments-container" :style="{ width: width }">
     <header class="header" v-if="hasComments">
       <h2 class="title">
-        Comments
+        {{ $t("postComments.title") }}
         <span class="badge">{{ numOfComments }}</span>
       </h2>
     </header>

@@ -14,5 +14,29 @@
       "label": "Search"
     },
     "welcome": "Hello, I am Pipi!"
+  },
+  "postComments": {
+    "title": "Comments"
+  },
+  "commentInputer": {
+    "buttons": {
+      "send": "Send",
+      "update": "Update",
+      "delete": "Delete"
+    },
+    "replyTo": "Reply to"
+  },
+  "auth": {
+    "title": {
+      "login": "LOGIN",
+      "register": "REGISTER"
+    },
+    "username": "Username",
+    "email": "Email",
+    "password": "Password",
+    "buttons": {
+      "login": "Login",
+      "register": "Register"
+    }
   }
 }

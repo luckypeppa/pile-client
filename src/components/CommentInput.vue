@@ -11,18 +11,20 @@
     />
     <div class="actions">
       <p v-if="selectedComment?.replyTo" class="reply-to">
-        {{ "Reply to " + selectedComment?.replyTo.username }}
+        {{
+          $t("commentInputer.replyTo") + " " + selectedComment?.replyTo.username
+        }}
       </p>
       <div class="buttons">
-        <base-button @click="createComment" v-show="!isEditing"
-          >Send</base-button
-        >
-        <base-button v-show="isEditing" @click="updateComment"
-          >Update</base-button
-        >
-        <base-button v-show="isEditing" @click="deleteComment"
-          >Delete</base-button
-        >
+        <base-button @click="createComment" v-show="!isEditing">{{
+          $t("commentInputer.buttons.send")
+        }}</base-button>
+        <base-button v-show="isEditing" @click="updateComment">{{
+          $t("commentInputer.buttons.update")
+        }}</base-button>
+        <base-button v-show="isEditing" @click="deleteComment">{{
+          $t("commentInputer.buttons.delete")
+        }}</base-button>
       </div>
     </div>
   </div>
@@ -151,6 +153,10 @@ export default {
     display: flex;
     justify-content: space-between;
     gap: 2rem;
+
+    .reply-to {
+      vertical-align: bottom;
+    }
 
     .buttons {
       display: flex;

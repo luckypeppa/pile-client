@@ -1,27 +1,29 @@
 <template>
   <form @submit="submit" class="user-form">
-    <h2>REGISTER</h2>
+    <h2>{{ $t("auth.title.register") }}</h2>
     <BaseInput
       v-model="username"
-      label="Username"
+      :label="$t('auth.username')"
       type="text"
       :error="errors.username"
     />
     <BaseInput
       v-model="email"
-      label="Email"
+      :label="$t('auth.email')"
       type="email"
       :error="errors.email"
     />
     <BaseInput
       v-model="password"
-      label="Password"
+      :label="$t('auth.password')"
       type="password"
       :error="errors.password"
     />
     <p class="error" v-if="error">{{ error }}</p>
-    <BaseButton type="submit">Register</BaseButton>
-    <router-link :to="{ name: 'login' }">Login</router-link>
+    <BaseButton type="submit">{{ $t("auth.buttons.register") }}</BaseButton>
+    <router-link :to="{ name: 'login', params: { language: $i18n.locale } }">{{
+      $t("auth.buttons.login")
+    }}</router-link>
   </form>
 </template>
 
