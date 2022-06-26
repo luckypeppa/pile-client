@@ -5,6 +5,11 @@
         >PiLE</router-link
       >
     </h1>
+    <base-select
+      :label="$t('navbar.language.label')"
+      :options="$i18n.availableLocales"
+      v-model="$i18n.locale"
+    ></base-select>
     <router-link :to="{ name: 'home', params: { language: $i18n.locale } }">{{
       $t("navbar.home")
     }}</router-link>

@@ -4,12 +4,15 @@
     "create": "Create",
     "register": "Register",
     "login": "Login",
-    "logout": "Logout"
+    "logout": "Logout",
+    "language": {
+      "label": "Language"
+    }
   },
   "home": {
     "search": {
-      "label": "搜索"
+      "label": "Search"
     },
-    "welcome": "你好， 我是皮皮!"
+    "welcome": "Hello, I am Pipi!"
   }
 }

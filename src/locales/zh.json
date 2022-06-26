@@ -4,12 +4,15 @@
     "create": "发帖",
     "register": "注册",
     "login": "登录",
-    "logout": "退出"
+    "logout": "退出",
+    "language": {
+      "label": "语言"
+    }
   },
   "home": {
     "search": {
       "label": "搜索"
     },
-    "intro": "你好， 我是皮皮"
+    "welcome": "你好， 我是皮皮"
   }
 }
