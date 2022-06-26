@@ -36,6 +36,7 @@ export default {
       required: true,
     },
   },
+  emits: ["update:modelValue"],
   setup() {
     const uuid = UUID();
 

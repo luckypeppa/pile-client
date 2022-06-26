@@ -5,19 +5,19 @@
       v-model="username"
       :label="$t('auth.username')"
       type="text"
-      :error="errors.username"
+      :error="messages.username"
     />
     <BaseInput
       v-model="email"
       :label="$t('auth.email')"
       type="email"
-      :error="errors.email"
+      :error="messages.email"
     />
     <BaseInput
       v-model="password"
       :label="$t('auth.password')"
       type="password"
-      :error="errors.password"
+      :error="messages.password"
     />
     <p class="error" v-if="error">{{ error }}</p>
     <BaseButton type="submit">{{ $t("auth.buttons.register") }}</BaseButton>
@@ -29,11 +29,12 @@
 
 <script>
 import { useForm, useField } from "vee-validate";
-import { object, string } from "yup";
+import { object, string, setLocale } from "yup";
 import api from "../../services/api";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
-import { ref } from "vue";
+import { ref, computed } from "vue";
+import { useI18n } from "vue-i18n";
 
 export default {
   name: "userRegister",
@@ -43,16 +44,33 @@ export default {
 
     const error = ref("");
 
+    // set error locale key
+    setLocale({
+      string: {
+        email: {
+          default: "errors.invalidEmail",
+        },
+        min: ({ min }) => ({ key: "errors.tooShort", value: { min } }),
+        max: ({ max }) => ({ key: "errors.tooLong", value: { max } }),
+        required: {
+          default: "errors.required",
+        },
+        matches: ({ matches }) => ({
+          key: "errors.matches",
+          value: { matches },
+        }),
+      },
+    });
+
     const validationSchema = object({
       email: string().email().required(),
       username: string().min(6).max(12).required(),
       password: string()
         .min(12)
         .required()
-        .matches(
-          /^.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?].*$/,
-          "Password must at least have one special character."
-        ),
+        .matches(/^.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?].*$/, {
+          message: "errors.oneSymbol",
+        }),
     });
 
     const { handleSubmit, errors } = useForm({
@@ -84,12 +102,30 @@ export default {
           error.value = err.response.data.message;
         });
     });
+
+    // retrieve error locale from i18n
+    const { t } = useI18n();
+
+    const messages = computed(() => {
+      const msgs = {};
+      for (const [key, error] of Object.entries(errors.value)) {
+        if (error.key) {
+          msgs[key] = t(error.key, error.value || {});
+        } else if (error.default) {
+          msgs[key] = t(error.default);
+        } else {
+          msgs[key] = t(error);
+        }
+      }
+      return msgs;
+    });
+
     return {
       submit,
       email,
       username,
       password,
-      errors,
+      messages,
       error,
     };
   },

@@ -38,5 +38,12 @@
       "login": "登录",
       "register": "注册"
     }
+  },
+  "errors": {
+    "tooShort": "请输入至少{min}位。",
+    "tooLong": "请输入最多{max}位。",
+    "invalidEmail": "请输入正确的邮箱地址。",
+    "required": "不能为空。",
+    "oneSymbol": "请输入最少一个符号。"
   }
 }

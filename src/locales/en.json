@@ -38,5 +38,12 @@
       "login": "Login",
       "register": "Register"
     }
+  },
+  "errors": {
+    "tooShort": "At Least has {min} characters.",
+    "tooLong": "At Most has {max} characters.",
+    "invalidEmail": "Please input correct email address.",
+    "required": "This field can not be empty.",
+    "oneSymbol": "At least one symbol."
   }
 }
