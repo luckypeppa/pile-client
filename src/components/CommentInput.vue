@@ -68,7 +68,6 @@ export default {
           replyToId: props.selectedComment?.author._id,
         })
         .then((res) => {
-          console.log(res.data);
           store.commit("ADD_CURRENT_COMMENT", res.data);
           store.commit("SET_NOTIFICATION", {
             message: t("resources.comment.created"),

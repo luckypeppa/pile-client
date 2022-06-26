@@ -49,10 +49,9 @@ export default {
     // get total number of comments
     const numOfComments = computed(() => {
       const initialValue = comments.value.length;
-      const sum = comments.value.reduce(
-        (previousValue, comment) => previousValue + comment.children?.length,
-        initialValue
-      );
+      const sum = comments.value.reduce((previousValue, comment) => {
+        return previousValue + (comment.children?.length || 0);
+      }, initialValue);
       return sum;
     });
 
