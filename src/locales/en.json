@@ -45,5 +45,12 @@
     "invalidEmail": "Please input correct email address.",
     "required": "This field can not be empty.",
     "oneSymbol": "At least one symbol."
+  },
+  "resources": {
+    "comment": {
+      "created": "You have posted a comment.",
+      "updated": "You have updated the comment.",
+      "deleted": "You have deleted the comment."
+    }
   }
 }

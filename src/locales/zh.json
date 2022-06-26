@@ -45,5 +45,12 @@
     "invalidEmail": "请输入正确的邮箱地址。",
     "required": "不能为空。",
     "oneSymbol": "请输入最少一个符号。"
+  },
+  "resources": {
+    "comment": {
+      "created": "评论发布成功。",
+      "updated": "评论更新成功.",
+      "deleted": "评论删除成功。"
+    }
   }
 }

@@ -34,6 +34,7 @@
 import { onMounted, ref } from "vue";
 import commentApi from "@/services/comment";
 import { useStore } from "vuex";
+import { useI18n } from "vue-i18n";
 export default {
   props: {
     parentId: {
@@ -53,6 +54,7 @@ export default {
   emits: ["close:inputer"],
   setup(props, context) {
     const store = useStore();
+    const { t } = useI18n();
 
     const body = ref(props.isEditing ? props.selectedComment?.body : "");
 
@@ -69,7 +71,7 @@ export default {
           console.log(res.data);
           store.commit("ADD_CURRENT_COMMENT", res.data);
           store.commit("SET_NOTIFICATION", {
-            message: "You have posted a comment.",
+            message: t("resources.comment.created"),
           });
           body.value = "";
           context.emit("close:inputer");
@@ -88,7 +90,7 @@ export default {
         .then(() => {
           store.commit("REMOVE_CURRENT_COMMENT", props.selectedComment._id);
           store.commit("SET_NOTIFICATION", {
-            message: "You have deleted the comment.",
+            message: t("resources.comment.deleted"),
           });
           context.emit("close:inputer");
         })
@@ -106,7 +108,7 @@ export default {
         .then((res) => {
           store.commit("UPDATE_CURRENT_COMMENT", res.data);
           store.commit("SET_NOTIFICATION", {
-            message: "You have updated the comment.",
+            message: t("resources.comment.updated"),
           });
           body.value = "";
           context.emit("close:inputer");
