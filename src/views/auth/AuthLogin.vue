@@ -45,7 +45,7 @@ export default {
       isLoading.value = true;
 
       axios
-        .post(process.env.VUE_APP_USER_LOGIN_URL, {
+        .post(process.env.VUE_APP_BASE_URL + "auth/login", {
           username: username.value,
           password: password.value,
         })

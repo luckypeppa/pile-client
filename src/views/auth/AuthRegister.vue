@@ -84,7 +84,7 @@ export default {
     const submit = handleSubmit((values) => {
       api
         .post(
-          process.env.VUE_APP_USER_REGISTER_URL,
+          process.env.VUE_APP_BASE_URL + "auth/register",
           {
             username: values.username,
             email: values.email,
