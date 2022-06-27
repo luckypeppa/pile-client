@@ -2,7 +2,7 @@
   <div class="no-comments">
     <comment-skeleton />
     <comment-skeleton :style="{ transform: 'translate(20%, -25%)' }" />
-    <h2>No Comments Yet</h2>
+    <h2>{{ $t("resources.comment.noComments") }}</h2>
   </div>
 </template>
 

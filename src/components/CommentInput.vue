@@ -8,6 +8,7 @@
       class="inputer"
       v-model="body"
       ref="input"
+      :placeholder="$t('resources.comment.placeholder')"
     />
     <div class="actions">
       <p v-if="selectedComment?.replyTo" class="reply-to">

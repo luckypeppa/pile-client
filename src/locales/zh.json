@@ -50,7 +50,9 @@
     "comment": {
       "created": "评论发布成功。",
       "updated": "评论更新成功.",
-      "deleted": "评论删除成功。"
+      "deleted": "评论删除成功。",
+      "noComments": "评论空空如也。",
+      "placeholder": "评论点啥吧。。。"
     }
   }
 }

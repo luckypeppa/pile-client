@@ -89,13 +89,13 @@
           text
         >
         </base-button>
-        <basee-button
+        <base-button
           @click="editor.chain().focus().toggleHeading({ level: 1 }).run()"
           :class="{ 'is-active': editor.isActive('heading', { level: 1 }) }"
           text
         >
           h1
-        </basee-button>
+        </base-button>
         <base-button
           @click="editor.chain().focus().toggleHeading({ level: 2 }).run()"
           :class="{ 'is-active': editor.isActive('heading', { level: 2 }) }"

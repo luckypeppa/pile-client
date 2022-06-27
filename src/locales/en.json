@@ -50,7 +50,9 @@
     "comment": {
       "created": "You have posted a comment.",
       "updated": "You have updated the comment.",
-      "deleted": "You have deleted the comment."
+      "deleted": "You have deleted the comment.",
+      "noComments": "No comments yet.",
+      "placeholder": "Say something...."
     }
   }
 }
