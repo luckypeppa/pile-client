@@ -1,7 +1,7 @@
 import axios from "axios";
 
 function getAllCommentsByBlogId(blogId) {
-  return axios.get(process.env.VUE_APP_BASE_URL + "comments" + "/" + blogId);
+  return axios.get(process.env.VUE_APP_BASE_URL + "comments/" + blogId);
 }
 
 function createComment(comment) {
@@ -9,11 +9,11 @@ function createComment(comment) {
 }
 
 function deleteComment(commentId) {
-  return axios.delete(process.env.VUE_APP_BASE_URL + "comments" + "/" + commentId);
+  return axios.delete(process.env.VUE_APP_BASE_URL + "comments/" + commentId);
 }
 
 function updateComment(commentId, body) {
-  return axios.post(process.env.VUE_APP_BASE_URL + "comments" + "/" + commentId, {
+  return axios.post(process.env.VUE_APP_BASE_URL + "comments/" + commentId, {
     body,
   });
 }

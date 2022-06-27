@@ -15,19 +15,19 @@ function uploadCover(img) {
 }
 
 function getPost(postId) {
-  return axios.get(process.env.VUE_APP_BASE_URL + "blogs" + "/" + postId);
+  return axios.get(process.env.VUE_APP_BASE_URL + "blogs/" + postId);
 }
 
 function updatePost(postId, post) {
-  return axios.post(process.env.VUE_APP_BASE_URL + "blogs" + "/" + postId, post);
+  return axios.post(process.env.VUE_APP_BASE_URL + "blogs/" + postId, post);
 }
 
 function deletePost(postId) {
-  return axios.delete(process.env.VUE_APP_BASE_URL + "blogs" + "/" + postId);
+  return axios.delete(process.env.VUE_APP_BASE_URL + "blogs/" + postId);
 }
 
 function getPostsByTag(tag) {
-  return axios.get(process.env.VUE_APP_BASE_URL + "blogs/tag" + "/" + tag);
+  return axios.get(process.env.VUE_APP_BASE_URL + "blogs/tag/" + tag);
 }
 
 function getAllTags() {
@@ -35,7 +35,7 @@ function getAllTags() {
 }
 
 function searchPosts(input) {
-  return axios.get(process.env.VUE_APP_BASE_URL + "blogs/search" + "/" + input);
+  return axios.get(process.env.VUE_APP_BASE_URL + "blogs/search/" + input);
 }
 
 export default {
