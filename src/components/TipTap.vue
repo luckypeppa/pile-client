@@ -42,6 +42,13 @@
           prependIcon="fa-solid fa-image"
         ></base-button>
         <base-button
+          @click="setLink"
+          :class="{ 'is-active': editor.isActive('link') }"
+          text
+        >
+          setLink
+        </base-button>
+        <base-button
           @click="editor.chain().focus().toggleBold().run()"
           :class="{ 'is-active': editor.isActive('bold') }"
           prependIcon="fa-solid fa-bold"
@@ -162,6 +169,7 @@
 <script>
 import { useEditor, EditorContent, BubbleMenu } from "@tiptap/vue-3";
 import StarterKit from "@tiptap/starter-kit";
+import Link from "@tiptap/extension-link";
 import Image from "@tiptap/extension-image";
 import postApi from "@/services/post";
 import { onBeforeUnmount, watch, ref } from "vue";
@@ -178,7 +186,7 @@ export default {
   },
   setup(props, context) {
     const editor = useEditor({
-      extensions: [StarterKit, Image],
+      extensions: [StarterKit, Image, Link],
       content: props.modelValue,
       autofocus: true,
       onUpdate: () => {
@@ -218,11 +226,37 @@ export default {
         .catch((err) => console.log("err:", err));
     }
 
+    // link
+    function setLink() {
+      const previousUrl = editor.value.getAttributes("link").href;
+      const url = window.prompt("URL", previousUrl);
+
+      // cancelled
+      if (url === null) {
+        return;
+      }
+
+      // empty
+      if (url === "") {
+        editor.value.chain().focus().extendMarkRange("link").unsetLink().run();
+
+        return;
+      }
+
+      // update link
+      editor.value
+        .chain()
+        .focus()
+        .extendMarkRange("link")
+        .setLink({ href: url })
+        .run();
+    }
+
     onBeforeUnmount(() => {
       editor.value.destroy();
     });
 
-    return { editor, addImage, triggerAddImage, imageInput };
+    return { editor, addImage, triggerAddImage, imageInput, setLink };
   },
 };
 </script>
