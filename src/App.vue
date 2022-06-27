@@ -1,7 +1,11 @@
 <template>
   <app-notification />
   <NavBar></NavBar>
-  <router-view></router-view>
+  <router-view v-slot="{ Component }">
+    <transition name="fade-out" mode="out-in">
+      <component :is="Component"></component>
+    </transition>
+  </router-view>
 </template>
 
 <script>
@@ -56,6 +60,20 @@ body {
     padding-inline: 2rem;
     padding-bottom: 10rem;
   }
+}
+
+// animation
+.fade-out-enter-from {
+  opacity: 0;
+}
+
+.fade-out-leave-to {
+  opacity: 0;
+}
+
+.fade-out-enter-active,
+.fade-out-leave-active {
+  transition: all 200ms ease-in-out;
 }
 
 /* Basic editor styles */

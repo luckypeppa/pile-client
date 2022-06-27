@@ -13,6 +13,7 @@ function authenticateToken(req, res, next) {
 
 function authenticateRole(req, res, next) {
   const user = req.user;
+  console.log(user);
   if (user.role.name === "admin") {
     next();
   } else {

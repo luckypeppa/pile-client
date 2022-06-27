@@ -11,7 +11,7 @@
       <base-input
         type="file"
         label="Add Cover"
-        @change="addCover"
+        @update:input="addCover"
         :required="true"
       />
     </div>

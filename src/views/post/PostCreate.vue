@@ -6,37 +6,7 @@
 
 <script>
 import PostEditor from "@/components/PostEditor.vue";
-import usePost from "@/utils/usePost";
 export default {
-  setup() {
-    const {
-      title,
-      snippet,
-      body,
-      tags,
-      coverUrl,
-      wholeCoverUrl,
-      isLoading,
-      createPost,
-      addCover,
-      addTag,
-      removeTag,
-    } = usePost();
-
-    return {
-      title,
-      snippet,
-      body,
-      tags,
-      coverUrl,
-      wholeCoverUrl,
-      isLoading,
-      createPost,
-      addCover,
-      addTag,
-      removeTag,
-    };
-  },
   components: {
     PostEditor,
   },

@@ -1,5 +1,6 @@
 const Blog = require("../model/blog");
 const Tag = require("../model/tag");
+const fs = require("fs");
 
 const createBlog = async (req, res) => {
   const { title, snippet, body, coverUrl, tags } = req.body;
@@ -60,8 +61,15 @@ const saveImage = (req, res) => {
       return res.status(400).send({ message: "Extension not allowed." });
     }
     const randomName = Math.random().toString().slice(2, 14);
+    if (!fs.existsSync("./public/images")) {
+      try {
+        fs.mkdirSync("./public/images");
+      } catch (err) {
+        console.log(err);
+      }
+    }
     const imageUrl = `images/${randomName}.${ext}`;
-    req.files.file.mv("public/" + imageUrl, (err) => {
+    req.files.file.mv("./public/" + imageUrl, (err) => {
       if (err) return res.status(500).send({ message: "can not save image." });
       res.send({ imageUrl });
     });

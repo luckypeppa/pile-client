@@ -69,15 +69,18 @@ export default {
     position: relative;
 
     &:focus-within label {
-      position: absolute;
       display: block;
-      left: 5%;
-      top: 0;
-      transform: translateY(-50%);
+      transform: scale(1) translateY(-50%);
+      opacity: 1;
     }
 
     label {
-      display: none;
+      position: absolute;
+      top: 0;
+      left: 10%;
+      opacity: 0;
+      transform: scale(0);
+      transition: all 500ms ease;
     }
 
     .input-container {
@@ -87,6 +90,8 @@ export default {
 
       input:focus::placeholder {
         opacity: 0;
+        transform-origin: left top;
+        transform: scaleX(0);
       }
     }
   }
@@ -109,6 +114,10 @@ export default {
       border: none;
       background-color: transparent;
       font-size: 1.5rem;
+
+      &::placeholder {
+        transition: all 500ms ease;
+      }
     }
 
     .icon {

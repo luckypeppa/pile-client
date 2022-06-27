@@ -37,16 +37,23 @@ export default {
       postApi.searchPosts(searchInput.value)
     );
 
+    let timer = null;
     watch(searchInput, () => {
-      if (searchInput.value !== "") {
-        getBlogs.createPromise(searchInput).then(() => {
-          store.commit("SET_POSTS", getBlogs.results.value.data);
-        });
-      } else {
-        postApi.getAll().then((res) => {
-          store.commit("SET_POSTS", res.data);
-        });
+      if (timer !== null) {
+        clearTimeout(timer);
       }
+
+      timer = setTimeout(() => {
+        if (searchInput.value !== "") {
+          getBlogs.createPromise(searchInput).then(() => {
+            store.commit("SET_POSTS", getBlogs.results.value.data);
+          });
+        } else {
+          postApi.getAll().then((res) => {
+            store.commit("SET_POSTS", res.data);
+          });
+        }
+      }, 700);
     });
 
     return { searchInput, posts };

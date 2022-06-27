@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const morgan = require("morgan");
@@ -9,8 +10,7 @@ const authRouter = require("./routes/auth");
 const commentRouter = require("./routes/comment");
 const app = express();
 
-const dbUrl =
-  "mongodb+srv://test:test123456@node-learn.hu0hto2.mongodb.net/test?retryWrites=true&w=majority";
+const dbUrl = process.env.DATABASE_URL;
 mongoose
   .connect(dbUrl)
   .then(() => {
