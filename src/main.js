@@ -23,10 +23,27 @@ import {
   faMagnifyingGlass,
   faMessage,
   faPenToSquare,
+  faImage,
+  faBold,
+  faItalic,
+  faStrikethrough,
+  faCode,
+  faParagraph,
 } from "@fortawesome/free-solid-svg-icons";
 
 /* add icons to the library */
-library.add(faXmark, faMagnifyingGlass, faMessage, faPenToSquare);
+library.add(
+  faXmark,
+  faMagnifyingGlass,
+  faMessage,
+  faPenToSquare,
+  faImage,
+  faBold,
+  faItalic,
+  faStrikethrough,
+  faCode,
+  faParagraph
+);
 
 let isRefreshing = false;
 

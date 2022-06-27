@@ -6,84 +6,104 @@
       v-if="editor"
       class="bubble-menu"
     >
-      <button
+      <base-button
         @click="editor.chain().focus().toggleBold().run()"
         :class="{ 'is-active': editor.isActive('bold') }"
+        prependIcon="fa-solid fa-bold"
+        text
       >
-        bold
-      </button>
-      <button
+      </base-button>
+      <base-button
         @click="editor.chain().focus().toggleItalic().run()"
         :class="{ 'is-active': editor.isActive('italic') }"
+        prependIcon="fa-solid fa-italic"
+        text
       >
-        italic
-      </button>
-      <button
+      </base-button>
+      <base-button
         @click="editor.chain().focus().toggleStrike().run()"
         :class="{ 'is-active': editor.isActive('strike') }"
+        prependIcon="fa-solid fa-strikethrough"
+        text
       >
-        strike
-      </button>
+      </base-button>
     </bubble-menu>
     <div v-if="editor" class="editor-menu">
-      <input type="file" @change="addImage" ref="imageInput" />
+      <input
+        type="file"
+        @change="addImage"
+        ref="imageInput"
+        class="add-image"
+      />
       <div class="button-group">
-        <base-button @click="triggerAddImage">ADD IMAGE</base-button>
-        <button
+        <base-button
+          @click="triggerAddImage"
+          text
+          prependIcon="fa-solid fa-image"
+        ></base-button>
+        <base-button
           @click="editor.chain().focus().toggleBold().run()"
           :class="{ 'is-active': editor.isActive('bold') }"
+          prependIcon="fa-solid fa-bold"
+          text
         >
-          bold
-        </button>
-        <button
+        </base-button>
+        <base-button
           @click="editor.chain().focus().toggleItalic().run()"
           :class="{ 'is-active': editor.isActive('italic') }"
+          prependIcon="fa-solid fa-italic"
+          text
         >
-          italic
-        </button>
-        <button
+        </base-button>
+        <base-button
           @click="editor.chain().focus().toggleStrike().run()"
           :class="{ 'is-active': editor.isActive('strike') }"
+          prependIcon="fa-solid fa-strikethrough"
+          text
         >
-          strike
-        </button>
-        <button
+        </base-button>
+        <base-button
           @click="editor.chain().focus().toggleCode().run()"
           :class="{ 'is-active': editor.isActive('code') }"
+          prependIcon="fa-solid fa-code"
+          text
         >
-          code
-        </button>
-        <button @click="editor.chain().focus().unsetAllMarks().run()">
+        </base-button>
+        <!-- <button @click="editor.chain().focus().unsetAllMarks().run()">
           clear marks
-        </button>
-        <button @click="editor.chain().focus().clearNodes().run()">
+        </button> -->
+        <!-- <button @click="editor.chain().focus().clearNodes().run()">
           clear nodes
-        </button>
-        <button
+        </button> -->
+        <base-button
           @click="editor.chain().focus().setParagraph().run()"
           :class="{ 'is-active': editor.isActive('paragraph') }"
+          prependIcon="fa-solid fa-paragraph"
+          text
         >
-          paragraph
-        </button>
-        <button
+        </base-button>
+        <basee-button
           @click="editor.chain().focus().toggleHeading({ level: 1 }).run()"
           :class="{ 'is-active': editor.isActive('heading', { level: 1 }) }"
+          text
         >
           h1
-        </button>
-        <button
+        </basee-button>
+        <base-button
           @click="editor.chain().focus().toggleHeading({ level: 2 }).run()"
           :class="{ 'is-active': editor.isActive('heading', { level: 2 }) }"
+          text
         >
           h2
-        </button>
-        <button
+        </base-button>
+        <base-button
           @click="editor.chain().focus().toggleHeading({ level: 3 }).run()"
           :class="{ 'is-active': editor.isActive('heading', { level: 3 }) }"
+          text
         >
           h3
-        </button>
-        <button
+        </base-button>
+        <!-- <button
           @click="editor.chain().focus().toggleHeading({ level: 4 }).run()"
           :class="{ 'is-active': editor.isActive('heading', { level: 4 }) }"
         >
@@ -100,7 +120,7 @@
           :class="{ 'is-active': editor.isActive('heading', { level: 6 }) }"
         >
           h6
-        </button>
+        </button> -->
         <button
           @click="editor.chain().focus().toggleBulletList().run()"
           :class="{ 'is-active': editor.isActive('bulletList') }"
@@ -231,31 +251,25 @@ export default {
 
   .editor-menu {
     margin-bottom: 1rem;
+    border-bottom: 1px solid black;
+    padding-bottom: 1rem;
 
     .add-image {
-      margin-bottom: 2rem;
+      display: none;
     }
 
     .button-group {
       display: grid;
       grid-template-columns: repeat(6, 1fr);
       gap: 1rem 2rem;
+      justify-items: center;
 
       @media (max-width: 900px) {
         grid-template-columns: repeat(4, 1fr);
       }
 
-      button {
-        background-color: transparent;
-        padding: 0.5rem;
-        font-size: 1rem;
-        font-weight: bold;
-        border: 1px solid black;
-        border-radius: 0.5rem;
-
-        &.is-active {
-          background-color: lightskyblue;
-        }
+      .is-active {
+        color: blue;
       }
     }
   }
