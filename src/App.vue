@@ -63,10 +63,7 @@ body {
   margin-bottom: 1rem;
   min-height: 10rem;
   padding: 2rem;
-
-  &.post-body {
-    border: none;
-  }
+  outline: none;
 
   > * + * {
     margin-top: 0.75em;
@@ -87,8 +84,8 @@ body {
   }
 
   code {
-    background-color: rgba(#616161, 0.1);
-    color: #616161;
+    background-color: black;
+    color: #fff;
   }
 
   pre {
@@ -119,6 +116,19 @@ body {
   hr {
     border-top: 2px solid rgba(#0d0d0d, 0.1);
     margin: 2rem 0;
+  }
+
+  a {
+    background-color: none;
+    color: blue;
+    text-decoration: underline;
+    padding: 0;
+
+    &:hover {
+      background-color: none;
+      padding: 0;
+      border-radius: 0;
+    }
   }
 }
 </style>
