@@ -16,7 +16,8 @@
     </div>
     <div class="detail">
       <h1 class="title">{{ post.title }}</h1>
-      <div class="ProseMirror post-body" ref="body"></div>
+      <!-- <div class="ProseMirror post-body" ref="body"></div> -->
+      <editor-content :editor="editor" />
     </div>
 
     <post-comment width="40rem" :blogId="post._id" />
@@ -26,6 +27,10 @@
 <script>
 import TagButton from "@/components/TagButton.vue";
 import PostComment from "@/components/PostComments.vue";
+import { Editor, EditorContent } from "@tiptap/vue-3";
+import StarterKit from "@tiptap/starter-kit";
+import Link from "@tiptap/extension-link";
+import Image from "@tiptap/extension-image";
 export default {
   beforeRouteUpdate() {
     location.reload();
@@ -37,13 +42,18 @@ export default {
     wholeCoverUrl() {
       return process.env.VUE_APP_BASE_URL + this.post.coverUrl;
     },
-  },
-  mounted() {
-    this.$refs.body.innerHTML = this.post.body;
+    editor() {
+      return new Editor({
+        editable: false,
+        content: this.$store.state.currentPost.body,
+        extensions: [StarterKit, Link, Image],
+      });
+    },
   },
   components: {
     TagButton,
     PostComment,
+    EditorContent,
   },
 };
 </script>
