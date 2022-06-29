@@ -29,15 +29,9 @@
       </base-button>
     </bubble-menu>
     <div v-if="editor" class="editor-menu">
-      <input
-        type="file"
-        @change="addImage"
-        ref="imageInput"
-        class="add-image"
-      />
       <div class="button-group">
         <base-button
-          @click="triggerAddImage"
+          @click="addImage"
           text
           prependIcon="fa-solid fa-image"
         ></base-button>
@@ -171,7 +165,6 @@ import { useEditor, EditorContent, BubbleMenu } from "@tiptap/vue-3";
 import StarterKit from "@tiptap/starter-kit";
 import Link from "@tiptap/extension-link";
 import Image from "@tiptap/extension-image";
-import postApi from "@/services/post";
 import { onBeforeUnmount, watch, ref } from "vue";
 export default {
   components: {
@@ -211,19 +204,9 @@ export default {
     // add image
     const imageInput = ref();
 
-    function triggerAddImage() {
-      imageInput.value.click();
-    }
-
-    function addImage(e) {
-      const img = e.target.files[0];
-      postApi
-        .uploadCover(img)
-        .then((res) => {
-          const url = process.env.VUE_APP_BASE_URL + res.data.imageUrl;
-          editor.value.chain().focus().setImage({ src: url }).run();
-        })
-        .catch((err) => console.log("err:", err));
+    function addImage() {
+      const url = prompt("Please paste an image url.");
+      editor.value.chain().focus().setImage({ src: url }).run();
     }
 
     // link
@@ -256,7 +239,7 @@ export default {
       editor.value.destroy();
     });
 
-    return { editor, addImage, triggerAddImage, imageInput, setLink };
+    return { editor, addImage, imageInput, setLink };
   },
 };
 </script>

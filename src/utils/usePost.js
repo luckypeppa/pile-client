@@ -1,4 +1,4 @@
-import { reactive, ref, toRefs, computed } from "vue";
+import { reactive, ref, toRefs } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 import postApi from "@/services/post";
@@ -15,9 +15,6 @@ export default function () {
     coverUrl: null,
   });
   const isLoading = ref(false);
-  const wholeCoverUrl = computed(
-    () => process.env.VUE_APP_BASE_URL + post.coverUrl
-  );
 
   function createPost() {
     if (checkEmpty()) return;
@@ -88,19 +85,21 @@ export default function () {
       });
   }
 
-  function addCover(e) {
-    const img = e.target.files[0];
-    postApi
-      .uploadCover(img)
-      .then((res) => {
-        post.coverUrl = res.data.imageUrl;
-      })
-      .catch((err) =>
-        store.commit("SET_NOTIFICATION", {
-          message: err.response.data.message,
-          type: "error",
-        })
-      );
+  function addCover() {
+    post.coverUrl = prompt("Please paste an image url.");
+
+    // const img = e.target.files[0];
+    // postApi
+    //   .uploadCover(img)
+    //   .then((res) => {
+    //     post.coverUrl = res.data.imageUrl;
+    //   })
+    //   .catch((err) =>
+    //     store.commit("SET_NOTIFICATION", {
+    //       message: err.response.data.message,
+    //       type: "error",
+    //     })
+    //   );
   }
 
   function addTag(value) {
@@ -131,7 +130,6 @@ export default function () {
 
   return {
     ...toRefs(post),
-    wholeCoverUrl,
     isLoading,
     createPost,
     updatePost,

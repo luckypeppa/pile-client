@@ -16,7 +16,7 @@
       }}</time>
     </div>
     <div class="cover">
-      <img :src="wholeCoverUrl" alt="" />
+      <img :src="post.coverUrl" alt="" />
     </div>
   </div>
 </template>
@@ -33,11 +33,6 @@ export default {
   methods: {
     seeDetail(postId) {
       this.$router.push({ name: "PostDetail", params: { id: postId } });
-    },
-  },
-  computed: {
-    wholeCoverUrl() {
-      return process.env.VUE_APP_BASE_URL + this.post.coverUrl;
     },
   },
   components: {

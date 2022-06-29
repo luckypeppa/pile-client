@@ -8,14 +8,9 @@
         v-model="snippet"
         :required="true"
       />
-      <base-input
-        type="file"
-        label="Add Cover"
-        @update:input="addCover"
-        :required="true"
-      />
+      <base-button @click="addCover">Add Cover</base-button>
     </div>
-    <img :src="wholeCoverUrl" v-if="coverUrl" alt="" class="preview" />
+    <img :src="coverUrl" v-if="coverUrl" alt="" class="preview" />
     <tag-input
       :tags="tags"
       @add:tag="addTag"
@@ -55,7 +50,6 @@ export default {
       body,
       tags,
       coverUrl,
-      wholeCoverUrl,
       isLoading,
       createPost,
       updatePost,
@@ -86,7 +80,6 @@ export default {
       body,
       tags,
       coverUrl,
-      wholeCoverUrl,
       isLoading,
       createPost,
       updatePost,
@@ -102,6 +95,7 @@ export default {
   },
 };
 </script>
+BaseButton
 
 <style lang="scss">
 .create-container {
