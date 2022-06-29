@@ -18,6 +18,8 @@
       <base-button
         prependIcon="fa-solid fa-pen-to-square"
         text
+        v-if="isAuthor"
+        data-test-id="edit-button"
         @click="
           toggleInputer({
             comment,
@@ -49,7 +51,8 @@
 <script>
 import CommentCard from "./CommentCard";
 import CommentInput from "@/components/CommentInput.vue";
-import { ref } from "vue";
+import { computed, ref } from "vue";
+import { useStore } from "vuex";
 export default {
   props: {
     comment: {
@@ -73,6 +76,13 @@ export default {
     // indicate which comment the user is replying to
     const selectedComment = ref({});
     const isEditing = ref(false);
+
+    // check if the current user is the author of the comment
+    const store = useStore();
+    console.log(props.comment.author._id)
+    const isAuthor = computed(
+      () => props.comment.author._id === store.state.user._id
+    );
 
     function toggleInputer({ comment, isEditingBoolean }) {
       if (props.sub) {
@@ -105,6 +115,7 @@ export default {
       closeInputer,
       selectedComment,
       isEditing,
+      isAuthor,
     };
   },
 };
