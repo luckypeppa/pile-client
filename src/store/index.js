@@ -85,6 +85,16 @@ export default createStore({
       state.currentComments = state.currentComments.map((c) => {
         if (c._id === comment._id) {
           return comment;
+        } else if (c._id === comment.parent) {
+          const newParentComment = { ...c };
+          newParentComment.children = c.children.map((childComment) => {
+            if ((childComment._id = comment._id)) {
+              return comment;
+            } else {
+              return childComment;
+            }
+          });
+          return newParentComment;
         } else {
           return c;
         }
