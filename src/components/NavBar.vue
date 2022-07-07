@@ -69,20 +69,26 @@ export default {
 <style lang="scss" scoped>
 .navbar {
   display: flex;
-  gap: 1rem;
+  gap: 0.2rem;
+  flex-wrap: wrap;
   position: fixed;
   top: 0;
   background-color: white;
-  height: min(5rem, 10vh);
+  height: min(7rem, 10vh);
   align-items: center;
-  padding: 0 3rem;
   width: 100vw;
   justify-content: flex-end;
   box-shadow: 1px 0 1px 1px rgba($color: #000000, $alpha: 0.1);
+  padding: 0 0.2rem;
   z-index: 999;
 
+  @media (min-width: 767px) {
+    gap: 1rem;
+    padding: 0 3rem;
+  }
+
   h1 {
-    font-size: 3rem;
+    font-size: clamp(0.7rem, 10vw, 3rem);
     flex: 1;
 
     &:hover a {

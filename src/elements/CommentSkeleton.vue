@@ -48,7 +48,7 @@ export default {
       border-radius: 0.5rem;
 
       &.long {
-        width: 10rem;
+        width: 9rem;
       }
     }
   }

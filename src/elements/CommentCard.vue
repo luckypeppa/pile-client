@@ -128,7 +128,8 @@ export default {
 
   .header {
     display: flex;
-    gap: 1rem;
+    gap: .5rem;
+    flex-wrap: wrap;
   }
 
   &:last-child {
@@ -142,7 +143,7 @@ export default {
 
   .body {
     color: rgb(98, 97, 97);
-    margin-bottom: 1rem;
+    margin-block: 1rem;
   }
 
   .actions {
