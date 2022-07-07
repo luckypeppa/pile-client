@@ -13,7 +13,8 @@
     "search": {
       "label": "搜索"
     },
-    "welcome": "你好， 我是皮皮"
+    "welcome": "你好， 我是皮皮",
+    "noPosts": "没有帖子!"
   },
   "postComments": {
     "title": "评论"

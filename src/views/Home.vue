@@ -11,9 +11,10 @@
     <app-tags></app-tags>
     <p>{{ $t("navbar.home") }}</p>
     <h1>{{ $t("home.welcome") }}</h1>
-    <div class="posts">
+    <div class="posts" v-if="hasPosts">
       <post-card v-for="(post, index) in posts" :key="index" :post="post" />
     </div>
+    <p v-else class="no-posts">{{ $t("home.noPosts") }}</p>
   </div>
 </template>
 
@@ -30,6 +31,7 @@ export default {
   setup() {
     const store = useStore();
     const posts = computed(() => store.state.posts);
+    const hasPosts = computed(() => posts.value.length > 0);
 
     // search posts
     const searchInput = ref("");
@@ -56,7 +58,7 @@ export default {
       }, 700);
     });
 
-    return { searchInput, posts };
+    return { searchInput, posts, hasPosts };
   },
 };
 </script>
@@ -87,5 +89,9 @@ h1 {
   display: grid;
   grid-template-columns: 1fr;
   gap: 2rem;
+}
+
+.no-posts {
+  font-size: 2rem;
 }
 </style>

@@ -13,7 +13,8 @@
     "search": {
       "label": "Search"
     },
-    "welcome": "Hello, I am Pipi!"
+    "welcome": "Hello, I am Pipi!",
+    "noPosts": "NO POSTS!"
   },
   "postComments": {
     "title": "Comments"
