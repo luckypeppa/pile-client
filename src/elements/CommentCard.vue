@@ -80,7 +80,8 @@ export default {
     // check if the current user is the author of the comment
     const store = useStore();
     const isAuthor = computed(
-      () => props.comment.author._id === store.state.user._id
+      () =>
+        store.state.user && props.comment.author._id === store.state.user._id
     );
 
     function toggleInputer({ comment, isEditingBoolean }) {
