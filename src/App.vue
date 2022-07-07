@@ -11,10 +11,21 @@
 <script>
 import NavBar from "@/components/NavBar.vue";
 import AppNotification from "@/components/AppNotification.vue";
+import { useTitle } from "@vueuse/core";
+import { computed } from "vue";
+import { useRoute } from "vue-router";
+import { useI18n } from "vue-i18n";
 export default {
   components: {
     NavBar,
     AppNotification,
+  },
+  setup() {
+    const { t } = useI18n();
+    const route = useRoute();
+    const title = computed(() => t(`meta.titles.${route.name}`));
+
+    useTitle(title, { titleTemplate: "%s | PiLE" });
   },
 };
 </script>

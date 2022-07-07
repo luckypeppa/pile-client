@@ -55,5 +55,18 @@
       "noComments": "No comments yet.",
       "placeholder": "Say something...."
     }
+  },
+  "meta": {
+    "titles": {
+      "home": "Home",
+      "register": "Register",
+      "login": "Login",
+      "PostCreate": "Create Post",
+      "PostDetail": "Post Detail",
+      "PostEdit": "Edit Post",
+      "404": "Not Found",
+      "NotFound": "Not Found",
+      "NetworkError": "Network Error"
+    }
   }
 }

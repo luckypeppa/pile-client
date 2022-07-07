@@ -55,5 +55,18 @@
       "noComments": "评论空空如也。",
       "placeholder": "评论点啥吧。。。"
     }
+  },
+  "meta": {
+    "titles": {
+      "home": "主页",
+      "register": "注册",
+      "login": "登录",
+      "PostCreate": "创建帖子",
+      "PostDetail": "帖子详情",
+      "PostEdit": "编辑帖子",
+      "404": "未找到",
+      "NotFound": "未找到",
+      "NetworkError": "网络错误"
+    }
   }
 }
