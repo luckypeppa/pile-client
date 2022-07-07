@@ -60,9 +60,10 @@ export default {
     } = usePost();
 
     const store = useStore();
+    let post;
     if (props.edit) {
       // get the post to be edited from store
-      const post = computed(() => store.state.currentPost);
+      post = computed(() => store.state.currentPost);
 
       // show post content
       onMounted(() => {
@@ -87,6 +88,7 @@ export default {
       addCover,
       addTag,
       removeTag,
+      post,
     };
   },
   components: {

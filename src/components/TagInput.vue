@@ -5,6 +5,7 @@
         v-for="(t, index) in tags"
         :key="index"
         @click="$emit('remove:tag', t)"
+        :searchByTag="false"
         :tag="t"
       ></tag-button>
     </div>

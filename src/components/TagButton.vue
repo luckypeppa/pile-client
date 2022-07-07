@@ -1,5 +1,5 @@
 <template>
-  <div class="tag" @click.stop="getPostsByTag">
+  <div class="tag" @click.stop="onClick">
     {{ tag }}
   </div>
 </template>
@@ -8,11 +8,16 @@
 import postApi from "@/services/post";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
+import { computed } from "@vue/runtime-core";
 export default {
   props: {
     tag: {
       type: String,
       required: true,
+    },
+    searchByTag: {
+      type: Boolean,
+      default: true,
     },
   },
   setup(props) {
@@ -48,7 +53,9 @@ export default {
       }
     }
 
-    return { getPostsByTag };
+    const onClick = computed(() => (props.searchByTag ? getPostsByTag : null));
+
+    return { getPostsByTag, onClick };
   },
 };
 </script>

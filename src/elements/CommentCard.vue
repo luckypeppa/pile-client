@@ -79,7 +79,7 @@ export default {
 
     // check if the current user is the author of the comment
     const store = useStore();
-    console.log(props.comment.author._id)
+    console.log(props.comment.author._id);
     const isAuthor = computed(
       () => props.comment.author._id === store.state.user._id
     );
