@@ -11,7 +11,7 @@
 <script>
 import NavBar from "@/components/NavBar.vue";
 import AppNotification from "@/components/AppNotification.vue";
-import { useTitle } from "@vueuse/core";
+import { useTitle, useFavicon } from "@vueuse/core";
 import { computed } from "vue";
 import { useRoute } from "vue-router";
 import { useI18n } from "vue-i18n";
@@ -21,11 +21,17 @@ export default {
     AppNotification,
   },
   setup() {
-    const { t } = useI18n();
     const route = useRoute();
-    const title = computed(() => t(`meta.titles.${route.name}`));
 
+    // set the title for every page
+    const { t } = useI18n();
+    const title = computed(() => t(`meta.titles.${route.name}`));
     useTitle(title, { titleTemplate: "%s | PiLE" });
+
+    // set icon for website
+    const icon = useFavicon();
+
+    icon.value = "icon.jpg";
   },
 };
 </script>
