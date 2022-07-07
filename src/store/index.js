@@ -76,10 +76,24 @@ export default createStore({
         });
       }
     },
-    REMOVE_CURRENT_COMMENT(state, commentId) {
-      state.currentComments = state.currentComments.filter(
-        (comment) => comment._id !== commentId
-      );
+    REMOVE_CURRENT_COMMENT(state, comment) {
+      if (!comment.parent) {
+        state.currentComments = state.currentComments.filter(
+          (c) => c._id !== comment._id
+        );
+      } else {
+        state.currentComments = state.currentComments.map((c) => {
+          if (c._id === comment.parent) {
+            const newParentComment = { ...c };
+            newParentComment.children = c.children.filter(
+              (childComment) => childComment._id !== comment._id
+            );
+            return newParentComment;
+          } else {
+            return c;
+          }
+        });
+      }
     },
     UPDATE_CURRENT_COMMENT(state, comment) {
       state.currentComments = state.currentComments.map((c) => {
@@ -88,7 +102,7 @@ export default createStore({
         } else if (c._id === comment.parent) {
           const newParentComment = { ...c };
           newParentComment.children = c.children.map((childComment) => {
-            if ((childComment._id = comment._id)) {
+            if (childComment._id === comment._id) {
               return comment;
             } else {
               return childComment;

@@ -88,7 +88,7 @@ export default {
       commentApi
         .deleteComment(props.selectedComment._id)
         .then(() => {
-          store.commit("REMOVE_CURRENT_COMMENT", props.selectedComment._id);
+          store.commit("REMOVE_CURRENT_COMMENT", props.selectedComment);
           store.commit("SET_NOTIFICATION", {
             message: t("resources.comment.deleted"),
           });

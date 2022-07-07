@@ -48,7 +48,7 @@ export default {
       default: false,
     },
   },
-  emits: ["update:modelValue", "add:tag"],
+  emits: ["update:modelValue", "add:tag", "update:input"],
   computed: {
     UUID() {
       return UniqueID();
