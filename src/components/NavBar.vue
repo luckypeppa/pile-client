@@ -1,77 +1,53 @@
 <template>
-  <nav class="navbar" :class="{ dark: isDark }">
+  <nav class="navbar">
     <h1>
       <router-link :to="{ name: 'home', params: { language: $i18n.locale } }"
         >PiLE</router-link
       >
     </h1>
-    <base-checkbox :label="$t('navbar.darkMode')" v-model="isDark" />
-    <base-select
-      :label="$t('navbar.language.label')"
-      :options="$i18n.availableLocales"
-      v-model="$i18n.locale"
-    ></base-select>
-    <router-link :to="{ name: 'home', params: { language: $i18n.locale } }">{{
-      $t("navbar.home")
-    }}</router-link>
-    <router-link
-      :to="{ name: 'PostCreate', params: { language: $i18n.locale } }"
-      v-if="isAdmin && isLogin"
-      data-test-id="navbar-create"
-      >{{ $t("navbar.create") }}</router-link
-    >
-    <router-link
-      :to="{ name: 'register', params: { language: $i18n.locale } }"
-      v-if="!isLogin"
-      data-test-id="navbar-register"
-      >{{ $t("navbar.register") }}</router-link
-    >
-    <router-link
-      :to="{ name: 'login', params: { language: $i18n.locale } }"
-      v-if="!isLogin"
-      data-test-id="navbar-login"
-      >{{ $t("navbar.login") }}</router-link
-    >
-    <BaseButton @click="logout" v-if="isLogin" data-test-id="navbar-logout">{{
-      $t("navbar.logout")
-    }}</BaseButton>
+    <nav-actions v-if="!mdAndSmaller" />
+    <base-menu v-if="mdAndSmaller">
+      <template v-slot:activator="{ onClick }">
+        <font-awesome-icon
+          icon="fa-solid fa-bars"
+          @click="onClick"
+          class="menu-icon"
+        />
+      </template>
+      <div class="menu-list">
+        <nav-actions />
+      </div>
+    </base-menu>
   </nav>
 </template>
 
 <script>
-import BaseButton from "./BaseButton.vue";
-import authApi from "@/services/auth";
-import { useDark } from "@vueuse/core";
-import { useStore } from "vuex";
-import { computed } from "vue";
+import NavActions from "../elements/NavActions.vue";
+import { useDark, breakpointsTailwind, useBreakpoints } from "@vueuse/core";
 export default {
   name: "appNav",
+  components: { NavActions },
   setup() {
     // set up dark mode
     const isDark = useDark();
 
-    const store = useStore();
-    function logout() {
-      authApi
-        .logout()
-        .then(() => {
-          store.dispatch("logout");
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
+    // set up breakpoints
+    const breakpoints = useBreakpoints(breakpointsTailwind);
 
-    const isLogin = computed(() => store.getters.isLogin);
-    const isAdmin = computed(() => store.getters.isAdmin);
+    const mdAndSmaller = breakpoints.smaller("md");
 
-    return { logout, isLogin, isAdmin, isDark };
+    return { isDark, mdAndSmaller };
   },
-  components: { BaseButton },
 };
 </script>
 
 <style lang="scss" scoped>
+html.dark {
+  .navbar {
+    background-color: rgb(63, 63, 63);
+  }
+}
+
 .navbar {
   display: flex;
   gap: 0.2rem;
@@ -87,13 +63,22 @@ export default {
   z-index: 999;
   background-color: #fff;
 
-  &.dark {
-    background-color: rgb(63, 63, 63);
-  }
-
-  @media (min-width: 767px) {
+  @media (min-width: 367px) {
     gap: 1rem;
     padding: 0 3rem;
+  }
+
+  .menu-icon {
+    font-size: 2rem;
+  }
+
+  .menu-list {
+    width: max-content;
+    border: 1px solid lightgray;
+    display: grid;
+    gap: 1rem;
+    padding: 1rem;
+    border-radius: 1rem;
   }
 
   h1 {

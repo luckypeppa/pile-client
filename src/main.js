@@ -29,6 +29,7 @@ import {
   faStrikethrough,
   faCode,
   faParagraph,
+  faBars,
 } from "@fortawesome/free-solid-svg-icons";
 
 /* add icons to the library */
@@ -42,7 +43,8 @@ library.add(
   faItalic,
   faStrikethrough,
   faCode,
-  faParagraph
+  faParagraph,
+  faBars
 );
 
 let isRefreshing = false;
