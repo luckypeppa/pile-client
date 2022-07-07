@@ -3,7 +3,7 @@
     <div class="header">
       <h3 class="author">{{ comment.author?.username }}</h3>
       <p v-if="sub && comment.replyTo">
-        {{ "Reply to " + comment.replyTo?.username }}
+        {{ $t("commentInputer.replyTo") + " " + comment.replyTo?.username }}
       </p>
     </div>
     <p class="body">
