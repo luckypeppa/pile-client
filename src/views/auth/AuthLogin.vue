@@ -6,12 +6,14 @@
       :label="$t('auth.username')"
       type="text"
       required="true"
+      autocomplete="username"
     />
     <BaseInput
       v-model="password"
       :label="$t('auth.password')"
       type="password"
       required="true"
+      autocomplete="current-password"
     />
     <BaseButton type="submit" :style="{ width: '100%' }">{{
       $t("auth.buttons.login")

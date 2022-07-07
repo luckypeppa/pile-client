@@ -6,18 +6,21 @@
       :label="$t('auth.username')"
       type="text"
       :error="messages.username"
+      autocomplete="username"
     />
     <BaseInput
       v-model="email"
       :label="$t('auth.email')"
       type="email"
       :error="messages.email"
+      autocomplete="email"
     />
     <BaseInput
       v-model="password"
       :label="$t('auth.password')"
       type="password"
       :error="messages.password"
+      autocomplete="new-password"
     />
     <p class="error" v-if="error">{{ error }}</p>
     <BaseButton type="submit">{{ $t("auth.buttons.register") }}</BaseButton>
@@ -95,8 +98,8 @@ export default {
           }
         )
         .then((res) => {
-          store.commit("SET_USER_DATA", res.response.data);
-          router.push({ name: "login" });
+          store.commit("SET_USER_DATA", res.data);
+          router.push({ name: "home" });
         })
         .catch((err) => {
           console.log("There is an Error:", err);
