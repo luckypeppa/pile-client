@@ -128,7 +128,7 @@ export default {
 
   .header {
     display: flex;
-    gap: .5rem;
+    gap: 0.5rem;
     flex-wrap: wrap;
   }
 

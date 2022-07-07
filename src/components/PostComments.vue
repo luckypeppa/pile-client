@@ -86,7 +86,7 @@ export default {
   border-radius: 2rem;
   margin-inline: auto;
   max-width: 100%;
-  
+
   .header {
     margin-bottom: 1rem;
 
