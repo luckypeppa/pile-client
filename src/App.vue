@@ -11,7 +11,7 @@
 <script>
 import NavBar from "@/components/NavBar.vue";
 import AppNotification from "@/components/AppNotification.vue";
-import { useTitle, useFavicon } from "@vueuse/core";
+import { useTitle, useFavicon, useDark } from "@vueuse/core";
 import { computed } from "vue";
 import { useRoute } from "vue-router";
 import { useI18n } from "vue-i18n";
@@ -30,8 +30,11 @@ export default {
 
     // set icon for website
     const icon = useFavicon();
-
     icon.value = "icon.jpg";
+
+    // set up dark mode
+    const isDark = useDark();
+    isDark.value = true;
   },
 };
 </script>
@@ -51,15 +54,27 @@ export default {
 html {
   font-family: "Noto Sans SC", sans-serif;
   font-family: "Roboto", sans-serif;
+
+  &.dark {
+    body {
+      background-color: rgb(63, 63, 63);
+      color: white;
+
+      a {
+        color: white;
+      }
+    }
+  }
 }
 
 body {
   overflow-x: hidden;
   background-color: white;
+  color: black;
+
   a {
     text-decoration: none;
     font-weight: 600;
-    color: black;
     cursor: pointer;
     padding: 0.5rem 1rem;
     border-radius: 1rem;

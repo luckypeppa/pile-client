@@ -73,7 +73,6 @@ export default {
   flex-wrap: wrap;
   position: fixed;
   top: 0;
-  background-color: white;
   height: min(7rem, 10vh);
   align-items: center;
   width: 100vw;
