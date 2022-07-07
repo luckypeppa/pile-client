@@ -7,7 +7,8 @@
     "logout": "Logout",
     "language": {
       "label": "Language"
-    }
+    },
+    "darkMode": "Dark Mode"
   },
   "home": {
     "search": {

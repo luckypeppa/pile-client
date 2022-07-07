@@ -1,10 +1,11 @@
 <template>
-  <nav class="navbar">
+  <nav class="navbar" :class="{ dark: isDark }">
     <h1>
       <router-link :to="{ name: 'home', params: { language: $i18n.locale } }"
         >PiLE</router-link
       >
     </h1>
+    <base-checkbox :label="$t('navbar.darkMode')" v-model="isDark" />
     <base-select
       :label="$t('navbar.language.label')"
       :options="$i18n.availableLocales"
@@ -40,27 +41,31 @@
 <script>
 import BaseButton from "./BaseButton.vue";
 import authApi from "@/services/auth";
+import { useDark } from "@vueuse/core";
+import { useStore } from "vuex";
+import { computed } from "vue";
 export default {
   name: "appNav",
-  methods: {
-    logout() {
+  setup() {
+    // set up dark mode
+    const isDark = useDark();
+
+    const store = useStore();
+    function logout() {
       authApi
         .logout()
         .then(() => {
-          this.$store.dispatch("logout");
+          store.dispatch("logout");
         })
         .catch((error) => {
           console.log(error);
         });
-    },
-  },
-  computed: {
-    isLogin() {
-      return this.$store.getters.isLogin;
-    },
-    isAdmin() {
-      return this.$store.getters.isAdmin;
-    },
+    }
+
+    const isLogin = computed(() => store.getters.isLogin);
+    const isAdmin = computed(() => store.getters.isAdmin);
+
+    return { logout, isLogin, isAdmin, isDark };
   },
   components: { BaseButton },
 };
@@ -80,6 +85,11 @@ export default {
   box-shadow: 1px 0 1px 1px rgba($color: #000000, $alpha: 0.1);
   padding: 0 0.2rem;
   z-index: 999;
+  background-color: #fff;
+
+  &.dark {
+    background-color: rgb(63, 63, 63);
+  }
 
   @media (min-width: 767px) {
     gap: 1rem;

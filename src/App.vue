@@ -11,7 +11,7 @@
 <script>
 import NavBar from "@/components/NavBar.vue";
 import AppNotification from "@/components/AppNotification.vue";
-import { useTitle, useFavicon, useDark } from "@vueuse/core";
+import { useTitle, useFavicon } from "@vueuse/core";
 import { computed } from "vue";
 import { useRoute } from "vue-router";
 import { useI18n } from "vue-i18n";
@@ -31,10 +31,6 @@ export default {
     // set icon for website
     const icon = useFavicon();
     icon.value = "icon.jpg";
-
-    // set up dark mode
-    const isDark = useDark();
-    isDark.value = true;
   },
 };
 </script>
