@@ -133,6 +133,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+html.dark {
+  .inputer-container {
+    .inputer {
+      background-color: rgb(63, 63, 63);
+    }
+  }
+}
+
 .inputer-container {
   border: 1px solid lightgray;
   border-radius: 0.5rem;
@@ -147,6 +155,7 @@ export default {
     resize: none;
     padding-block: 1rem;
     font-size: 1rem;
+    background-color: #fff;
   }
 
   .actions {

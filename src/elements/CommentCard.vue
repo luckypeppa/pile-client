@@ -143,7 +143,6 @@ export default {
   }
 
   .body {
-    color: rgb(98, 97, 97);
     margin-block: 1rem;
   }
 

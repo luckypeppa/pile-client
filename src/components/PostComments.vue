@@ -81,7 +81,6 @@ export default {
 <style lang="scss" scoped>
 .comments-container {
   margin-top: 5rem;
-  background-color: #fff;
   padding: 2rem;
   border-radius: 2rem;
   margin-inline: auto;
