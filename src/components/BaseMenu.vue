@@ -34,7 +34,6 @@ html.dark {
     position: absolute;
     top: 100%;
     right: 0;
-    
     background-color: white;
   }
 }
