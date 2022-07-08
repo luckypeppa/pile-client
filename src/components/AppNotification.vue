@@ -41,7 +41,7 @@ export default {
   position: fixed;
   left: 1rem;
   top: 5.5rem;
-  z-index: 99;
+  z-index: 1999;
   background-color: white;
   border: 1px solid black;
   border-radius: 1rem;

@@ -52,9 +52,8 @@ html.dark {
   display: flex;
   gap: 0.2rem;
   flex-wrap: wrap;
-  position: fixed;
+  position: sticky;
   top: 0;
-  height: min(7rem, 10vh);
   align-items: center;
   width: 100vw;
   justify-content: flex-end;
