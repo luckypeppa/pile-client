@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import { onMounted, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 import commentApi from "@/services/comment";
 import { useStore } from "vuex";
 import { useI18n } from "vue-i18n";
@@ -59,7 +59,15 @@ export default {
 
     const body = ref(props.isEditing ? props.selectedComment?.body : "");
 
+    const isLogin = computed(() => store.getters.isLogin);
     function createComment() {
+      if (!isLogin.value) {
+        store.commit("SET_NOTIFICATION", {
+          message: t("commentInputer.errors.notLogin"),
+          type: "error",
+        });
+        return;
+      }
       commentApi
         .createComment({
           blogId: props.blogId,

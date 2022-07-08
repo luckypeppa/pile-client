@@ -26,7 +26,10 @@
       "update": "Update",
       "delete": "Delete"
     },
-    "replyTo": "Reply to"
+    "replyTo": "Reply to",
+    "errors": {
+      "notLogin": "Please login to comment."
+    }
   },
   "auth": {
     "title": {
